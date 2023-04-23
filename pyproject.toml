@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "sqlalchemy-rusdoc"
+version = "0.0.1"
+description = ""
+authors = ["Elisha Kravchuk <elisey.kravchuk@gmail.com>"]
+license = "LGPL3"
+readme = "README.md"
+packages = [{include = "sqlalchemy_rusdoc"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mkdocs-material = "^9.1.7"
+mkdocs-glightbox = "^0.3.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
