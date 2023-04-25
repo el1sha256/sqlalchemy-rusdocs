@@ -51,6 +51,7 @@ nav:
     - tutorial/engine.md
     - tutorial/db_api.md
     - tutorial/metadata.md
+    - tutorial/data.md
 - ORM:
     - orm/index.md
 - SQLAlchemy Core:
