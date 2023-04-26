@@ -62,3 +62,8 @@ nav:
     - glossary/index.md
 
 copyright: Copyright &copy; 2023 Elisha Kravchuk
+
+extra:
+  analytics:
+    provider: google
+    property: G-96L8NNF9FG
