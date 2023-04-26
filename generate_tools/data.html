@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+        <title>
+            
+    
+    Working with Data
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/changelog.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy Unified Tutorial" href="index.html" />
+        <link rel="next" title="Using INSERT Statements" href="data_insert.html" />
+        <link rel="prev" title="Working with Database Metadata" href="metadata.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.10</span>
+
+
+        | Release Date: April 21, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy Unified Tutorial">SQLAlchemy Unified Tutorial</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="engine.html">Establishing Connectivity - the Engine</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">Working with Transactions and the DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">Working with Database Metadata</a></span></li>
+<li class="selected"><span class="link-container"><strong>Working with Data</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="data_insert.html">Using INSERT Statements</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_select.html">Using SELECT Statements</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_update.html">Using UPDATE and DELETE Statements</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">Data Manipulation with the ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">Working with ORM Related Objects</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">Further Reading</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="metadata.html" title="previous chapter">Working with Database Metadata</a></li>
+                <li><b>Next:</b>
+                <a href="data_insert.html" title="next chapter">Using INSERT Statements</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy Unified Tutorial">SQLAlchemy Unified Tutorial</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#working-with-data">Working with Data</a></li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar tutorial-data" >
+        
+<aside class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>This page is part of the <a class="reference internal" href="index.html"><span class="doc">SQLAlchemy Unified Tutorial</span></a>.</p>
+<p>Previous: <a class="reference internal" href="metadata.html"><span class="doc">Working with Database Metadata</span></a>   |   Next: <a class="reference internal" href="data_insert.html"><span class="doc">Using INSERT Statements</span></a></p>
+</aside>
+<section class="core-header orm-addin" id="working-with-data">
+<span id="tutorial-working-with-data"></span><h1>Working with Data<a class="headerlink" href="#working-with-data" title="Permalink to this heading">¶</a></h1>
+<p>In <a class="reference internal" href="dbapi_transactions.html#tutorial-working-with-transactions"><span class="std std-ref">Working with Transactions and the DBAPI</span></a>, we learned the basics of how to
+interact with the Python DBAPI and its transactional state.  Then, in
+<a class="reference internal" href="metadata.html#tutorial-working-with-metadata"><span class="std std-ref">Working with Database Metadata</span></a>, we learned how to represent database
+tables, columns, and constraints within SQLAlchemy using the
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> and related objects.  In this section we will combine
+both concepts above to create, select and manipulate data within a relational
+database.   Our interaction with the database is <strong>always</strong> in terms
+of a transaction, even if we’ve set our database driver to use <a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">autocommit</span></a> behind the scenes.</p>
+<p>The components of this section are as follows:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="data_insert.html#tutorial-core-insert"><span class="std std-ref">Using INSERT Statements</span></a> - to get some data into the database, we introduce
+and demonstrate the Core <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> construct.   INSERTs from an
+ORM perspective are described in the next section
+<a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-data-manipulation"><span class="std std-ref">Data Manipulation with the ORM</span></a>.</p></li>
+<li><p><a class="reference internal" href="data_select.html#tutorial-selecting-data"><span class="std std-ref">Using SELECT Statements</span></a> - this section will describe in detail
+the <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> construct, which is the most commonly used object
+in SQLAlchemy.  The <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> construct emits SELECT statements
+for both Core and ORM centric applications and both use cases will be
+described here.   Additional ORM use cases are also noted in the later
+section <a class="reference internal" href="orm_related_objects.html#tutorial-select-relationships"><span class="std std-ref">Using Relationships in Queries</span></a> as well as the
+<a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM Querying Guide</span></a>.</p></li>
+<li><p><a class="reference internal" href="data_update.html#tutorial-core-update-delete"><span class="std std-ref">Using UPDATE and DELETE Statements</span></a> - Rounding out the INSERT and SELECTion
+of data, this section will describe from a Core perspective the use of the
+<a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> and <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a> constructs.  ORM-specific
+UPDATE and DELETE is similarly described in the
+<a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-data-manipulation"><span class="std std-ref">Data Manipulation with the ORM</span></a> section.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<aside class="topic">
+<p class="topic-title">SQLAlchemy 1.4 / 2.0 Tutorial</p>
+<p>Next Tutorial Section: <a class="reference internal" href="data_insert.html"><span class="doc">Using INSERT Statements</span></a></p>
+</aside>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="metadata.html" title="previous chapter">Working with Database Metadata</a>
+        Next:
+        <a href="data_insert.html" title="next chapter">Using INSERT Statements</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.3.0.
+
+    Documentation last generated: Sun 23 Apr 2023 12:39:27 PM 
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.10',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+
