@@ -51,7 +51,11 @@ nav:
     - tutorial/engine.md
     - tutorial/db_api.md
     - tutorial/metadata.md
-    - tutorial/data.md
+    - Работа с Данными:
+      - tutorial/data/index.md
+      - tutorial/data/data_insert.md
+      - tutorial/data/data_select.md
+      - tutorial/data/data_update.md
 - ORM:
     - orm/index.md
 - SQLAlchemy Core:

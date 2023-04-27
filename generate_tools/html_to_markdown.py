@@ -13,10 +13,11 @@ class CustomConverter(markdownify.MarkdownConverter):
             return text
         text = text.rstrip()
         hashes = '#' * n
+        # +# for cheat
         if 'id' in el.attrs.keys():
-            return '%s %s {#%s} \n\n' % (hashes, text, el.attrs['id'])
+            return '%s %s {#%s} \n\n' % (hashes + "#", text, el.attrs['id'])
         else:
-            return '%s %s \n\n' % (hashes, text)
+            return '%s %s \n\n' % (hashes + "#", text)
 
     def process_text(self, el):
         text = six.text_type(el) or ''

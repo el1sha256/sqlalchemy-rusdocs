@@ -1,6 +1,7 @@
 import os
 from time import sleep
 from datetime import datetime
+from pathlib import Path
 
 import openai
 import tiktoken
@@ -11,8 +12,10 @@ from secret import apikey
 
 # Load your API key from an environment variable or secret management service
 openai.api_key = apikey
+requests_per_minute = 2.9
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 logger = logging.getLogger()
+base_path = Path(__file__).parent
 
 
 def send_request_to_api_gpt(string: str, max_tokens: int):
@@ -27,7 +30,8 @@ def send_request_to_api_gpt(string: str, max_tokens: int):
              "content": string},
         ],
         temperature=0.7,
-        max_tokens=max_tokens
+        max_tokens=max_tokens,
+        top_p=0.5
     )
     result = response['choices'][0]['message']['content']
     return result
@@ -41,25 +45,14 @@ def num_tokens_from_string(string: str, encoding_name: str = "gpt-3.5-turbo") ->
     return num_tokens
 
 
-def read_text_from_file(filename: str) -> str:
+def read_text_from_file(filename: str or Path) -> str:
     logger.info("Чтение и парсинг...")
 
     # Read the XML file
     with open(filename, 'r') as f:
         xml_data = f.read()
 
-    # Load the XML data into a BeautifulSoup object
-    soup = BeautifulSoup(xml_data, 'html.parser')
-
-    # Find elements in the XML tree
-    elements = soup.find_all(id='docs-body')
-
-    end_result = ""
-    # Print the contents of each element
-    for element in elements:
-        end_result += element.get_text()
-        # print(element.get_text())
-    return end_result
+    return xml_data
 
 
 def write_to_file(filename: str, data: str, mode: str = "a+"):
@@ -83,7 +76,7 @@ def get_paraphed_token_checked_strings(cleaned_text):
             tmp_str += paraphed[i]
         elif ntfs > 820:
             print(f"overflowed paragraph {paraphed[i]}")
-            exit(1)
+            raise AssertionError("To many tokens in paragraph")
         else:
             res_list.append(tmp_str)
             tmp_str = ''
@@ -94,27 +87,51 @@ def get_paraphed_token_checked_strings(cleaned_text):
     return res_list
 
 
-def workflow(cleaned_text: str, output_file: str):
+def workflow(cleaned_text: str, output_file: str or Path):
     res = get_paraphed_token_checked_strings(cleaned_text)
-    for e, i in enumerate(res):
-        # write_to_file('hi.txt', i)
-        logger.info(f"Перевод секции {e + 1}/{len(res)}")
-        start_translate = datetime.timestamp(datetime.now())
-        translated_text = send_request_to_api_gpt(i, 820)
-        end_translate = datetime.timestamp(datetime.now())
-        logger.info(f"Перевод завершен")
-        logger.info("Запись в файл...")
-        write_to_file(f"translated_{output_file}.md", translated_text + "\n\n")
-        if delta := (21 - (end_translate - start_translate)) > 0:
-            sleep(delta)
+    with open(output_file, 'w') as output:
+        for ei, i in enumerate(res):
+            # write_to_file('hi.txt', i)
+            logger.info(f"Перевод секции {ei + 1}/{len(res)}")
+            start_translate = datetime.timestamp(datetime.now())
+            translated_text = send_request_to_api_gpt(i, 820)
+            end_translate = datetime.timestamp(datetime.now())
+            logger.info(f"Перевод завершен")
+            logger.info("Запись в файл...")
+            # write_to_file(output_file, translated_text)
+            output.write(translated_text)
+            if (21 - (end_translate - start_translate)) > 0:
+                # print((21 - (end_translate - start_translate)))
+                sleep((21 - (end_translate - start_translate)))
+    # write_to_file(output_file, result_translated, 'w')
 
 
-# if __name__ == "__main__":
-#     try:
-#         file = input("Имя файла без расширения: ")
-#         text = read_text_from_file(file)
-#         write_to_file(f"raw_{file}.txt", text, 'w')
-#         workflow(text)
-#
-#     except KeyboardInterrupt:
-#         logger.info("Bye")
+if __name__ == "__main__":
+    # try:
+    #     file = "sqlalchemy_20_md/index.md"
+    #     text = read_text_from_file(file)
+    #     # write_to_file(f"raw_{file}.txt", text, 'w')
+    #     workflow(text, "index.md")
+    #
+    # except KeyboardInterrupt:
+    #     logger.info("Bye")
+    with open('new_files.txt', 'r') as f:
+        files = f.readlines()
+        not_processed_files = files[:]
+    with open('need_human_editing.txt') as y:
+        exclude_files = y.readlines()
+    for e, file in enumerate(files):
+        if file in exclude_files:
+            continue
+        print(f'file: {str(file)} {e + 1}/{len(files)}', end='\r')
+        md_path = base_path / 'sqlalchemy_20_md' / file[1:-1]
+        rus_path = base_path / 'sqlalchemy_20_rus' / file[1: -1]
+        try:
+            workflow(read_text_from_file(md_path), rus_path)
+            not_processed_files.remove(file)
+            with open('new_files.txt', 'w') as f:
+                f.writelines(not_processed_files)
+        except Exception as e:
+            with open('new_files.txt', 'w') as f:
+                f.writelines(not_processed_files)
+            print("error", e)

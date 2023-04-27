@@ -39,4 +39,7 @@ class CleanHtml:
 
     def __fix_titles_ids(self):
         for heading in self.body.find_all(["h1", "h2", "h3", "h4"]):
-            heading.attrs['id'] = heading.previous_element.attrs['id']
+            try:
+                heading.attrs['id'] = heading.previous_element.attrs['id']
+            except AttributeError:
+                pass
