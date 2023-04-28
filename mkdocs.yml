@@ -1,9 +1,20 @@
 site_name: SQL Alchemy 2.0 Russian
+version: 0.0.1
+repo_url: https://github.com/el1sha-git/sqlalchemy-rusdocs
+repo_name: el1sha-git/sqlalchemy-rusdocs
+edit_uri: edit/main/docs/
 theme:
   name: material
   features:
     - navigation.indexes
     - content.code.copy
+    - content.action.edit
+#    - content.action.view
+    - header.autohide
+  icon:
+    edit: material/pencil
+    view: material/eye
+
   palette:
 #    scheme: slate
 #    primary: pink
@@ -56,6 +67,8 @@ nav:
       - tutorial/data/data_insert.md
       - tutorial/data/data_select.md
       - tutorial/data/data_update.md
+    - tutorial/orm_data_manipulation.md
+    - tutorial/orm_related_objects.md
 - ORM:
     - orm/index.md
 - SQLAlchemy Core:
