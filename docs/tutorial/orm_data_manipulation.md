@@ -55,27 +55,25 @@ User(id=None, name='squidward', fullname='Squidward Tentacles')
 >>> session.add(krabs)
 ```
 
-
-Когда у нас есть ожидающие объекты, мы можем увидеть это состояние, посмотрев на
-коллекцию на [`Session`](../orm/session_api.html#sqlalchemy.orm.Session "sqlalchemy.orm.Session"), называемую [`Session.new`](../orm/session_api.html#sqlalchemy.orm.Session.new "sqlalchemy.orm.Session.new"):
+Когда у нас есть ожидающие объекты, мы можем увидеть это состояние, посмотрев на коллекцию на [`Session`](../orm/session_api.html#sqlalchemy.orm.Session "sqlalchemy.orm.Session"), называемую [`Session.new`](../orm/session_api.html#sqlalchemy.orm.Session.new "sqlalchemy.orm.Session.new"):
 
 ```
 >>> session.new
-IdentitySet([User(id=None, name='squidward', fullname='Squidward Tentacles'), User(id=None, name='ehkrabs', fullname='Eugene H. Krabs')])
 ```
+IdentitySet([User(id=None, name='squidward', fullname='Squidward Tentacles'), User(id=None, name='ehkrabs', fullname='Eugene H. Krabs')])
 
 
 Вышеуказанный вид использует коллекцию `IdentitySet`, которая
-существенно является множеством Python, хеширующим по ид```
+существенно является множеством Python, хеширующим по ид
+```
 >>> session.flush()
+```
 BEGIN (implicit)
 INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id
 [... (insertmanyvalues) 1/2 (ordered; batch not supported)] ('squidward', 'Squidward Tentacles')
 INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id
 [insertmanyvalues 2/2 (ordered; batch not supported)] ('ehkrabs', 'Eugene H. Krabs')
 
-
-```
 
 Здесь мы видим, что [`Session`](../orm/session_api.html#sqlalchemy.orm.Session "sqlalchemy.orm.Session") был вызван для генерации SQL-запроса,
 таким образом, он создал новую транзакцию и выполнил соответствующие операторы INSERT
