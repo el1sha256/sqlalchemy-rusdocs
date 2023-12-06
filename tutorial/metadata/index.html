@@ -1,0 +1,1413 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../db_api/">
+      
+      
+        <link rel="next" href="../data/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.1.7">
+    
+    
+      
+        <title>Работа с метаданными базы данных - SQL Alchemy 2.0 Russian</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-96L8NNF9FG"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-96L8NNF9FG",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-96L8NNF9FG",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#metadata-introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SQL Alchemy 2.0 Russian" class="md-header__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Alchemy 2.0 Russian
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Работа с метаданными базы данных
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SQL Alchemy 2.0 Russian" class="md-nav__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SQL Alchemy 2.0 Russian
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        SQLAlchemy начало
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Унифицированное руководство SQLAlchemy</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Унифицированное руководство SQLAlchemy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engine/" class="md-nav__link">
+        Установка соединения - Engine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../db_api/" class="md-nav__link">
+        Работа с транзакциями и DBAPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Работа с метаданными базы данных
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Работа с метаданными базы данных
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-introduction" class="md-nav__link">
+    Работа с метаданными базы данных
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-metadata-with-table-objects" class="md-nav__link">
+    Настройка метаданных с Table объектами
+  </a>
+  
+    <nav class="md-nav" aria-label="Настройка метаданных с Table объектами">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#components-of-table" class="md-nav__link">
+    Компоненты таблицы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaring-simple-constraints" class="md-nav__link">
+    Объявление простых ограничений
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emitting-ddl-to-the-database" class="md-nav__link">
+    Отправка DDL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-orm-declarative-forms-to-define-table-metadata" class="md-nav__link">
+    Использование ORM-декларативных форм для определения метаданных таблицы
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование ORM-декларативных форм для определения метаданных таблицы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#establishing-a-declarative-base" class="md-nav__link">
+    Создание декларативной базы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaring-mapped-classes" class="md-nav__link">
+    Определение отображаемых классов
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emitting-ddl-to-the-database-from-an-orm-mapping" class="md-nav__link">
+    Генерация DDL в базу данных из ORM отображения
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-reflection" class="md-nav__link">
+    Отражение таблиц
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../data/">Работа с Данными</a>
+          
+            <label for="__nav_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Работа с Данными
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_insert/" class="md-nav__link">
+        Использование операторов INSERT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_select/" class="md-nav__link">
+        Использование операторов SELECT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_update/" class="md-nav__link">
+        Использование операторов UPDATE и DELETE
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orm_data_manipulation/" class="md-nav__link">
+        Манипуляции с данными с помощью ORM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orm_related_objects/" class="md-nav__link">
+        Работа с объектами, связанными с ORM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../orm/">ORM</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          ORM
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../core/">SQLAlchemy Core</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          SQLAlchemy Core
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../dialects/">Диалекты</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Диалекты
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../glossary/">Глоссарий</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Глоссарий
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#metadata-introduction" class="md-nav__link">
+    Работа с метаданными базы данных
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-metadata-with-table-objects" class="md-nav__link">
+    Настройка метаданных с Table объектами
+  </a>
+  
+    <nav class="md-nav" aria-label="Настройка метаданных с Table объектами">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#components-of-table" class="md-nav__link">
+    Компоненты таблицы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaring-simple-constraints" class="md-nav__link">
+    Объявление простых ограничений
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emitting-ddl-to-the-database" class="md-nav__link">
+    Отправка DDL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-orm-declarative-forms-to-define-table-metadata" class="md-nav__link">
+    Использование ORM-декларативных форм для определения метаданных таблицы
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование ORM-декларативных форм для определения метаданных таблицы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#establishing-a-declarative-base" class="md-nav__link">
+    Создание декларативной базы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaring-mapped-classes" class="md-nav__link">
+    Определение отображаемых классов
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emitting-ddl-to-the-database-from-an-orm-mapping" class="md-nav__link">
+    Генерация DDL в базу данных из ORM отображения
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table-reflection" class="md-nav__link">
+    Отражение таблиц
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs/edit/main/docs/tutorial/metadata.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>Работа с метаданными базы данных</h1>
+
+<h2 id="metadata-introduction">Работа с метаданными базы данных</h2>
+<p>После изучения работы с движками и выполнения SQL-запросов мы готовы начать работу с Alchemy. Центральным элементом как
+для SQLAlchemy Core, так и для ORM является язык выражений SQL, который позволяет свободно и компонуемо строить
+SQL-запросы. Основу этих запросов составляют объекты Python, которые представляют концепции базы данных, такие как
+таблицы и столбцы. Эти объекты известны совместным названием - метаданные базы данных.</p>
+<p>Самые распространенные объекты для метаданных базы данных в SQLAlchemy - это MetaData, Table и Column. Ниже мы
+проиллюстрируем, как эти объекты используются как в стиле Core, так и в стиле ORM.</p>
+<div class="admonition tip">
+<p class="admonition-title">ORM пользователи, оставайтесь с нами!</p>
+<p>Как и в других разделах, пользователи Core могут пропустить разделы ORM, но ORM пользователи лучше ознакомиться с этими
+объектами с обеих сторон. Объект Table, обсуждаемый здесь, объявляется более косвенным (и также полностью
+типизированным) способом при использовании ORM, однако в конфигурации ORM по-прежнему есть объект Table.</p>
+</div>
+<h2 id="setting-up-metadata-with-table-objects">Настройка метаданных с Table объектами</h2>
+<p>При работе с реляционной базой данных основной структурой, которую мы запрашиваем, является таблица. В SQLAlchemy база
+данных "таблица" в конечном итоге представляется объектом на Python, также названым Table.</p>
+<p>Для начала использования SQLAlchemy Expression Language мы захотим, чтобы были созданы объекты Table, представляющие все
+таблицы базы данных, с которыми мы хотим работать. Table создается программно, либо непосредственно с помощью
+конструктора Table, либо косвенно с помощью ORM Mapped классов (описанных позже в разделе Использование
+ORM-декларативных форм для определения метаданных таблицы). Также есть возможность загрузить некоторую или всю
+информацию о таблице из существующей базы данных, называемой отражением.</p>
+<p>Каким бы способом мы ни подошли к делу, мы всегда начинаем с коллекции, куда поместим наши таблицы, называемой объектом
+MetaData. Этот объект, по сути, является фасадом вокруг словаря Python, который хранит серию объектов Table, ключевыми
+для которых являются их строковые имена. В то время как ORM предоставляет некоторые варианты, где можно получить эту
+коллекцию, мы всегда можем просто создать ее напрямую, что выглядит следующим образом:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">MetaData</span>
+
+<span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+</code></pre></div>
+<p>После создания объекта MetaData, мы можем объявить несколько объектов Table. В этом руководстве мы начнем с классической
+модели SQLAlchemy, которая имеет таблицу с названием user_account, которая хранит, например, пользователей веб-сайта, и
+связанную с ней таблицу address, которая хранит адреса электронной почты, связанные с записями в таблице user_account.
+Если мы не используем ORM Declarative модели вовсе, мы создаем каждый объект Table напрямую, обычно присваивая каждому
+переменную, которая будет ссылкой на таблицу в приложении:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+
+<span class="n">user_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+    <span class="s2">&quot;user_account&quot;</span><span class="p">,</span>
+    <span class="n">metadata_obj</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">)),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;fullname&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>С приведенным выше примером, когда мы хотим написать код, который относится к таблице user_account в базе данных, мы
+будем использовать переменную Python user_table для обращения к ней.</p>
+<div class="admonition tip">
+<p class="admonition-title">Когда следует создавать объект MetaData в программе?</p>
+<p>Создание единого объекта MetaData для всего приложения является наиболее распространенным случаем и представляется в
+виде переменной уровня модуля в одном месте в приложении, часто в пакете типа "models" или "dbschema". Также очень
+распространено использование реестра, ориентированного на ORM, или базового класса Declarative Base, чтобы этот же
+объект MetaData был доступен для Table объектов, объявленных как ORM, так и Core.</p>
+<p>Также возможно использование нескольких коллекций MetaData; Table объекты могут ссылаться на объекты Table из других
+коллекций без ограничений. Однако для группы связанных между собой Table объектов практически гораздо проще их
+устанавливать в рамках одной коллекции MetaData, как с точки зрения их объявления, так и с точки зрения генерации
+SQL-запросов DDL (например, CREATE и DROP) в правильном порядке.</p>
+</div>
+<h3 id="components-of-table">Компоненты таблицы</h3>
+<p>Мы можем заметить, что конструкция Table в написанном на Python коде напоминает оператор SQL CREATE TABLE; сначала
+задается имя таблицы, затем перечисляются столбцы, каждый из которых имеет имя и тип данных. Объекты, которые мы
+используем выше, включают:</p>
+<ul>
+<li>Table - представляет таблицу в базе данных и присваивает себе коллекцию MetaData.</li>
+<li>
+<p>Column - представляет столбец в базе данных и присваивает себе объект Table. Колонка обычно включает строковое имя и
+  объект типа. Коллекция объектов Column относительно родительской таблицы обычно доступна через ассоциативный массив,
+  расположенный в Table.c:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span>
+<span class="n">Column</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span> <span class="n">table</span><span class="o">=</span> <span class="o">&lt;</span> <span class="n">user_account</span> <span class="o">&gt;</span><span class="p">)</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;fullname&#39;</span><span class="p">]</span>
+</code></pre></div>
+</li>
+<li>
+<p>Integer, String - эти классы представляют SQL типы данных и могут быть переданы в Column с или без необходимости
+  создания экземпляра. Выше мы хотим задать длину «30» для столбца «name», поэтому мы создали экземпляр String(30). Но
+  для «id» и «fullname» мы не указали это, поэтому мы можем отправить сам класс.</p>
+</li>
+</ul>
+<details class="info" open="open">
+<summary>См. также</summary>
+<p>Справочная и API-документация по MetaData, Table и Column находится в разделе Описание баз данных с MetaData. Справочная
+документация по типам данных находится в разделе Объекты SQL Datatype.</p>
+</details>
+<p>В следующем разделе мы продемонстрируем одну из основных функций Table, которая состоит в генерации DDL на определенном
+подключении к базе данных. Но сначала мы объявим вторую таблицу.</p>
+<h3 id="declaring-simple-constraints">Объявление простых ограничений</h3>
+<p>Первый столбец в примере <code>user_table</code> включает параметр <code>Column.primary_key</code>, который является сокращенной техникой
+указания, что этот столбец должен быть частью первичного ключа для этой таблицы. Сам первичный ключ обычно объявляется
+неявно и представляется конструкцией <code>PrimaryKeyConstraint</code>, которую мы можем увидеть в атрибуте <code>Table.primary_key</code>
+объекта <code>Table</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">user_table</span><span class="o">.</span><span class="n">primary_key</span>
+<span class="n">PrimaryKeyConstraint</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">(),</span> <span class="n">table</span><span class="o">=&lt;</span><span class="n">user_account</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</code></pre></div>
+<p>Ограничение, которое обычно объявляется явно, - это объект <code>ForeignKeyConstraint</code>, который соответствует ограничению
+внешнего ключа базы данных. Когда мы объявляем таблицы, которые связаны между собой, SQLAlchemy использует наличие этих
+объявлений ограничений внешнего ключа не только для того, чтобы они были выведены в операторы <code>CREATE</code> базы данных, но
+также для помощи в создании SQL-выражений.</p>
+<p><code>ForeignKeyConstraint</code>, которое включает только один столбец на целевой таблице, обычно объявляется с использованием
+сокращенной записи на уровне столбца через объект <code>ForeignKey</code>. Ниже мы объявляем вторую таблицу <code>address</code>, которая
+будет иметь ограничение внешнего ключа, ссылочное на таблицу <code>user</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">address_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+<span class="o">...</span>     <span class="s2">&quot;address&quot;</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">metadata_obj</span><span class="p">,</span>
+<span class="o">...</span>     <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+<span class="o">...</span>     <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user_account.id&quot;</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="o">...</span>     <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;email_address&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="o">...</span> <span class="p">)</span>
+</code></pre></div>
+<p>В таблице выше также присутствует третий вид ограничения, который в SQL представляет собой ограничение «NOT NULL»,
+указанное выше с помощью параметра <code>Column.nullable</code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Совет</p>
+<p>При использовании объекта <code>ForeignKey</code> в определении столбца мы можем опустить тип данных для этого столбца; он
+автоматически выводится из связанного столбца, в приведенном выше примере это целочисленный тип данных
+столбца <code>user_account.id</code>.</p>
+</div>
+<p>В следующем разделе мы выведем завершенный DDL для таблиц <code>user</code> и <code>address</code>, чтобы увидеть окончательный результат.</p>
+<h3 id="emitting-ddl-to-the-database">Отправка DDL</h3>
+<p>Мы создали объектную структуру, которая представляет две таблицы базы данных в базе данных, начиная с корневого объекта
+MetaData, затем двух объектов Table, каждый из которых удерживает коллекцию объектов Column и Constraint. Эта объектная
+структура будет в центре большинства операций, которые мы будем выполнять как с Core, так и с ORM.</p>
+<p>Первое полезное, что мы можем сделать с этой структурой, это извлечь операторы CREATE TABLE, или DDL, в нашу базу данных
+SQLite, чтобы мы могли вставлять и извлекать данные из них. У нас уже есть все инструменты, необходимые для этого,
+вызывая метод MetaData.create_all() нашего объекта MetaData и передавая ему Engine, который ссылается на целевую базу
+данных:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># python</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">metadata_obj</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># SQL</span>
+<span class="n">BEGIN</span> <span class="p">(</span><span class="n">implicit</span><span class="p">)</span>
+<span class="n">PRAGMA</span> <span class="n">main</span><span class="o">.</span><span class="n">table_</span><span class="o">...</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;user_account&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">PRAGMA</span> <span class="n">main</span><span class="o">.</span><span class="n">table_</span><span class="o">...</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">user_account</span> <span class="p">(</span>
+    <span class="nb">id</span> <span class="n">INTEGER</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+    <span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+    <span class="n">fullname</span> <span class="n">VARCHAR</span><span class="p">,</span>
+    <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="o">...</span>
+<span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">address</span> <span class="p">(</span>
+    <span class="nb">id</span> <span class="n">INTEGER</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+    <span class="n">user_id</span> <span class="n">INTEGER</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+    <span class="n">email_address</span> <span class="n">VARCHAR</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+    <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="nb">id</span><span class="p">),</span>
+    <span class="n">FOREIGN</span> <span class="n">KEY</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="n">REFERENCES</span> <span class="n">user_account</span> <span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="o">...</span>
+<span class="n">COMMIT</span>
+</code></pre></div>
+<p>Процесс создания DDL выше включает некоторые SQLite-специфические операторы PRAGMA, которые проверяют наличие каждой
+таблицы перед созданием. Полный набор шагов также включен в пару BEGIN/COMMIT для обеспечения транзакционной DDL.</p>
+<p>Процесс создания также заботится о том, чтобы эмитировать операторы CREATE в правильном порядке. Например, FOREIGN
+KEY-ограничение зависит от существования таблицы user, поэтому таблица адреса создается второй. В более сложных случаях
+зависимости FOREIGN KEY-ограничений также могут быть применены к таблицам после того, как они были созданы с помощью
+ALTER.</p>
+<p>Объект MetaData также имеет метод MetaData.drop_all(), который будет создавать операторы DROP в обратном порядке, чем
+CREATE, чтобы удалить элементы схемы.</p>
+<div class="admonition tip">
+<p class="admonition-title">Инструменты миграции обычно подходят</p>
+<p>В целом, функция CREATE / DROP в MetaData полезна для наборов тестов, небольших и / или новых приложений и приложений,
+которые используют базы данных с коротким сроком жизни. Однако для управления схемой базы данных приложения в течение
+длительного времени инструмент управления схемой, такой как Alembic, который основан на SQLAlchemy, вероятно, является
+лучшим выбором, поскольку он может управлять и оркестрировать процесс инкрементного изменения фиксированной схемы базы
+данных со временем, когда проектирование приложения меняется.</p>
+</div>
+<h2 id="using-orm-declarative-forms-to-define-table-metadata">Использование ORM-декларативных форм для определения метаданных таблицы</h2>
+<div class="admonition info">
+<p class="admonition-title">Еще один способ создания объектов таблиц?</p>
+<p>В предыдущих примерах мы рассмотрели прямое использование объекта Table, который лежит в основе того, как SQLAlchemy
+обращается к таблицам базы данных при создании SQL-выражений. Как упоминалось ранее, SQLAlchemy ORM предоставляет фасад
+вокруг процесса объявления таблиц, который называется "декларативная таблица". Декларативная таблица достигает той же
+цели, которую мы имели в предыдущем разделе, а именно создания объектов Table, но также включает в этот процесс еще
+что-то, называемое ORM-отображаемым классом или просто "отображаемым классом". Отображаемый класс является наиболее
+распространенной основной единицей SQL при использовании ORM, и в современном SQLAlchemy также может быть использован
+вместе с Core-центрическим подходом.</p>
+<p>Некоторые преимущества использования декларативной таблицы:</p>
+<ul>
+<li>
+<p>Более краткий и 'питонический' стиль определения столбцов, где для представления типов SQL, используемых в базе
+  данных, могут использоваться типы Python.</p>
+</li>
+<li>
+<p>Результирующий отображаемый класс может использоваться для формирования SQL-выражений, которые во многих случаях
+    поддерживают информацию о типизации PEP 484, которую можно использовать в инструментах статического анализа, таких как
+    Mypy и проверщики типов IDE.</p>
+</li>
+<li>
+<p>Позволяет объявить метаданные таблицы и отображаемый класс ORM, используемый в операциях сохранения/загрузки объектов,
+    все сразу.</p>
+</li>
+</ul>
+<p>В этом разделе мы продемонстрируем, как метаданные таблицы, созданные в предыдущих разделах, могут быть сконструированы
+с использованием декларативной таблицы.</p>
+</div>
+<p>При использовании ORM процесс объявления метаданных таблиц обычно сочетается с процессом объявления отображаемых
+классов (mapped classes). Отображаемый класс - это любой класс Python, который мы хотим создать, и который затем будет
+иметь атрибуты, связанные с колонками в таблице базы данных. Хотя существует несколько способов достижения этой цели,
+наиболее распространенным стилем является декларативный, который позволяет нам объявлять наши классы, определять
+метаданные таблицы и отображаемый класс, используемый в операциях сохранения / загрузки объектов, одновременно.</p>
+<h3 id="establishing-a-declarative-base">Создание декларативной базы</h3>
+<p>При использовании ORM MetaData остается на месте, однако она связана с конструктом, используемым только для ORM, который
+обычно называется декларативной базой. Самым быстрым способом получить новую декларативную базу является создание нового
+класса, который является подклассом класса DeclarativeBase из SQLAlchemy:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
+<p>В приведенном выше примере класс Base - это декларативная база. Когда мы создаем новые классы, которые являются
+подклассами Base и содержат соответствующие директивы на уровне класса, каждый из них обычно (но не исключительно)
+ссылается на определенный объект таблицы.</p>
+<p>Декларативная база ссылается на коллекцию MetaData, которая автоматически создается для нас, если мы не предоставили ее
+извне. Эта коллекция MetaData доступна через атрибут класса DeclarativeBase.metadata. При создании новых отображаемых
+классов каждый из них будет ссылаться на таблицу в этой коллекции MetaData:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span>
+<span class="n">MetaData</span><span class="p">()</span>
+</code></pre></div>
+<p>Декларативная база также ссылается на коллекцию под названием registry, которая является центральным блоком "
+конфигурации маппера" в ORM SQLAlchemy. Хотя это объект редко используется напрямую, он является центральным для
+процесса конфигурации маппера, поскольку набор отображаемых классов будет координироваться друг с другом через этот
+registry. Как и в случае с MetaData, наша декларативная база также создала registry для нас (опять же, с возможностью
+передачи своего собственного registry), к которому мы можем получить доступ через переменную класса
+DeclarativeBase.registry:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">Base</span><span class="o">.</span><span class="n">registry</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="o">.</span><span class="n">orm</span><span class="o">.</span><span class="n">decl_api</span><span class="o">.</span><span class="n">registry</span> <span class="nb">object</span> <span class="n">at</span> <span class="mi">0</span><span class="n">x</span><span class="o">...&gt;</span>
+</code></pre></div>
+<div class="admonition note">
+<p>Существуют и другие способы отображения с помощью registry, включая декораторно-ориентированные и императивные способы
+отображения классов. Также существует полная поддержка создания Python-классов данных при отображении. В документации по
+ссылке ORM Mapped Class Configuration можно найти подробную информацию обо всех подходах.</p>
+</div>
+<h3 id="declaring-mapped-classes">Определение отображаемых классов</h3>
+<p>С установленным классом Base мы теперь можем определить ORM отображаемые классы для таблиц <code>user_account</code> и <code>address</code> в
+виде
+новых классов <code>User</code> и <code>Address</code>. Ниже мы приводим наиболее современную форму <code>Declarative</code>, которая основана на
+аннотациях
+типов <em>PEP 484</em> с использованием специального типа <code>Mapped</code>, который указывает на атрибуты, которые должны быть
+отображены
+как определенные типы:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user_account&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+    <span class="n">fullname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+    <span class="n">addresses</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Address&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;User(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, fullname=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fullname</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">email_address</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user_account.id&quot;</span><span class="p">))</span>
+    <span class="n">user</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">User</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Address(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">!r}</span><span class="s2">, email_address=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">email_address</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+</code></pre></div>
+<p>Оба класса, <code>User</code> и <code>Address</code>, теперь называются <code>ORM Mapped Classes</code> и доступны для использования в ORM операциях
+сохранения
+и запроса, которые будут описаны позже. Некоторые детали этих классов:</p>
+<ul>
+<li>Каждый класс ссылается на объект Table, который был сгенерирован в процессе декларативного отображения и назван с
+  помощью строки, присвоенной атрибуту DeclarativeBase.__tablename__. После создания класса этот сгенерированный Table
+  доступен через атрибут DeclarativeBase.__table__.</li>
+<li>Как упоминалось ранее, этот вид называется Declarative Table Configuration. Один из нескольких альтернативных способов
+  объявления был бы построить объект Table напрямую и присвоить его непосредственно DeclarativeBase.__table__. Этот
+  стиль называется Declarative with Imperative Table.</li>
+<li>Чтобы указать столбцы в таблице, мы используем конструкцию mapped_column(), в сочетании с типами аннотаций,
+  основанными на типе Mapped. Этот объект будет генерировать объекты Column, которые будут применяться при создании
+  таблицы.</li>
+<li>Для столбцов с простыми типами данных и без других параметров мы можем указать только тип Mapped, используя простые
+  типы Python, такие как int и str для означения Integer и String. Настройка того, как интерпретируются типы Python в
+  процессе декларативного отображения, является очень гибкой; см. разделы Using Annotated Declarative Table (Type
+  Annotated Forms for mapped_column()) и Customizing the Type Map для получения дополнительной информации.</li>
+<li>Столбец может быть объявлен как «nullable» или «not null» на основе наличия типа аннотации Optional[<typ>] (или его
+  эквивалентов, <typ> | None или Union[<typ>, None]). Можно также явно использовать параметр mapped_column.nullable (он
+  необязательно должен соответствовать параметру опциональности аннотации).</li>
+<li>Использование явных типовых аннотаций является полностью необязательным. Мы также можем использовать mapped_column()
+  без аннотаций. При использовании этой формы мы будем использовать более явные типы объектов, такие как Integer и
+  String, а также nullable=False, при необходимости, в каждой конструкции mapped_column().</li>
+<li>Два дополнительных атрибута, User.addresses и Address.user, определяют другой тип атрибута, называемый relationship(),
+  который имеет схожие стили конфигурации, основанные на аннотациях. Конструкция relationship() подробно рассмотрена в
+  разделе Working with ORM Related Objects.</li>
+<li>
+<p>Если мы не определяем свой собственный init() метод, то классы автоматически получают этот метод. Форма по умолчанию
+  этого метода принимает все имена атрибутов в качестве необязательных ключевых аргументов.</p>
+<div class="highlight"><pre><span></span><code><span class="n">sandy</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;sandy&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Sandy Cheeks&quot;</span><span class="p">)</span>
+</code></pre></div>
+</li>
+</ul>
+<p>Чтобы автоматически создать полнофункциональный метод <code>__init__()</code> , который предоставляет позиционные аргументы, а
+также
+аргументы со значением по умолчанию, можно использовать функционал dataclasses, введенный в Declarative Dataclass
+Mapping. Конечно, всегда можно использовать явный метод <code>__init__()</code>.</p>
+<p>Методы <code>__repr__()</code> добавлены, чтобы мы получили читаемый строковый вывод; нет необходимости, чтобы эти методы были
+здесь.
+Как и в случае с <code>__init__()</code>, метод <code>__repr__()</code> можно автоматически создать с помощью функционала dataclasses.</p>
+<div class="admonition info">
+<p class="admonition-title">Где же остался старый декларативный способ?</p>
+<p>Пользователи SQLAlchemy 1.4 или более ранних версий заметят, что приведенное выше отображение использует сильно
+отличающуюся форму, чем раньше; в нем используется mapped_column() вместо Column в декларативном отображении, а также
+используются аннотации типов Python для получения информации о столбцах.</p>
+<p>Чтобы обеспечить контекст для пользователей "старого" способа, декларативные отображения все еще могут быть созданы с
+использованием объектов Column (а также с использованием функции declarative_base() для создания базового класса), и эти
+формы будут продолжать поддерживаться без планов на их удаление. Причиной того, что эти два механизма заменены новыми
+конструкциями, является в первую очередь интеграция с инструментами PEP 484, включая среды разработки, такие как VSCode,
+и проверяющие типы, такие как Mypy и Pyright, без необходимости использования плагинов. Во-вторых, происхождение
+объявлений из аннотаций типов является частью интеграции SQLAlchemy с Python dataclasses, которые теперь могут быть
+созданы непосредственно из отображений.</p>
+<p>Для пользователей, которым нравится "старый" способ, но все же хотят, чтобы их среды разработки не ошибочно сообщали об
+ошибках типизации для их декларативных отображений, конструкция mapped_column() является заменой Column в декларативном
+отображении ORM (обратите внимание, что mapped_column() предназначен только для декларативных отображений ORM; он не
+может использоваться внутри конструкции Table), а аннотации типов являются необязательными. Наше отображение выше может
+быть записано без аннотаций следующим образом:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user_account&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">fullname</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ... definition continues```</span>
+</code></pre></div>
+<p>Вышеуказанный класс имеет преимущество перед классом, который использует <code>Column</code> напрямую, в том, что класс <code>User</code>, а также
+экземпляры <code>User</code> будут указывать правильную типовую информацию для инструментов типизации без использования плагинов.
+<code>mapped_column()</code> также позволяет использовать дополнительные ORM-специфические параметры для настройки поведения, таких
+как отложенная загрузка столбца, для которой ранее необходимо было использовать отдельную функцию <code>deferred()</code> с Column.</p>
+<p>Также есть пример преобразования класса Declarative старого стиля в новый стиль, который можно увидеть в разделе ORM
+Declarative Models в руководстве What’s New in SQLAlchemy 2.0?</p>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Смотрите также</p>
+<ul>
+<li>ORM Mapping Styles - полный обзор различных стилей конфигурации ORM.</li>
+<li>Declarative Mapping - обзор маппинга классов Declarative.</li>
+<li>Declarative Table with mapped_column() - подробное описание использования mapped_column() и Mapped для определения
+  столбцов в  таблице, которые будут отображены при использовании Declarative.</li>
+</ul>
+</div>
+<h3 id="emitting-ddl-to-the-database-from-an-orm-mapping">Генерация DDL в базу данных из ORM отображения</h3>
+<p>Поскольку наши отображаемые классы ORM ссылается на объекты Table, содержащиеся в коллекции MetaData, генерация DDL на
+основе Declarative Base осуществляется тем же процессом, что и описанный ранее в
+статье <a href="#emitting-ddl-to-the-database">отправка DDL в базу данных</a>. В
+нашем случае мы уже создали таблицы пользователей и адресов в нашей базе данных SQLite. Если бы мы этого еще не сделали,
+мы были бы свободны использовать связанную с нашим DeclarativeBase метаданными коллекцию, чтобы это сделать, получив
+доступ к коллекции через атрибут DeclarativeBase.metadata, а затем использовав MetaData.create_all() как и ранее. В этом
+случае выполняются операторы PRAGMA, но новые таблицы не создаются, так как они уже существуют:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="n">BEGIN</span> <span class="p">(</span><span class="n">implicit</span><span class="p">)</span>
+<span class="n">PRAGMA</span> <span class="n">main</span><span class="o">.</span><span class="n">table_</span><span class="o">...</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;user_account&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">PRAGMA</span> <span class="n">main</span><span class="o">.</span><span class="n">table_</span><span class="o">...</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;address&quot;</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">COMMIT</span>
+</code></pre></div>
+<h3 id="table-reflection">Отражение таблиц</h3>
+<div class="admonition quote">
+<p class="admonition-title">Дополнительный раздел</p>
+<p>Этот раздел является кратким введением в связанную тему отражения таблиц или того, как автоматически генерировать
+объекты Table из существующей базы данных. Читатели учебника, которые хотят перейти к написанию запросов, могут
+пропустить этот раздел.</p>
+</div>
+<p>Чтобы закончить раздел по работе с метаданными таблиц, мы продемонстрируем другую операцию, которая была упомянута в
+начале раздела, а именно отражение таблиц. Отражение таблиц относится к процессу генерации объектов Table и связанных
+объектов, считывая текущее состояние базы данных. В то время как в предыдущих разделах мы объявляли объекты Table на
+Python, где у нас была возможность генерировать DDL для базы данных для создания такой схемы, процесс отражения
+выполняет эти два шага в обратном порядке, начиная с существующей базы данных и генерируя в структуры данных на Python,
+представляющие схемы внутри этой базы данных.</p>
+<div class="admonition tip">
+<p class="admonition-title">Совет</p>
+<p>Отражение не является обязательным для использования SQLAlchemy с существующей базой данных. Совершенно типично, что
+приложение SQLAlchemy объявляет все метаданные явно на Python, так что его структура соответствует существующей базе
+данных. Структура метаданных также может не включать таблицы, столбцы или другие ограничения и конструкции в
+существующей базе данных, которые не нужны для локального функционирования приложения.</p>
+</div>
+<p>В качестве примера отражения мы создадим новый объект Table, который представляет <code>some_table</code>, который мы создали
+вручную
+в более ранних разделах этого документа. Существуют разные варианты того, как это можно сделать, но наиболее простой -
+создать объект Table, указав имя таблицы и коллекцию MetaData, к которой он будет принадлежать, а затем вместо указания
+отдельных объектов Column и Constraint передать ему целевой Engine, используя параметр Table.autoload_with:</p>
+<div class="highlight"><pre><span></span><code># python shell
+&gt;&gt;&gt; some_table = Table(&quot;some_table&quot;, metadata_obj, autoload_with=engine)
+
+# SQL
+BEGIN (implicit)
+PRAGMA main.table_...info(&quot;some_table&quot;)
+[raw sql] ()
+SELECT sql FROM  (SELECT * FROM sqlite_master UNION ALL   SELECT * FROM sqlite_temp_master) WHERE name = ? AND type in (&#39;table&#39;, &#39;view&#39;)
+[raw sql] (&#39;some_table&#39;,)
+PRAGMA main.foreign_key_list(&quot;some_table&quot;)
+...
+PRAGMA main.index_list(&quot;some_table&quot;)
+...
+ROLLBACK
+</code></pre></div>
+<p>По окончании процесса <code>some_table</code> объект теперь содержит информацию о <code>Column</code> объектах, присутствующих в таблице, и
+объект
+можно использовать точно так же, как и <code>Table</code>, который мы объявили явно:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">some_table</span>
+<span class="n">Table</span><span class="p">(</span><span class="s1">&#39;some_table&#39;</span><span class="p">,</span> <span class="n">MetaData</span><span class="p">(),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">INTEGER</span><span class="p">(),</span> <span class="n">table</span><span class="o">=&lt;</span><span class="n">some_table</span><span class="o">&gt;</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">INTEGER</span><span class="p">(),</span> <span class="n">table</span><span class="o">=&lt;</span><span class="n">some_table</span><span class="o">&gt;</span><span class="p">),</span>
+    <span class="n">schema</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition quote">
+<p class="admonition-title">См. также</p>
+<p>Более подробную информацию о рефлексии таблиц и схем можно найти в разделе Reflecting Database Objects.</p>
+<p>Для ORM-связанных вариантов рефлексии таблиц раздел Mapping Declaratively with Reflected Tables содержит обзор доступных вариантов.</p>
+</div>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Elisha Kravchuk
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.code.copy", "content.action.edit", "header.autohide"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

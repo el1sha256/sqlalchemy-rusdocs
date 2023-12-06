@@ -1,0 +1,1470 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../dialects/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.1.7">
+    
+    
+      
+        <title>Глоссарий - SQL Alchemy 2.0 Russian</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-96L8NNF9FG"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-96L8NNF9FG",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-96L8NNF9FG",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="SQL Alchemy 2.0 Russian" class="md-header__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Alchemy 2.0 Russian
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Глоссарий
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="SQL Alchemy 2.0 Russian" class="md-nav__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SQL Alchemy 2.0 Russian
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        SQLAlchemy начало
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../tutorial/">Унифицированное руководство SQLAlchemy</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Унифицированное руководство SQLAlchemy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/engine/" class="md-nav__link">
+        Установка соединения - Engine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/db_api/" class="md-nav__link">
+        Работа с транзакциями и DBAPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/metadata/" class="md-nav__link">
+        Работа с метаданными базы данных
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../tutorial/data/">Работа с Данными</a>
+          
+            <label for="__nav_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Работа с Данными
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/data/data_insert/" class="md-nav__link">
+        Использование операторов INSERT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/data/data_select/" class="md-nav__link">
+        Использование операторов SELECT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/data/data_update/" class="md-nav__link">
+        Использование операторов UPDATE и DELETE
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/orm_data_manipulation/" class="md-nav__link">
+        Манипуляции с данными с помощью ORM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/orm_related_objects/" class="md-nav__link">
+        Работа с объектами, связанными с ORM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../orm/">ORM</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          ORM
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../core/">SQLAlchemy Core</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          SQLAlchemy Core
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../dialects/">Диалекты</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Диалекты
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href="./">Глоссарий</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Глоссарий
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs/edit/main/docs/glossary/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>Глоссарий</h1>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Этот раздел не редактировался людьми, возможны ошибки и неточности в форматировании, вы можете помочь исправив и сделав pull request</p>
+</div>
+<p>1.x стиль2.0 стильЭти термины новы в SQLAlchemy 1.4 и относятся к плану перехода SQLAlchemy 1.4-&gt;2.0, описанному
+в <a href="changelog/migration_20.html">SQLAlchemy 2.0 - Major Migration Guide</a>. Термин "1.x стиль" относится к API,
+использованному так, как это было задокументировано на протяжении серии 1.x и ранее (например, 1.3, 1.2 и т.д.), а
+термин "2.0 стиль" относится к тому, как будет выглядеть API в версии 2.0. Версия 1.4 реализует почти все API 2.0 в так
+называемом "режиме перехода", в то время как версия 2.0 все еще поддерживает устаревший
+объект <a href="orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code>Query</code></a>, чтобы устаревший код оставался
+в значительной степени совместимым с 2.0.</p>
+<p>См. также</p>
+<p><a href="changelog/migration_20.html">SQLAlchemy 2.0 - Major Migration Guide</a></p>
+<p>ACIDМодель ACIDАкроним для "Atomicity, Consistency, Isolation, Durability"; набор свойств, гарантирующих надежную
+обработку транзакций базы данных.
+(через Википедию)</p>
+<p>См. также</p>
+<p><a href="#term-atomicity">атомарность</a></p>
+<p><a href="#term-consistency">согласованность</a></p>
+<p><a href="#term-isolation">изоляция</a></p>
+<p><a href="#term-durability">надежность</a></p>
+<p><a href="https://en.wikipedia.org/wiki/ACID_Model">Модель ACID (через Википедию)</a></p>
+<p>Двухуровневая ассоциативная<a href="#term-relationship">связь</a>, которая связывает две таблицы
+вместе, используя таблицу ассоциации посередине.
+Ассоциативная связь отличается от <a href="#term-many-to-many">многие ко многим</a>
+отношение в том, что таблица многие-ко-многим отображается
+полным классом, а не обрабатывается невидимо
+конструкцией <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>sqlalchemy.orm.relationship()</code></a>,
+как в случае
+с многие-ко-многим, так что дополнительные атрибуты
+явно доступны.</p>
+<p>Например, если мы хотим связать сотрудников с
+проектами, также храня конкретную роль для этого сотрудника
+с проектом, реляционная схема может выглядеть так:</p>
+<div class="highlight"><pre><span></span><code>CREATE TABLE employee (
+ id INTEGER PRIMARY KEY,
+ name VARCHAR(30)
+)
+
+CREATE TABLE project (
+ id INTEGER PRIMARY KEY,
+ name VARCHAR(30)
+)
+
+CREATE TABLE employee\_project (
+ employee\_id INTEGER PRIMARY KEY,
+ project\_id INTEGER PRIMARY KEY,
+ role\_name VARCHAR(30),
+ FOREIGN KEY employee\_id REFERENCES employee```
+proj.project_employees.extend(
+    [
+        EmployeeProject(employee=emp1, role_name=&quot;технический лидер&quot;),
+        EmployeeProject(employee=emp2, role_name=&quot;клиентский менеджер&quot;),
+    ]
+)
+</code></pre></div>
+<p>См. также</p>
+<p><a href="#term-many-to-many">многие ко многим</a></p>
+<p>атомарностьАтомарность является одним из компонентов модели <a href="#term-ACID">ACID</a> и требует, чтобы каждая транзакция была "
+все или ничего": если одна часть транзакции не удалась, вся транзакция не удалась, и состояние базы данных остается
+неизменным. Атомарная система должна гарантировать атомарность в любой ситуации, включая отключения питания, ошибки и
+сбои.
+(из Википедии)</p>
+<p>См. также</p>
+<p><a href="#term-ACID">ACID</a></p>
+<p><a href="https://ru.wikipedia.org/wiki/%D0%90%D1%82%D0%BE%D0%BC%D0%B0%D1%80%D0%BD%D0%BE%D1%81%D1%82%D1%8C_(%D0%B1%D0%B0%D0%B7%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)">Атомарность (через Википедию)</a></p>
+<p>прикрепленныйОбозначает ORM-объект, который в настоящее время связан с определенной <a href="#term-Session">Session</a>.</p>
+<p>См. также</p>
+<p><a href="orm/session_state_management.html#session-object-states">Краткое введение в состояния объектов</a></p>
+<p>обратная ссылкабидирекциональная связьРасширение системы <a href="#term-relationship">relationship</a>, при котором два отдельных
+объекта <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> могут
+быть взаимосвязаны друг с другом, так что они координируются в памяти при изменениях с любой стороны. Самый
+распространенный способ создания этих двух отношений - использование
+функции <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> явно для
+одной стороны и указание ключевого слова <code>backref</code>, чтобы
+другая <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>
+создавалась автоматически. Мы можем проиллюстрировать это на примере, который мы использовали
+в <a href="#term-one-to-many">один ко многим</a>, следующим образом:</p>
+<div class="highlight"><pre><span></span><code>class Department(Base):
+    __tablename__ = &quot;department&quot;
+    id = Column(Integer, primary_key=True)
+    name = Column(String(30))
+    employees = relationship(&quot;Employee&quot;, backref=&quot;department&quot;)
+
+
+class Employee(Base):
+    __tablename__ = &quot;employee&quot;
+    id = Column(Integer, primary_key=True)
+    name = Column(String(30))
+    dep_id = Column(Integer, ForeignKey(&quot;department.id&quot;))
+</code></pre></div>
+<p>Обратная ссылка может быть применена к любому отношению, включая один ко многим, мнОтправка параметров -
+в <a href="tutorial/index.html#unified-tutorial">SQLAlchemy Unified Tutorial</a></p>
+<p>Кандидатский ключ - термин реляционной алгебры, относящийся к атрибуту или набору атрибутов, которые образуют уникальный
+идентифицирующий ключ для строки. У строки может быть более одного кандидатского ключа, каждый из которых подходит для
+использования в качестве первичного ключа этой строки. Первичный ключ таблицы всегда является кандидатским ключом.</p>
+<p>См. также</p>
+<p><a href="#term-primary-key">primary key</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Candidate_key">Кандидатский ключ (через Википедию)</a></p>
+<p><a href="https://www.databasestar.com/database-keys/">https://www.databasestar.com/database-keys/</a></p>
+<p>Декартово произведение - для двух множеств A и B декартово произведение является множеством всех упорядоченных пар (a,
+b), где a находится в A, а b находится в B.</p>
+<p>В терминах SQL-баз данных декартово произведение происходит, когда мы выбираем из двух или более таблиц (или других
+подзапросов) без установления каких-либо критериев между строками одной таблицы и другой (непосредственно или косвенно).
+Если мы выбираем из таблицы A и таблицы B одновременно, мы получаем каждую строку A, сопоставленную с первой строкой B,
+затем каждую строку A, сопоставленную со второй строкой B, и так далее, пока каждая строка из A не будет сопоставлена со
+всеми строками из B.</p>
+<p>Декартово произведение приводит к генерации огромных наборов результатов и может легко вызвать сбой клиентского
+приложения, если не предотвратить его.</p>
+<p>См. также</p>
+<p><a href="https://en.wikipedia.org/wiki/Cartesian_product">Декартово произведение (через Википедию)</a></p>
+<p>Каскад - термин, используемый в SQLAlchemy для описания того, как действие сохранения ORM, которое происходит с
+определенным объектом, распространяется на другие объекты, которые непосредственно связаны с этим объектом. В SQLAlchemy
+эти связи объектов настраиваются с помощью
+конструкции <a href="orm/relationship_api.html#sqlalchemy.orm.relationship"><code>relationship()</code></a>. <a href="orm/relationship_api.html#sqlalchemy.orm.relationship"><code>relationship()</code></a>
+содержит параметр,
+называемый <a href="orm/relationship_api.html#sqlalchemy.orm.relationship.params.cascade"><code>relationship.cascade</code></a>, который
+предоставляет опции, какие операции сохранения могут распространяться.</p>
+<p>Термин "каскады", а также общая архитектура этой системы в SQLAlchemy были заимствованы, лучше или хуже, из ORM
+Hibernate.</p>
+<p>См. также</p>
+<p>[КСогласованность</p>
+<p>Согласованность является одним из компонентов модели <a href="#term-ACID">ACID</a> и гарантирует, что любая транзакция приведет
+базу данных из одного допустимого состояния в другое. Любые данные, записанные в базу данных, должны быть допустимы в
+соответствии со всеми определенными правилами, включая, но не ограничиваясь, <a href="#term-constraints">ограничениями</a>,
+каскадами, триггерами и любой их комбинацией. (источник: Wikipedia)</p>
+<p>См. также</p>
+<p><a href="#term-ACID">ACID</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Consistency_(database_systems)">Согласованность (через Wikipedia)</a></p>
+<p>Ограничение</p>
+<p>Ограничения - это правила, установленные в пределах реляционной базы данных, которые обеспечивают допустимость и
+согласованность данных. Общие формы ограничений
+включают <a href="#term-primary-key-constraint">ограничение первичного ключа</a>, <a href="#term-foreign-key-constraint">ограничение внешнего ключа</a>
+и <a href="#term-check-constraint">ограничение проверки</a>.</p>
+<p>Коррелированный подзапрос</p>
+<p>Коррелированный подзапрос - это <a href="#term-subquery">подзапрос</a>, который зависит от данных в охватывающем <code>SELECT</code>.</p>
+<p>Ниже приведен подзапрос, который выбирает агрегированное значение <code>MIN(a.id)</code> из таблицы <code>email_address</code>, так что он
+будет вызываться для каждого значения <code>user_account.id</code>, коррелируя значение этого столбца
+с <code>email_address.user_account_id</code>:</p>
+<div class="highlight"><pre><span></span><code>SELECT user\_account.name, email\_address.email
+ FROM user\_account
+ JOIN email\_address ON user_account.id=email_address.user_account_id
+ WHERE email_address.id = (
+ SELECT MIN(a.id) FROM email_address AS a
+ WHERE a.user_account_id=user_account.id
+ )
+</code></pre></div>
+<p>Вышеуказанный подзапрос ссылается на таблицу <code>user_account</code>, которая сама не находится в <code>FROM</code>-клаузе этого вложенного
+запроса. Вместо этого таблица <code>user_account</code> получается из охватывающего запроса, где каждая выбранная строка
+из <code>user_account</code> приводит к отдельному выполнению подзапроса.</p>
+<p>Коррелированный подзапрос в большинстве случаев присутствует в <a href="#term-WHERE-clause">WHERE-клаузе</a>
+или <a href="#term-columns-clause">клаузе столбцов</a> непосредственно охватывающего оператора <code>SELECT</code>, а также в клаузе ORDER BY
+или HAVING.</p>
+<p>В менее распространенных случаях коррелированный подзапрос может присутствовать в <a href="#term-FROM-clause">FROM-клаузе</a>
+охватывающего <code>SELECT</code>; в этих случаях
+корреля<a href="https://ru.wikipedia.org/wiki/%D0%9A%D1%83%D1%80%D1%81%D0%BE%D1%80_(%D0%B1%D0%B0%D0%B7%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85)">Курсор (через Википедию)</a></p>
+<p>цикломатическая сложность - это мера сложности кода, основанная на количестве возможных путей через исходный код
+программы.</p>
+<p>См. также</p>
+<p><a href="https://ru.wikipedia.org/wiki/%D0%A6%D0%B8%D0%BA%D0%BB%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D1%81%D0%BB%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C">Цикломатическая сложность</a></p>
+<p>DBAPIpep-249DBAPI - это сокращение от фразы «Python Database API Specification». Это широко используемая спецификация в
+Python, которая определяет общие шаблоны использования для всех пакетов подключения к базе данных. DBAPI - это
+«низкоуровневый» API, который обычно является самым низким уровнем системы, используемой в приложении Python для общения
+с базой данных. Система диалектов SQLAlchemy построена вокруг работы с DBAPI, предоставляя отдельные классы диалектов,
+которые обслуживают конкретный DBAPI поверх конкретного движка базы данных; например,
+URL <code>postgresql+psycopg2://@localhost/test</code> относится к комбинации DBAPI /
+диалект <a href="dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.psycopg2" title="sqlalchemy.dialects.postgresql.psycopg2"><code>psycopg2</code></a>,
+тогда как URL <code>mysql+mysqldb://@localhost/test</code> относится к комбинации DBAPI /
+диалект <a href="dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb" title="sqlalchemy.dialects.mysql.mysqldb"><code>MySQL для Python</code></a>.</p>
+<p>См. также</p>
+<p><a href="https://www.python.org/dev/peps/pep-0249/">PEP 249 - Python Database API Specification v2.0</a></p>
+<p>DDL - это аббревиатура от <strong>Data Definition Language</strong>. DDL - это подмножество SQL, которое реляционные базы данных
+используют для настройки таблиц, ограничений и других постоянных объектов в схеме базы данных. SQLAlchemy предоставляет
+богатый API для создания и вывода выражений DDL.</p>
+<p>См. также</p>
+<p><a href="core/metadata.html">Описание баз данных с MetaData</a></p>
+<p><a href="#term-DML">DML</a></p>
+<p><a href="#term-DQL">DQL</a></p>
+<p>deleted - это описывает одно из основных состояний объекта, которое может иметь в <a href="#term-Session">Session</a>; удаленный
+объект - это объект, который ранее быКласс <code>MyClass</code> будет <a href="#term-mapped">отображен</a>, когда его определение будет
+завершено, после чего атрибуты <code>id</code> и <code>data</code>, начинающиеся как
+объекты <a href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a>, будут заменены
+системой <a href="#term-instrumentation">инструментации</a> на
+экземпляры <a href="orm/internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code>InstrumentedAttribute</code></a>,
+которые являются дескрипторами, предоставляющими вышеупомянутые методы <code>__get__()</code>, <code>__set__()</code>
+и <code>__delete__()</code>. <a href="orm/internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code>InstrumentedAttribute</code></a>
+будет генерировать выражение SQL при использовании на уровне класса:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(MyClass.data == 5)
+data = :data_1
+</code></pre></div>
+<p>а на уровне экземпляра отслеживает изменения значений и также <a href="#term-lazy-loads">лениво загружает</a> не загруженные
+атрибуты из базы данных:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; m1 = MyClass()
+&gt;&gt;&gt; m1.id = 5
+&gt;&gt;&gt; m1.data = &quot;some data&quot;
+
+&gt;&gt;&gt; from sqlalchemy import inspect
+&gt;&gt;&gt; inspect(m1).attrs.data.history.added
+&quot;some data&quot;
+</code></pre></div>
+<p>Отсоединенный. Это описывает одно из основных состояний объекта, которое может иметь в <a href="#term-Session">Session</a>;
+отсоединенный объект - это объект, который имеет идентификатор базы данных (т.е. первичный ключ), но не связан с
+какой-либо сессией. Объект, который ранее был <a href="#term-persistent">постоянным</a> и был удален из своей сессии, либо потому,
+что он был удален, либо потому, что владеющая сессия была закрыта, переходит в состояние отсоединения. Состояние
+отсоединения обычно используется, когда объекты перемещаются между сессиями или когда они перемещаются в/из внешнего
+кэша объектов.</p>
+<p>См. также</p>
+<p><a href="orm/session_state_management.html#session-object-states">Quickie Intro to Object States</a></p>
+<p>Диалект. В SQLAlchemy «диалект» - это объект Python, который представляет информацию и методы, которые позволяют
+выполнять операции с базой данных на конкретном типе базы данных и конкретном типе драйвера Python (
+или <a href="#term-DBAPI">DBAPI</a>) для этой базы данных. Диалекты SQLAlchemy являются подклассами
+класса <a href="core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code>Dialect</code></a>.</p>
+<p>См. также</p>
+<p><a href="core/engines.html">Engine Configuration</a></p>
+<p>Дискриминатор. Столбец результата, который используется во время <a href="#term-polymorphic">полиморфной</a> загрузки, чтобы
+определить, какой тип отображенного класса должDQL - это аббревиатура от "Data Query Language". DQL - это подмножество
+SQL, которое используют реляционные базы данных для чтения данных в таблицах. DQL почти исключительно относится к
+конструкции SQL SELECT в качестве основного оператора SQL.</p>
+<p>См. также</p>
+<p><a href="https://en.wikipedia.org/wiki/Data_query_language">DQL (через Wikipedia)</a></p>
+<p><a href="#term-DML">DML</a></p>
+<p><a href="#term-DDL">DDL</a></p>
+<p>durability - это свойство модели <a href="#term-ACID">ACID</a>, которое означает, что после того, как транзакция была подтверждена,
+она останется такой, даже в случае потери питания, сбоев или ошибок. В реляционной базе данных, например, после того,
+как группа SQL-операторов выполнена, результаты должны быть сохранены навсегда (даже если база данных немедленно
+аварийно завершится).</p>
+<p>(via Wikipedia)</p>
+<p>См. также</p>
+<p><a href="#term-ACID">ACID</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Durability_(database_systems)">Durability (через Wikipedia)</a></p>
+<p>eager load - в отображении объектов-отношений "eager load" относится к атрибуту, который заполняется его значением на
+стороне базы данных в то же время, когда сам объект загружается из базы данных. В SQLAlchemy термин "eager loading"
+обычно относится к связанным коллекциям и экземплярам объектов, которые связаны между отображениями с использованием
+конструкции <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>, но
+также может относиться к дополнительным атрибутам столбцов, которые загружаются, часто из других таблиц, связанных с
+определенной запрашиваемой таблицей, например, при использовании отображений наследования.</p>
+<p>Eager loading - это противоположность <a href="#term-lazy-loading">lazy loading</a>.</p>
+<p>См. также</p>
+<p><a href="orm/queryguide/relationships.html">Techniques of Relationship Loading</a></p>
+<p>executemany - этот термин относится к части спецификации <a href="https://peps.python.org/pep-0249/"><strong>PEP 249</strong></a> DBAPI,
+указывающей на один SQL-оператор, который может быть вызван против соединения с базой данных с несколькими наборами
+параметров. Конкретный метод известен как <a href="https://peps.python.org/pep-0249/#executemany">cursor.executemany()</a>, и у
+него много поведенческих отличий по сравнению с методом <a href="https://peps.python.org/pep-0249/#execute">cursor.execute()</a>,
+который используется для вызова одного оператора. Метод "executemany" выполняет данный SQL-оператор несколько раз, по
+одному разу для каждого переданного набора параметров.Для преодоления этого ограничения SQLAlchemy начиная с серии 2.0
+реализует альтернативную форму "executemany", которая
+называется <a href="core/connections.html#engine-insertmanyvalues">"Insert Many Values" Behavior for INSERT statements</a>. Эта
+функция использует <code>cursor.execute()</code> для вызова оператора INSERT, который будет выполнять несколько наборов параметров
+за один проход, таким образом, производя тот же эффект, что и использование <code>cursor.executemany()</code>, при этом поддерживая
+RETURNING.</p>
+<p>См. также</p>
+<p><a href="tutorial/dbapi_transactions.html#tutorial-multiple-parameters">Отправка нескольких параметров</a> - введение в учебник "
+executemany"</p>
+<p><a href="core/connections.html#engine-insertmanyvalues">"Insert Many Values" Behavior for INSERT statements</a> - функция
+SQLAlchemy, которая позволяет использовать RETURNING с "executemany"</p>
+<p>expireexpiredexpiresexpiringExpiring В ORM SQLAlchemy относится к тому, когда данные в <a href="#term-persistent">persistent</a>
+или иногда <a href="#term-detached">detached</a> объекте стираются, так что при следующем доступе к атрибутам объекта будет
+отправлен SQL-запрос <a href="#term-lazy-load">lazy load</a>, чтобы обновить данные для этого объекта, как они хранятся в текущей
+идущей транзакции.</p>
+<p>См. также</p>
+<p><a href="orm/session_state_management.html#session-expire">Обновление / истечение срока действия</a></p>
+<p>facadeОбъект, который служит в качестве интерфейса, маскирующего более сложный
+подлежащий или структурный код.</p>
+<p>См. также</p>
+<p><a href="https://en.wikipedia.org/wiki/Facade_pattern">Шаблон фасада (через Википедию)</a></p>
+<p>foreign key constraintОграничение ссылочной целостности между двумя таблицами. Внешний ключ - это поле или набор полей в
+реляционной таблице, которое соответствует <a href="#term-candidate-key">кандидатскому ключу</a> другой таблицы.
+Внешний ключ может использоваться для перекрестной ссылки таблиц.
+(через Википедию)</p>
+<p>Ограничение внешнего ключа может быть добавлено к таблице в стандартном
+SQL с использованием <a href="#term-DDL">DDL</a> следующим образом:</p>
+<div class="highlight"><pre><span></span><code>ALTER TABLE employee ADD CONSTRAINT dep\_id\_fk
+FOREIGN KEY (employee) REFERENCES department (dep\_id)
+</code></pre></div>
+<p>См. также</p>
+<p><a href="https://en.wikipedia.org/wiki/Foreign_key_constraint">Ограничение внешнего ключа (через Википедию)</a></p>
+<p>FROM clauseЧасть оператора <code>SELECT</code>, которая указывает начальный
+источник строк.</p>
+<p>Простой <code>SELECT</code> будет содержать одно или несколько имен таблиц в его
+FROM clause. Несколько источников разделяются запятой:</p>
+<div class="highlight"><pre><span></span><code>SELECT user.name, address.email\_address
+FROM user, address
+WHERE user.id=address.user\_id
+</code></pre></div>
+<p>FROM clause также является местом, где указываidentity map
+Карта идентичности - это отображение между объектами Python и их идентификаторами в базе данных. Карта идентичности -
+это коллекция, связанная с объектом ORM <a href="#term-Session">Session</a>, и поддерживает единственный экземпляр каждого объекта
+базы данных, ключевым является его идентификатор. Преимущество этого шаблона заключается в том, что все операции,
+которые происходят для определенного идентификатора базы данных, прозрачно координируются на один объектный экземпляр.
+При использовании карты идентичности в сочетании с <a href="#term-isolated">изолированной</a> транзакцией, имея ссылку на объект,
+который известен по определенному первичному ключу, можно считать с практической точки зрения прокси фактической строки
+базы данных.</p>
+<p>См. также</p>
+<p><a href="https://martinfowler.com/eaaCatalog/identityMap.html">Карта идентичности (через Martin Fowler)</a></p>
+<p><a href="orm/session_basics.html#session-get">Получение по первичному ключу</a> - как искать объект в карте идентичности по
+первичному ключу</p>
+<p>императивный декларативный
+В ORM SQLAlchemy эти термины относятся к двум разным стилям отображения классов Python на таблицы базы данных.</p>
+<p>См. также</p>
+<p><a href="orm/mapping_styles.html#orm-declarative-mapping">Декларативное отображение</a></p>
+<p><a href="orm/mapping_styles.html#orm-imperative-mapping">Императивное отображение</a></p>
+<p>insertmanyvalues
+Это относится к функциональности, специфичной для SQLAlchemy, которая позволяет операторам INSERT выдавать тысячи новых
+строк в рамках одного оператора, позволяя при этом возвращать значения, созданные сервером, встроенные в оператор с
+помощью RETURNING или подобных методов, для оптимизации производительности. Эта функция предназначена для
+автоматического использования на выбранных бэкэндах, но предлагает некоторые конфигурационные параметры. См.
+раздел <a href="core/connections.html#engine-insertmanyvalues">Поведение "Вставить много значений" для операторов INSERT</a> для
+полного описания этой функции.</p>
+<p>См. также</p>
+<p><a href="core/connections.html#engine-insertmanyvalues">Поведение "Вставить много значений" для операторов INSERT</a></p>
+<p>инструментирование
+Инструментирование относится к процессу расширения функциональности и набора атрибутов определенного класса. В идеале
+поведение класса должно оставаться близким к обычному классу, за исключением того, что дополнительные функции и
+возможности становятся доступными. Процесс [отЛенивая загрузка (lazy load) - это техника, используемая в
+объектно-реляционном отображении, при которой атрибут не содержит значения, полученного из базы данных в течение
+некоторого времени, обычно при первой загрузке объекта. Вместо этого атрибут получает мемоизацию, которая заставляет его
+обратиться к базе данных и загрузить свои данные при первом использовании. Используя этот шаблон, сложность и время,
+затраченное на получение объектов, иногда можно уменьшить, поскольку атрибуты для связанных таблиц не нужно обрабатывать
+немедленно.</p>
+<p>Ленивая загрузка - это противоположность <a href="#term-eager-loading">жадной загрузке</a>.</p>
+<p>В SQLAlchemy ленивая загрузка является ключевой функцией ORM и применяется к атрибутам,
+которые <a href="#term-mapped">отображены</a> на пользовательский класс. Когда обращаются к атрибутам, которые относятся к столбцам
+базы данных или связанным объектам, для которых нет загруженного значения, ORM
+использует <a href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, с которым связан текущий
+объект в состоянии <a href="#term-persistent">persistent</a>, и генерирует SELECT-запрос в текущей транзакции, начиная новую
+транзакцию, если она не была запущена. Если объект находится в состоянии <a href="#term-detached">detached</a> и не связан с
+какой-либо <a href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, это считается ошибочным
+состоянием, и генерируется <a href="errors.html#error-bhk3">информативное исключение</a>.</p>
+<p>См. также</p>
+<p><a href="https://martinfowler.com/eaaCatalog/lazyLoad.html">Ленивая загрузка (через Martin Fowler)</a></p>
+<p><a href="#term-N-plus-one-problem">Проблема N+1</a></p>
+<p><a href="orm/queryguide/columns.html#loading-columns">Опции загрузки столбцов</a> - содержит информацию о ленивой загрузке
+отображаемых столбцов ORM</p>
+<p><a href="orm/queryguide/relationships.html">Техники загрузки отношений</a> - содержит информацию о ленивой загрузке связанных
+объектов ORM</p>
+<p><a href="orm/extensions/asyncio.html#asyncio-orm-avoid-lazyloads">Предотвращение неявного ввода-вывода при использовании AsyncSession</a> -
+советы по избежанию ленивой загрузки при использовании
+расширения <a href="orm/extensions/asyncio.html">Asynchronous I/O (asyncio)</a></p>
+<p>Многие ко многим (many-to-many) - это
+стиль <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>sqlalchemy.orm.relationship()</code></a>,
+который связывает две таблицы через промежуточную таблицу посередине. Используя эту конфигурацию, любое количествоВыше
+определены коллекции <code>Employee.projects</code> и обратная связь <code>Project.employees</code>:</p>
+<div class="highlight"><pre><span></span><code>proj = Project(name=&quot;Клиент A&quot;)
+
+emp1 = Employee(name=&quot;emp1&quot;)
+emp2 = Employee(name=&quot;emp2&quot;)
+
+proj.employees.extend([emp1, emp2])
+</code></pre></div>
+<p>См. также</p>
+<p><a href="#term-association-relationship">ассоциативная связь</a></p>
+<p><a href="#term-relationship">связь</a></p>
+<p><a href="#term-one-to-many">один ко многим</a></p>
+<p><a href="#term-many-to-one">многие к одному</a></p>
+<p>многие к
+одномуСтиль <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>,
+который связывает
+внешний ключ в таблице родительского отображения с первичным
+ключом связанной таблицы. Каждый объект-родитель может
+ссылаться на ровно ноль или один связанный объект.</p>
+<p>Связанные объекты, в свою очередь, будут иметь неявную или
+явную <a href="#term-one-to-many">один ко многим</a> связь с любым количеством
+родительских объектов, которые на них ссылается.</p>
+<p>Пример схемы многие к одному (которая, заметим, идентична
+схеме <a href="#term-one-to-many">один ко многим</a>):</p>
+<div class="highlight"><pre><span></span><code>CREATE TABLE department (
+ id INTEGER PRIMARY KEY,
+ name VARCHAR(30)
+)
+
+CREATE TABLE employee (
+ id INTEGER PRIMARY KEY,
+ name VARCHAR(30),
+ dep\_id INTEGER REFERENCES department(id)
+)
+</code></pre></div>
+<p>Связь от <code>employee</code> к <code>department</code> является
+многие к одному, так как многие записи сотрудников могут быть связаны с
+одним отделом. Отображение SQLAlchemy может выглядеть так:</p>
+<div class="highlight"><pre><span></span><code>class Department(Base):
+    \_\_tablename\_\_ = &quot;department&quot;
+    id = Column(Integer, primary\_key=True)
+    name = Column(String(30))
+
+
+class Employee(Base):
+    \_\_tablename\_\_ = &quot;employee&quot;
+    id = Column(Integer, primary\_key=True)
+    name = Column(String(30))
+    dep\_id = Column(Integer, ForeignKey(&quot;department.id&quot;))
+    department = relationship(&quot;Department&quot;)
+</code></pre></div>
+<p>См. также</p>
+<p><a href="#term-relationship">связь</a></p>
+<p><a href="#term-one-to-many">один ко многим</a></p>
+<p><a href="#term-backref">обратная связь</a></p>
+<p>отображениеОтображенный класс ORMОтображенный класс ORMМы говорим, что класс «отображен», когда он был связан с
+экземпляром класса <a href="orm/mapping_api.html#sqlalchemy.orm.Mapper" title="sqlalchemy.orm.Mapper"><code>Mapper</code></a>. Этот процесс
+связывает
+класс с таблицей базы данных или другой <a href="#term-selectable">selectable</a> конструкцией,
+чтобы экземпляры могли быть сохранены и загружены с помощью
+<a href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>.</p>
+<p>См. также</p>
+<p><a href="orm/mapping_styles.html">Обзор отображенных классов ORM</a></p>
+<p>маршаллингмаршаллинг данныхПроцесс преобразования представления объекта в памяти вРасширение существующих
+типов - <a href="core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code>TypeDecorator</code></a>
+SQLAlchemy часто используется для маршалинга данных при отправке данных в базу данных для операций INSERT и UPDATE, а
+также для "размаршаливания" данных при их извлечении с помощью операций SELECT.</p>
+<p>Метаданные - термин "метаданные" обычно относится к "данным, описывающим данные"; данные, которые сами представляют
+формат и/или структуру каких-либо других данных. В SQLAlchemy термин "метаданные" обычно относится к
+конструкции <a href="core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code>MetaData</code></a>, которая является
+коллекцией информации о таблицах, столбцах, ограничениях и других объектах <a href="#term-DDL">DDL</a>, которые могут существовать
+в конкретной базе данных.</p>
+<p>См. также</p>
+<p><a href="https://www.martinfowler.com/eaaCatalog/metadataMapping.html">Metadata Mapping (через Martin Fowler)</a></p>
+<p><a href="tutorial/metadata.html#tutorial-working-with-metadata">Работа с метаданными базы данных</a> -
+в <a href="tutorial/index.html#unified-tutorial">SQLAlchemy Unified Tutorial</a></p>
+<p>Цепочка методов - "Цепочка методов", называемая в документации SQLAlchemy "генеративной", является
+объектно-ориентированной техникой, при которой состояние объекта создается путем вызова методов объекта. Объект содержит
+любое количество методов, каждый из которых возвращает новый объект (или в некоторых случаях тот же объект) с
+добавленным состоянием объекта.</p>
+<p>Два объекта SQLAlchemy, которые наиболее часто используют цепочку методов, это
+объект <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a> и
+объект <a href="orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code>Query</code></a>. Например,
+объект <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a> может быть
+назначен двум выражениям в его условии WHERE, а также выражению ORDER BY, вызвав
+методы <a href="core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code>Select.where()</code></a>
+и <a href="core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code>Select.order_by()</code></a>:</p>
+<div class="highlight"><pre><span></span><code>stmt = (
+    select(user.c.name)
+    .where(user.c.id &gt; 5)
+    .where(user.c.name.like(&quot;e%&quot;))
+    .order\_by(user.c.name)
+)
+</code></pre></div>
+<p>Каждый вызов метода выше возвращает копию исходного
+объекта <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a> с
+добавленными дополнительными квалификаторами.</p>
+<p>Миксин-класс - это распространенный объектно-ориентированный шаблон, где класс содержит методы или атрибуты для
+использования другими классами, не являяСтратегии загрузки</p>
+<p>Техники загрузки отношений</p>
+<p>one to many
+Стиль <a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>, который
+связывает первичный ключ таблицы родительского отображения с внешним ключом связанной таблицы. Каждый уникальный
+объект-родитель может ссылаться на ноль или более уникальных связанных объектов.</p>
+<p>Связанные объекты, в свою очередь, будут иметь неявное или явное <a href="#term-many-to-one">many to one</a> отношение к своему
+родительскому объекту.</p>
+<p>Пример схемы one to many (которая, заметьте, идентична схеме <a href="#term-many-to-one">many to one</a>):</p>
+<div class="highlight"><pre><span></span><code>CREATE TABLE department (
+ id INTEGER PRIMARY KEY,
+ name VARCHAR(30)
+)
+
+CREATE TABLE employee (
+ id INTEGER PRIMARY KEY,
+ name VARCHAR(30),
+ dep\_id INTEGER REFERENCES department(id)
+)
+</code></pre></div>
+<p>Отношение от <code>department</code> к <code>employee</code> является one to many, так как множество записей employee может быть связано с
+одним department. Отображение SQLAlchemy может выглядеть так:</p>
+<div class="highlight"><pre><span></span><code>class Department(Base):
+    \_\_tablename\_\_ = &quot;department&quot;
+    id = Column(Integer, primary\_key=True)
+    name = Column(String(30))
+    employees = relationship(&quot;Employee&quot;)
+
+
+class Employee(Base):
+    \_\_tablename\_\_ = &quot;employee&quot;
+    id = Column(Integer, primary\_key=True)
+    name = Column(String(30))
+    dep\_id = Column(Integer, ForeignKey(&quot;department.id&quot;))
+</code></pre></div>
+<p>Смотрите также</p>
+<p><a href="#term-relationship">relationship</a></p>
+<p><a href="#term-many-to-one">many to one</a></p>
+<p><a href="#term-backref">backref</a></p>
+<p>ORM-аннотации
+Фраза «ORM-аннотированный» относится к внутреннему аспекту SQLAlchemy, где объект Core, такой как
+объект <a href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a>, может нести дополнительную
+информацию о времени выполнения, которая помечает его как принадлежащий определенному ORM-отображению. Этот термин не
+следует путать с общей фразой «аннотация типа», которая относится к подсказкам типа исходного кода Python, используемым
+для статической типизации, как это было представлено в <a href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>.</p>
+<p>Большинство примеров кода SQLAlchemy, документированных в документации, отформатированы с небольшим примечанием
+«Annotated Example» или «Non-annotated Example». Это относится к тому, аннотирован ли пример <a href="https://peps.python.org/pep-0484/">**PEP 484
+**</a>, и не связан с понятием SQLAlchemy «ORM-аннотированный».</p>
+<p>Когда в документации появляется фраза «ORM-аннотированный», она относится к объектам выражений SQL Core, таким
+как <a href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemyВнутреннее состояние [Select](core/selectable.html#sqlalchemy.sql.expression.Select &quot;sqlalchemy.sql.expression.Select"><code>Table</code></a> относится
+к <a href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>, к которому отображается <code>User</code>. Сам
+класс <code>User</code> не непосредственно ссылается. Таким образом,
+конструкция <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>
+остается совместимой с процессами уровня Core (обратите внимание, что член <code>._raw_columns</code>
+объекта <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a> является
+закрытым и не должен быть доступен для кода конечного пользователя):</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; stmt.\_raw\_columns
+[Table(&#39;user\_account&#39;, MetaData(), Column(&#39;id&#39;, Integer(), ...)]
+</code></pre></div>
+<p>Однако, когда наш <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>
+передается в ORM <a href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, сущности ORM,
+косвенно связанные с объектом, используются для интерпретации
+этого <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a> в контексте
+ORM. Фактические «ORM-аннотации» можно увидеть в другой закрытой переменной <code>._annotations</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; stmt.\_raw\_columns[0].\_annotations
+immutabledict({
+ &#39;entity\_namespace&#39;: &lt;Mapper at 0x7f4dd8098c10; User&gt;,
+ &#39;parententity&#39;: &lt;Mapper at 0x7f4dd8098c10; User&gt;,
+ &#39;parentmapper&#39;: &lt;Mapper at 0x7f4dd8098c10; User&gt;
+})
+</code></pre></div>
+<p>Поэтому мы называем <code>stmt</code> <strong>ORM-аннотированным объектом select()</strong>. Это
+выражение <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>, которое
+содержит дополнительную информацию, которая приведет к его интерпретации в специфическом для ORM контексте при передаче
+методам, таким
+как <a href="orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code>Session.execute()</code></a>.</p>
+<p>pendingЭто описывает одно из основных состояний объекта, которое
+может иметь внутри <a href="#term-Session">Session</a>; ожидающий объект</p>
+<ul>
+<li>это новый объект, у которого нет идентификатора в базе данных,
+  но недавно связанный с сеансом. Когда
+  сеанс запускает флаш и строка вставляется, объект переходит в состояние
+  <a href="#term-persistent">постоянный</a>.</li>
+</ul>
+<p>См. также</p>
+<p><a href="orm/session_state_management.html#session-object-states">Краткое введение в состояния объектов</a></p>
+<p>persistentЭто описывает одно из основных состояний объекта, которое
+может иметь внутри <a href="#term-Session">Session</a>; постоянный объект</p>
+<ul>
+<li>это объект, у которого есть идентификатор в базе данных (т.е. первичный ключ)
+  и в настВ частности, основным «плагином» является плагин «orm», который
+  является основой системы, которую ORM SQLAlchemy использует
+  для составления и выполнения SQL-запросов, возвращающих результаты ORM.</li>
+</ul>
+<p>См. также</p>
+<p><a href="changelog/migration_20.html#migration-20-unify-select">ORM Query Unified with Core Select</a></p>
+<p>polymorphicpolymorphicallyОтносится к функции, которая обрабатывает несколько типов одновременно. В SQLAlchemy
+термин обычно применяется к концепции ORM отображаемого класса,
+при которой операция запроса будет возвращать различные подклассы
+на основе информации в наборе результатов, обычно проверяя
+значение определенного столбца в результате, известного как <a href="#term-discriminator">дискриминатор</a>.</p>
+<p>Полиморфная загрузка в SQLAlchemy подразумевает использование одной или
+комбинации трех различных схем для отображения иерархии классов:
+«joined», «single» и «concrete». Раздел
+<a href="orm/inheritance.html">Отображение иерархий классов наследования</a> полностью описывает отображение наследования.</p>
+<p>primary keyprimary key constraintОграничение, которое уникально определяет характеристики
+каждой строки в таблице. Первичный ключ должен состоять из
+характеристик, которые не могут быть дублированы другой строкой.
+Первичный ключ может состоять из одного атрибута или
+нескольких атрибутов в комбинации.
+(через Википедию)</p>
+<p>Первичный ключ таблицы обычно, хотя и не всегда,
+определяется в <code>CREATE TABLE</code> <a href="#term-DDL">DDL</a>:</p>
+<div class="highlight"><pre><span></span><code>CREATE TABLE employee (
+ emp\_id INTEGER,
+ emp\_name VARCHAR(30),
+ dep\_id INTEGER,
+ PRIMARY KEY (emp\_id)
+)
+</code></pre></div>
+<p>См. также</p>
+<p><a href="#term-composite-primary-key">composite primary key</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Primary_Key">Primary key (через Википедию)</a></p>
+<p>read committedОдин из четырех уровней <a href="#term-isolation">изоляции</a> базы данных, read committed
+обеспечивает, что транзакция не будет иметь доступа к данным из
+других параллельных транзакций, которые еще не были подтверждены,
+предотвращая так называемые «грязные чтения». Однако при read committed
+могут быть неповторяющиеся чтения, что означает, что данные в строке могут измениться
+при повторном чтении, если другая транзакция подтвердила изменения.</p>
+<p>read uncommittedОдин из четырех уровней <a href="#term-isolation">изоляции</a> базы данных, read uncommitted
+обеспечивает, что изменения, внесенные в данные базы данных в рамках транзакции, неrelationshiprelationshipsСвязующий
+элемент между двумя отображаемыми классами, соответствующий
+некоторому отношению между двумя таблицами в базе данных.</p>
+<p>Отношение определяется с помощью функции SQLAlchemy
+<a href="orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>. После создания
+SQLAlchemy
+анализирует аргументы и базовые отображения, участвующие
+чтобы классифицировать отношение как один из трех типов:
+<a href="#term-one-to-many">один ко многим</a>, <a href="#term-many-to-one">многие к одному</a> или <a href="#term-many-to-many">многие ко многим</a>.
+С этой классификацией конструкция отношения
+обрабатывает задачу сохранения соответствующих связей
+в базе данных в ответ на ассоциации объектов в памяти,
+а также задачу загрузки ссылок на объекты и коллекции
+в память на основе текущих связей в
+базе данных.</p>
+<p>См. также</p>
+<p><a href="orm/relationships.html">Конфигурация отношений</a></p>
+<p>releasereleasesreleasedВ контексте SQLAlchemy термин «выпущенный»
+относится к процессу завершения использования конкретного
+соединения с базой данных. SQLAlchemy поддерживает использование
+пулов соединений, что позволяет настраивать время жизни соединений с базой данных. При использовании пула
+соединений процесс «закрытия» соединения, т. е. вызов
+оператора типа <code>connection.close()</code>, может привести
+к тому, что соединение будет возвращено в существующий пул,
+или может привести к тому, что будет фактически закрыто
+подключение TCP/IP, на которое ссылается это соединение -
+какой из них произойдет, зависит от конфигурации, а также
+от текущего состояния пула. Поэтому мы используем термин
+<em>выпущенный</em> вместо того, чтобы означать «сделайте все,
+что вам нужно сделать с соединениями, когда мы закончим их использование».</p>
+<p>Термин иногда используется в фразе «освобождение
+транзакционных ресурсов», чтобы более явно указать, что
+мы фактически «освобождаем» любое транзакционное
+состояние, которое накопилось на соединении. В большинстве
+ситуаций процесс выборки из таблиц, отправки
+обновлений и т. д. приобретает <a href="#term-isolated">изолированное</a> состояние на
+этом соединении, а также потенциальные блокировки строк или таблиц.
+Это состояние локально для конкретнойВышеуказанное выражение INSERT при выполнении предоставит набор результатов,
+который включает значения столбцов <code>user_account.id</code> и <code>user_account.timestamp</code>, которые должны были быть сгенерированы
+как значения по умолчанию, так как они не включены в противном случае (но обратите внимание, что любая серия столбцов
+или SQL-выражений может быть помещена в RETURNING, а не только столбцы со значениями по умолчанию).</p>
+<p>Серверы, которые в настоящее время поддерживают RETURNING или аналогичную конструкцию, - это PostgreSQL, SQL Server,
+Oracle и Firebird. Реализации PostgreSQL и Firebird обычно полнофункциональны, тогда как реализации SQL Server и Oracle
+имеют ограничения. В SQL Server этот оператор известен как «OUTPUT INSERTED» для операторов INSERT и UPDATE и «OUTPUT
+DELETED» для операторов DELETE; главное ограничение заключается в том, что триггеры не поддерживаются в сочетании с этим
+ключевым словом. В Oracle он известен как «RETURNING…INTO» и требует, чтобы значение было помещено в OUT-параметр, что
+означает, что синтаксис неуклюжий, и его можно использовать только для одной строки за раз.</p>
+<p>Система <a href="core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code>UpdateBase.returning()</code></a>
+SQLAlchemy предоставляет слой абстракции поверх систем RETURNING этих серверов, чтобы обеспечить согласованный интерфейс
+для возврата столбцов. ORM также включает множество оптимизаций, которые используют RETURNING при наличии.</p>
+<p>selectable - термин, используемый в SQLAlchemy для описания конструкции SQL, которая представляет собой набор строк. Он
+в значительной степени похож на концепцию «отношения» в <a href="#term-relational-algebra">реляционной алгебре</a>. В SQLAlchemy
+объекты, которые наследуют
+класс <a href="core/selectable.html#sqlalchemy.sql.expression.Selectable" title="sqlalchemy.sql.expression.Selectable"><code>Selectable</code></a>,
+считаются пригодными для использования в качестве «selectable» при использовании SQLAlchemy Core. Два наиболее
+распространенных конструкта - это <a href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>
+и <a href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>.</p>
+<p>sentinelinsert sentinel - это специфический для SQLAlchemy термин, который относится
+к <a href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a>, который может использоваться для
+операции массовой вставки <a href="#term-insertmanyvalues">insertmanyvalues</a> для отслеживания вставленных записей данных против
+строк, переданных обратно с помощью RETURNING или аналогичных. Такая конфигурация столбца необходима для тSerializable
+Один из четырех уровней <a href="#term-isolation">изоляции</a> базы данных, serializable
+обладает всей изоляцией <a href="#term-repeatable-read">repeatable read</a> и, кроме того, в рамках подхода на основе блокировки
+гарантирует, что так называемые
+"призрачные чтения" не могут произойти; это означает, что строки, которые были вставлены
+или удалены в рамках других транзакций, не будут
+обнаруживаться в этой транзакции. Строка, которая была прочитана в этой
+транзакции, гарантированно продолжает существовать, а строка, которой нет
+гарантируется, что она не может появиться из другой
+транзакции.</p>
+<p>Изоляция Serializable обычно основывается на блокировке строк или диапазонов строк, чтобы достичь этого эффекта, и может
+повысить вероятность
+взаимоблокировок и ухудшить производительность. Также существуют схемы, не основанные на блокировке, однако они
+обязательно отклоняют транзакции, если
+обнаруживаются коллизии записи.</p>
+<p>Session Контейнер или область для операций ORM с базой данных. Сессии
+загружают экземпляры из базы данных, отслеживают изменения в отображенных
+экземплярах и сохраняют изменения в единице работы при
+flushed.</p>
+<p>См. также</p>
+<p><a href="orm/session.html">Использование сессии</a></p>
+<p>subqueryscalar subquery Относится к оператору <code>SELECT</code>, встроенному во внешний
+<code>SELECT</code>.</p>
+<p>Подзапросы бывают двух типов: "скалярный подзапрос", который должен вернуть ровно одну строку и один столбец, и "
+производная таблица", которая служит источником строк для оператора FROM другого оператора SELECT. Скалярный подзапрос
+может быть размещен в <a href="#term-WHERE-clause">WHERE clause</a>, <a href="#term-columns-clause">columns clause</a>,
+ORDER BY clause или HAVING clause внешнего оператора SELECT, тогда как
+производная таблица может быть размещена в операторе FROM внешнего <code>SELECT</code>.</p>
+<p>Примеры:</p>
+<ol>
+<li>скалярный подзапрос, размещенный в <a href="#term-columns-clause">columns clause</a> внешнего
+   <code>SELECT</code>. В этом примере подзапрос является <a href="#term-correlated-subquery">коррелированным подзапросом</a>, потому что
+   часть
+   строк, которые он выбирает, задаются через внешний оператор.</li>
+</ol>
+<div class="highlight"><pre><span></span><code>SELECT id, (SELECT name FROM address WHERE address.user\_id=user.id)
+FROM user
+</code></pre></div>
+<ol>
+<li>скалярный подзапрос, размещограничение уникальности, уникальный ключ, индекс
+   Уникальный ключ или индекс может уникально идентифицировать каждую строку данных в таблице базы данных. Уникальный
+   ключ или индекс может состоять из одного столбца или набора столбцов в одной таблице базы данных. Если не
+   используются значения NULL, то никакие две разные строки или записи данных в таблице базы данных не могут иметь
+   одинаковое значение данных (или комбинацию значений данных) в этих столбцах уникального ключа или индекса. В
+   зависимости от ее конструкции, таблица базы данных может иметь много уникальных ключей или индексов, но не более
+   одного первичного ключа или индекса.</li>
+</ol>
+<p>См. также</p>
+<p><a href="https://ru.wikipedia.org/wiki/%D0%A3%D0%BD%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BB%D1%8E%D1%87#%D0%9E%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D1%83%D0%BD%D0%B8%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%B9">Уникальный ключ (через Википедию)</a></p>
+<p>единица работы
+Архитектура программного обеспечения, в которой система сохранения, такая как объектно-реляционный отображатель,
+поддерживает список изменений, внесенных в ряд объектов, и периодически сбрасывает все эти ожидающие изменения в базу
+данных.</p>
+<p><code>Session</code> SQLAlchemy <a href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> реализует шаблон
+единицы работы, где объекты, добавленные
+в <a href="orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> с использованием методов, таких
+как <a href="orm/session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code>Session.add()</code></a>, будут участвовать в
+сохранении в стиле единицы работы.</p>
+<p>Для примера того, как выглядит сохранение единицы работы в SQLAlchemy, начните с
+раздела <a href="tutorial/orm_data_manipulation.html#tutorial-orm-data-manipulation">Манипулирование данными с ORM</a>
+в <a href="tutorial/index.html#unified-tutorial">SQLAlchemy Unified Tutorial</a>. Затем для получения более подробной информации
+см. <a href="orm/session_basics.html#id1">Основы использования сеанса</a> в общей справочной документации.</p>
+<p>См. также</p>
+<p><a href="https://martinfowler.com/eaaCatalog/unitOfWork.html">Единица работы (через Martin Fowler)</a></p>
+<p>[Манипулирование данными с ORM](tutorial/</p>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Elisha Kravchuk
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.indexes", "content.code.copy", "content.action.edit", "header.autohide"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

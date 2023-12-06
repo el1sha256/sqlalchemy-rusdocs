@@ -1,0 +1,1221 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../data/data_update/">
+      
+      
+        <link rel="next" href="../orm_related_objects/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.1.7">
+    
+    
+      
+        <title>Манипуляции с данными с помощью ORM - SQL Alchemy 2.0 Russian</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-96L8NNF9FG"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-96L8NNF9FG",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-96L8NNF9FG",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#data-manipulation-with-the-orm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SQL Alchemy 2.0 Russian" class="md-header__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Alchemy 2.0 Russian
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Манипуляции с данными с помощью ORM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SQL Alchemy 2.0 Russian" class="md-nav__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SQL Alchemy 2.0 Russian
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        SQLAlchemy начало
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Унифицированное руководство SQLAlchemy</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Унифицированное руководство SQLAlchemy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engine/" class="md-nav__link">
+        Установка соединения - Engine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../db_api/" class="md-nav__link">
+        Работа с транзакциями и DBAPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metadata/" class="md-nav__link">
+        Работа с метаданными базы данных
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../data/">Работа с Данными</a>
+          
+            <label for="__nav_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Работа с Данными
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_insert/" class="md-nav__link">
+        Использование операторов INSERT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_select/" class="md-nav__link">
+        Использование операторов SELECT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_update/" class="md-nav__link">
+        Использование операторов UPDATE и DELETE
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Манипуляции с данными с помощью ORM
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Манипуляции с данными с помощью ORM
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-manipulation-with-the-orm" class="md-nav__link">
+    Манипуляции с данными с помощью ORM
+  </a>
+  
+    <nav class="md-nav" aria-label="Манипуляции с данными с помощью ORM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-inserting-orm" class="md-nav__link">
+    Вставка строк с использованием шаблона ORM Unit of Work
+  </a>
+  
+    <nav class="md-nav" aria-label="Вставка строк с использованием шаблона ORM Unit of Work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Экземпляры классов представляют строки
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Добавление объектов в сеанс
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Автоматически сгенерированные атрибуты первичного ключа
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Получение объектов по первичному ключу из карты идентичности
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-updating" class="md-nav__link">
+    Обновление ORM-объектов с использованием шаблона Unit of Work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-deleting" class="md-nav__link">
+    Удаление ORM-объектов с использованием шаблона Unit of Work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-bulk" class="md-nav__link">
+    Массовая вставка / многорядное вставление, upsert, UPDATE и DELETE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Откат
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-closing" class="md-nav__link">
+    Закрытие сессии
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orm_related_objects/" class="md-nav__link">
+        Работа с объектами, связанными с ORM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../orm/">ORM</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          ORM
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../core/">SQLAlchemy Core</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          SQLAlchemy Core
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../dialects/">Диалекты</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Диалекты
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../glossary/">Глоссарий</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Глоссарий
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-manipulation-with-the-orm" class="md-nav__link">
+    Манипуляции с данными с помощью ORM
+  </a>
+  
+    <nav class="md-nav" aria-label="Манипуляции с данными с помощью ORM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-inserting-orm" class="md-nav__link">
+    Вставка строк с использованием шаблона ORM Unit of Work
+  </a>
+  
+    <nav class="md-nav" aria-label="Вставка строк с использованием шаблона ORM Unit of Work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Экземпляры классов представляют строки
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Добавление объектов в сеанс
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Автоматически сгенерированные атрибуты первичного ключа
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Получение объектов по первичному ключу из карты идентичности
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-updating" class="md-nav__link">
+    Обновление ORM-объектов с использованием шаблона Unit of Work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-deleting" class="md-nav__link">
+    Удаление ORM-объектов с использованием шаблона Unit of Work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-bulk" class="md-nav__link">
+    Массовая вставка / многорядное вставление, upsert, UPDATE и DELETE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Откат
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-closing" class="md-nav__link">
+    Закрытие сессии
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs/edit/main/docs/tutorial/orm_data_manipulation.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>Манипуляции с данными с помощью ORM</h1>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Этот раздел не редактировался людьми, возможны ошибки и неточности в форматировании, вы можете помочь исправив и сделав pull request</p>
+</div>
+<h2 id="data-manipulation-with-the-orm">Манипуляции с данными с помощью ORM</h2>
+<p>Предыдущий раздел <a href="data.html#tutorial-working-with-data">Работа с данными</a> был сосредоточен на языке выражений SQL с точки зрения Core, чтобы обеспечить непрерывность между основными конструкциями операторов SQL. В этом разделе будет рассмотрен жизненный цикл <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> и то, как он взаимодействует с этими конструкциями.</p>
+<p><strong>Предварительные разделы</strong> - раздел, посвященный ORM, основан на двух предыдущих разделах ORM-центрической части этого документа:</p>
+<ul>
+<li><a href="dbapi_transactions.html#tutorial-executing-orm-session">Выполнение с помощью сеанса ORM</a> - вводит способ создания объекта ORM <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a></li>
+<li><a href="metadata.html#tutorial-orm-table-metadata">Использование ORM-декларативных форм для определения метаданных таблицы</a> - где мы настраиваем наши отображения ORM для сущностей <code>User</code> и <code>Address</code></li>
+<li><a href="data_select.html#tutorial-selecting-orm-entities">Выбор ORM-сущностей и столбцов</a> - несколько примеров того, как запускать операторы SELECT для сущностей, таких как <code>User</code></li>
+</ul>
+<h3 id="tutorial-inserting-orm">Вставка строк с использованием шаблона ORM Unit of Work</h3>
+<p>При использовании ORM объект <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> отвечает за создание конструкций <a href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code>Insert</code></a> и их эмиссию в виде операторов INSERT в рамках текущей транзакции. Способ, которым мы указываем <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> это сделать, заключается в <strong>добавлении</strong> записей объектов в него; <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> затем гарантирует, что эти новые записи будут выведены в базу данных, когда они будут нужны, с помощью процесса, известного как <strong>flush</strong>. Общий процесс, используемый <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> для сохранения объектов, известен как шаблон <a href="../glossary.html#term-unit-of-work">unit of work</a>.</p>
+<h4 id="_1">Экземпляры классов представляют строки</h4>
+<p>В то время как в предыдущем примере мы выводили оператор INSERT, используя словари Python, чтобы указать данные, которые мы хотели добавить, с ORM мы непосредственно используем определенные нами пользовательские классы Python, возвращаясь к разделу <a href="metadata.html#tutorial-orm-table-metadata">Использование ORM-декларативных форм для определения метаданных таблицы</a>. На уровнеАналогично нашим примерам ядра <a href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code>Insert</code></a>, мы не включили первичный ключ (т. е. запись для столбца <code>id</code>), поскольку мы хотим воспользоваться функцией автоматического инкремента первичного ключа базы данных, в данном случае SQLite, которую также интегрирует ORM. Значение атрибута <code>id</code> на приведенных выше объектах, если бы мы его просмотрели, отображается как <code>None</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; squidward
+User(id=None, name=&#39;squidward&#39;, fullname=&#39;Squidward Tentacles&#39;)
+</code></pre></div>
+<p>Значение <code>None</code> предоставляется SQLAlchemy для указания того, что атрибут еще не имеет значения. Отображаемые в Python атрибуты, отображаемые SQLAlchemy, всегда возвращают значение и не вызывают <code>AttributeError</code>, если они отсутствуют, при работе с новым объектом, которому еще не было присвоено значение.</p>
+<p>В настоящее время наши два объекта выше находятся в состоянии, называемом <a href="../glossary.html#term-transient">transient</a> - они не связаны с каким-либо состоянием базы данных и еще не связаны с объектом <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, который может генерировать для них операторы INSERT.</p>
+<h4 id="_2">Добавление объектов в сеанс</h4>
+<p>Чтобы проиллюстрировать процесс добавления пошагово, мы создадим
+<a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> без использования менеджера контекста (и, следовательно, мы должны
+убедиться, что закроем его позже!):</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; session = Session(engine)
+</code></pre></div>
+<p>Затем объекты добавляются в <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> с использованием
+метода <a href="../orm/session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code>Session.add()</code></a>. Когда это вызывается, объекты находятся в состоянии
+известном как <a href="../glossary.html#term-pending">pending</a> и еще не были вставлены:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; session.add(squidward)
+&gt;&gt;&gt; session.add(krabs)
+</code></pre></div>
+<p>Когда у нас есть ожидающие объекты, мы можем увидеть это состояние, посмотрев на коллекцию на <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, называемую <a href="../orm/session_api.html#sqlalchemy.orm.Session.new" title="sqlalchemy.orm.Session.new"><code>Session.new</code></a>:</p>
+<p><div class="highlight"><pre><span></span><code>&gt;&gt;&gt; session.new
+</code></pre></div>
+IdentitySet([User(id=None, name='squidward', fullname='Squidward Tentacles'), User(id=None, name='ehkrabs', fullname='Eugene H. Krabs')])</p>
+<p>Вышеуказанный вид использует коллекцию <code>IdentitySet</code>, которая
+существенно является множеством Python, хеширующим по ид
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; session.flush()
+</code></pre></div>
+BEGIN (implicit)
+INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id
+[... (insertmanyvalues) 1/2 (ordered; batch not supported)] ('squidward', 'Squidward Tentacles')
+INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id
+[insertmanyvalues 2/2 (ordered; batch not supported)] ('ehkrabs', 'Eugene H. Krabs')</p>
+<p>Здесь мы видим, что <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> был вызван для генерации SQL-запроса,
+таким образом, он создал новую транзакцию и выполнил соответствующие операторы INSERT
+для двух объектов. Транзакция теперь <strong>остается открытой</strong> до тех пор, пока мы не вызовем любой
+из методов <a href="../orm/session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code>Session.commit()</code></a>, <a href="../orm/session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code>Session.rollback()</code></a>, или
+<a href="../orm/session_api.html#sqlalchemy.orm.Session.close" title="sqlalchemy.orm.Session.close"><code>Session.close()</code></a> объекта <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>.</p>
+<p>Хотя <a href="../orm/session_api.html#sqlalchemy.orm.Session.flush" title="sqlalchemy.orm.Session.flush"><code>Session.flush()</code></a> может использоваться для ручной отправки ожидающих
+изменений в текущую транзакцию, это обычно не требуется, так как
+<a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> имеет поведение, известное как <strong>автоочистка</strong>, которое
+будет проиллюстрировано позже. Он также очищает изменения, когда
+вызывается <a href="../orm/session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code>Session.commit()</code></a>.</p>
+<h4 id="_3">Автоматически сгенерированные атрибуты первичного ключа</h4>
+<p>После вставки строк созданные нами два объекта Python находятся в состоянии, известном как <a href="../glossary.html#term-persistent">persistent</a>, где они связаны с
+объектом <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, в котором они были добавлены или загружены, и имеют много
+других функций, которые будут рассмотрены позже.</p>
+<p>Еще одним эффектом INSERT, который произошел, является то, что ORM извлекла
+новые идентификаторы первичных ключей для каждого нового объекта; внутренне она обычно использует
+тот же доступор <a href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code>CursorResult.inserted_primary_key</code></a>, который мы
+введены ранее. Теперь у объектов <code>squidward</code> и <code>krabs</code> есть эти новые
+идентификаторы первичных ключей, связанные с ними, и мы можем просмотреть их, обратившисьПочему ORM генерирует два отдельных оператора INSERT, когда она могла бы использовать <a href="dbapi_transactions.html#tutorial-multiple-parameters">executemany</a>? Как мы увидим в следующем разделе, при сохранении объектов в <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> всегда необходимо знать первичный ключ только что вставленных объектов. Если используется функция, такая как автоинкремент SQLite (другие примеры включают PostgreSQL IDENTITY или SERIAL, использование последовательностей и т. д.), то функция <a href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code>CursorResult.inserted_primary_key</code></a> обычно требует, чтобы каждый INSERT был отправлен по одной строке. Если мы предоставили значения для первичных ключей заранее, ORM смогла бы оптимизировать операцию лучше. Некоторые базы данных, такие как <a href="../dialects/postgresql.html#postgresql-psycopg2">psycopg2</a>, также могут вставлять множество строк за один раз, сохраняя возможность извлечения значений первичных ключей.</p>
+<h4 id="_4">Получение объектов по первичному ключу из карты идентичности</h4>
+<p>Первичный ключ объектов важен для <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, поскольку объекты теперь связаны с этим идентификатором в памяти с использованием функции, известной как <a href="../glossary.html#term-identity-map">карта идентичности</a>. Карта идентичности - это хранилище в памяти, которое связывает все объекты, загруженные в память, с их первичным ключом. Мы можем наблюдать это, извлекая один из вышеуказанных объектов с помощью метода <a href="../orm/session_api.html#sqlalchemy.orm.Session.get" title="sqlalchemy.orm.Session.get"><code>Session.get()</code></a>, который вернет запись из карты идентичности, если она находится локально, в противном случае будет отправлен запрос SELECT:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; some\_squidward = session.get(User, 4)
+&gt;&gt;&gt; some\_squidward
+User(id=4, name=&#39;squidward&#39;, fullname=&#39;Squidward Tentacles&#39;)
+</code></pre></div>
+<p>Важно отметить, что карта идентичности поддерживает <strong>уникальный экземпляр</strong> конкретного объекта Python для конкретного идентификатора базы данных в рамках конкретного объекта <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>. Мы можем заметить, что <code>some_squidward</code> ссылается на <strong>тот же объект</strong>, что и <code>squidward</code> ранее:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; some\_squidward is squidward
+True
+</code></pre></div>
+<p>Карта идентичности - это критическая функция, которая позволяет манипулировать сложными наборами объектов в рамках тВажно отметить, что атрибуты объектов, с которыми мы только что работали, были <a href="../glossary.html#term-expired">истекшие</a>, что означает, что при следующем доступе к любым атрибутам на них <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> начнет новую транзакцию и перезагрузит их состояние. Этот вариант иногда проблематичен как по причине производительности, так и если вы хотите использовать объекты после закрытия <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> (что известно как <a href="../glossary.html#term-detached">отсоединенное</a> состояние), так как они не будут иметь никакого состояния и не будут иметь <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, с помощью которой можно загрузить это состояние, что приведет к ошибкам "отсоединенного экземпляра". Поведение можно контролировать с помощью параметра <a href="../orm/session_api.html#sqlalchemy.orm.Session.params.expire_on_commit" title="sqlalchemy.orm.Session"><code>Session.expire_on_commit</code></a>. Больше об этом можно узнать в разделе <a href="#tutorial-orm-closing">Закрытие сессии</a>.</p>
+<h3 id="tutorial-orm-updating">Обновление ORM-объектов с использованием шаблона Unit of Work</h3>
+<p>В предыдущем разделе <a href="data_update.html#tutorial-core-update-delete">Использование операторов UPDATE и DELETE</a> мы представили конструкцию <a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a>, которая представляет оператор SQL UPDATE. При использовании ORM есть два способа использования этой конструкции. Основной способ заключается в том, что он автоматически генерируется в рамках <a href="../glossary.html#term-unit-of-work">единицы работы</a>, используемой <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, где оператор UPDATE генерируется на основе первичного ключа, соответствующего отдельным объектам, которые имеют изменения на них.</p>
+<p>Предположим, что мы загрузили объект <code>User</code> для имени пользователя <code>sandy</code> в транзакцию (также демонстрируя метод <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.filter_by" title="sqlalchemy.sql.expression.Select.filter_by"><code>Select.filter_by()</code></a> и метод <a href="../core/connections.html#sqlalchemy.engine.Result.scalar_one" title="sqlalchemy.engine.Result.scalar_one"><code>Result.scalar_one()</code></a>):</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; sandy = session.execute(select(User).filter_by(name=&quot;sandy&quot;)).scalar_one()
+BEGIN (implicit)
+SELECT user_account.id, user_account.name, user_account.fullname
+FROM user_account
+WHERE user_account.name = ?
+[...] (&#39;sandy&#39;,)
+</code></pre></div>
+<p>Python-объект <code>sandy</code>, как упоминалось ранее, действует как <strong>прокси</strong> для строки в базе данных, более конкретно, строкКогда <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> следующий раз вызывает <code>flush</code>, будет выполнено обновление этого значения в базе данных. Как упоминалось ранее, <code>flush</code> происходит автоматически перед тем, как мы выполняем любой <code>SELECT</code>, используя поведение, известное как <strong>autoflush</strong>. Мы можем запросить напрямую столбец <code>User.fullname</code> из этой строки, и мы получим обновленное значение обратно:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; sandy_fullname = session.execute(select(User.fullname).where(User.id == 2)).scalar_one()
+UPDATE user_account SET fullname=? WHERE user_account.id = ?
+[...] (&#39;Sandy Squirrel&#39;, 2)
+SELECT user_account.fullname
+FROM user_account
+WHERE user_account.id = ?
+[...] (2,)
+&gt;&gt;&gt; print(sandy_fullname)
+Sandy Squirrel
+</code></pre></div>
+<p>Мы видим выше, что мы запросили, чтобы <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> выполнить один оператор <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>. Однако, SQL, который был выполнен, показывает, что было выполнено обновление, которое было процессом <code>flush</code>, выталкивающим ожидающие изменения. Объект Python <code>sandy</code> теперь больше не считается грязным:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; sandy in session.dirty
+False
+</code></pre></div>
+<p>Однако, обратите внимание, что мы <strong>все еще в транзакции</strong>, и наши изменения не были отправлены в постоянное хранилище базы данных. Поскольку фамилия Сэнди на самом деле "Cheeks", а не "Squirrel", мы исправим эту ошибку позже, когда откатим транзакцию. Но сначала мы внесем еще несколько изменений в данные.</p>
+<p>Смотрите также</p>
+<p><a href="../orm/session_basics.html#session-flushing">Flushing</a> - детали процесса <code>flush</code>, а также информация о настройке <a href="../orm/session_api.html#sqlalchemy.orm.Session.params.autoflush" title="sqlalchemy.orm.Session"><code>Session.autoflush</code></a>.</p>
+<h3 id="tutorial-orm-deleting">Удаление ORM-объектов с использованием шаблона Unit of Work</h3>
+<p>Для завершения основных операций сохранения, отдельный ORM-объект может быть помечен для удаления в процессе <a href="../glossary.html#term-unit-of-work">Unit of Work</a> с помощью метода <a href="../orm/session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code>Session.delete()</code></a>. Давайте загрузим <code>patrick</code> из базы данных:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; patrick = session.get(User, 3)
+SELECT user_account.id AS user_account_id, user_account.name AS user_account_name,
+user_account.fullname AS user_account_fullname
+FROM user_account
+WHERE user_account.id = ?
+[...] (3,)
+</code></pre></div>
+<p>Если мы пометим <code>patrick</code> для удаления, как и в случае с другими операциями, ничего не произойдет, пока не будет выполнен <code>flush</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; session.delete(patrick)
+</code></pre></div>
+<p>ТВышеуказанный SELECT, который мы запросили на вывод, предшествовал DELETE, который указывал на ожидающее удаление для <code>patrick</code>. Также был выполнен SELECT из таблицы <code>address</code>, который был вызван ORM для поиска строк в этой таблице, которые могут быть связаны с целевой строкой; это поведение является частью поведения, известного как <a href="../glossary.html#term-cascade">cascade</a>, и может быть настроено для более эффективной работы, позволяя базе данных автоматически обрабатывать связанные строки в <code>address</code>; в разделе <a href="../orm/cascades.html#cascade-delete">delete</a> содержится вся информация об этом.</p>
+<p>См. также</p>
+<p><a href="../orm/cascades.html#cascade-delete">delete</a> - описывает, как настроить поведение <a href="../orm/session_api.html#sqlalchemy.orm.Session.delete" title="sqlalchemy.orm.Session.delete"><code>Session.delete()</code></a> в отношении того, как обрабатывать связанные строки в других таблицах.</p>
+<p>Кроме того, экземпляр объекта <code>patrick</code>, который сейчас удаляется, больше не считается постоянным в <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, как показывает проверка на содержание:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; patrick in session
+False
+</code></pre></div>
+<p>Однако, как и UPDATE, которые мы сделали для объекта <code>sandy</code>, каждое изменение, которое мы сделали здесь, локально для текущей транзакции, которая не станет постоянной, если мы ее не зафиксируем. Поскольку откат транзакции на самом деле более интересен в данный момент, мы сделаем это в следующем разделе.</p>
+<h3 id="tutorial-orm-bulk">Массовая вставка / многорядное вставление, upsert, UPDATE и DELETE</h3>
+<p>Техники <a href="../glossary.html#term-unit-of-work">unit of work</a>, обсуждаемые в этом разделе, предназначены для интеграции <a href="../glossary.html#term-DML">dml</a>, или операторов INSERT/UPDATE/DELETE, с механикой объектов Python, часто включающих сложные графы взаимосвязанных объектов. Как только объекты добавлены в <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> с помощью <a href="../orm/session_api.html#sqlalchemy.orm.Session.add" title="sqlalchemy.orm.Session.add"><code>Session.add()</code></a>, процесс unit of work автоматически генерирует операторы INSERT/UPDATE/DELETE от нашего имени, поскольку создаются и изменяются атрибуты наших объектов.</p>
+<p>Однако ORM <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> также имеет возможность обрабатывать команды, которые позволяют ему генерировать операторы INSERT, UPDATE и DELETE напрямую, не передавая никаких объектов, сохраненных в ORMФункции Bulk / Multi row ORM <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> используют конструкции <a href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code>insert()</code></a>, <a href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code>update()</code></a> и <a href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code>delete()</code></a> напрямую, и их использование напоминает то, как они используются с SQLAlchemy Core (впервые представлены в этом учебнике в разделах <a href="data_insert.html#tutorial-core-insert">Использование операторов INSERT</a> и <a href="data_update.html#tutorial-core-update-delete">Использование операторов UPDATE и DELETE</a>). При использовании этих конструкций с ORM <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> вместо обычного <a href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code>Connection</code></a>, их конструирование, выполнение и обработка результатов полностью интегрированы с ORM.</p>
+<p>Для получения дополнительной информации и примеров использования этих функций см. раздел <a href="../orm/queryguide/dml.html#orm-expression-update-delete">ORM-Enabled INSERT, UPDATE, and DELETE statements</a> в <a href="../orm/queryguide/index.html">ORM Querying Guide</a>.</p>
+<p>См. также</p>
+<p><a href="../orm/queryguide/dml.html#orm-expression-update-delete">ORM-Enabled INSERT, UPDATE, and DELETE statements</a> - в <a href="../orm/queryguide/index.html">ORM Querying Guide</a></p>
+<h3 id="_5">Откат</h3>
+<p><a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> имеет метод <a href="../orm/session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code>Session.rollback()</code></a>, который, как и ожидалось, выполняет ROLLBACK на текущем соединении SQL. Однако он также влияет на объекты, которые в настоящее время связаны с <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, в нашем предыдущем примере это объект Python <code>sandy</code>. Хотя мы изменили <code>.fullname</code> объекта <code>sandy</code> на <code>"Sandy Squirrel"</code>, мы хотим откатить эту изменение. Вызов <a href="../orm/session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code>Session.rollback()</code></a> не только откатит транзакцию, но также <strong>сбросит</strong> все объекты, которые в настоящее время связаны с этой <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, что приведет к тому, что они обновятся при следующем доступе с помощью процесса, известного как <a href="../glossary.html#term-lazy-loading">ленивая загрузка</a>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; session.rollback()
+ROLLBACK
+</code></pre></div>
+<p>Чтобы более тщательно просмотреть процесс «истечения срока действия», мы можем заметить, что у объекта Python <code>sandy</code> не осталось состояния в его <code>__dict__</code>, за исключением специального внутреннего объекта состояния SQLAlchemy:</p>
+<p>`````</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>sandy.<strong>dict</strong>
+{'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x...>,
+ 'id': 2, 'name': 'sandy', 'fullname': 'Sandy Cheeks'}
+```</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>Для удаленных объектов, когда мы ранее отметили, что <code>patrick</code> больше не
+находится в сессии, идентичность этого объекта также восстанавливается:</p>
+<p>```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>patrick in session
+True
+```</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>и, конечно, данные базы данных также присутствуют:</p>
+<p>```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>session.execute(select(User).where(User.name == "patrick")).scalar_one() is patrick
+SELECT user_account.id, user_account.name, user_account.fullname
+FROM user_account
+WHERE user_account.name = ?
+[...] ('patrick',)
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>```</p>
+<h3 id="tutorial-orm-closing">Закрытие сессии</h3>
+<p>В предыдущих разделах мы использовали объект <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> вне
+контекстного менеджера Python, то есть мы не использовали оператор <code>with</code>.
+Это нормально, однако, если мы делаем это таким образом, лучше явно
+закрыть <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, когда мы закончили с ним:</p>
+<p>```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>session.close()
+ROLLBACK</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>```</p>
+<p>Закрытие <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>, что происходит, когда мы используем его в
+контекстном менеджере, также выполняет следующие действия:</p>
+<ul>
+<li>Он <a href="../glossary.html#term-releases">освобождает</a> все ресурсы соединения в пуле соединений, отменяя
+(например, откатывая) любые транзакции, которые были в процессе выполнения.</li>
+</ul>
+<p>Это означает, что когда мы используем сессию для выполнения некоторых задач только для чтения
+и затем закрываем ее, нам не нужно явно вызывать
+<a href="../orm/session_api.html#sqlalchemy.orm.Session.rollback" title="sqlalchemy.orm.Session.rollback"><code>Session.rollback()</code></a>, чтобы убедиться, что транзакция откатывается;
+это обрабатывается пулом соединений.
+* Он <strong>удаляет</strong> все объекты из <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>.</p>
+<p>Это означает, что все объекты Python, которые мы загрузили для этой <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>,
+такие как <code>sandy</code>, <code>patrick</code> и <code>squidward</code>, теперь находятся в состоянии, известном
+как <a href="../glossary.html#term-detached">отсоединенный</a>. В частности, мы отметим, что объекты, которые были все еще
+в состоянии <a href="../glossary.html#term-expired">истекшего срока</a>, например, из-за вызова <a href="../orm/session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code>Session.commit()</code></a>,
+теперь```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>session.add(squidward)
+squidward.name
+BEGIN (implicit)
+SELECT user_account.id AS user_account_id, user_account.name AS user_account_name, user_account.fullname AS user_account_fullname
+FROM user_account
+WHERE user_account.id = ?
+[...] (4,)
+'squidward'</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>```</p>
+<p>Совет</p>
+<p>Постарайтесь избегать использования объектов в их отсоединенном состоянии, если это возможно. При закрытии <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> также очищайте ссылки на все ранее присоединенные объекты. В случаях, когда отсоединенные объекты необходимы, обычно это связано с немедленным отображением только что сохраненных объектов для веб-приложения, где <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> закрывается перед отображением представления, установите флаг <a href="../orm/session_api.html#sqlalchemy.orm.Session.params.expire_on_commit" title="sqlalchemy.orm.Session"><code>Session.expire_on_commit</code></a> в значение <code>False</code>.</p>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Elisha Kravchuk
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.code.copy", "content.action.edit", "header.autohide"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

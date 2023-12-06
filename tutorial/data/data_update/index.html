@@ -1,0 +1,1117 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../data_select/">
+      
+      
+        <link rel="next" href="../../orm_data_manipulation/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.1.7">
+    
+    
+      
+        <title>Использование операторов UPDATE и DELETE - SQL Alchemy 2.0 Russian</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-96L8NNF9FG"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-96L8NNF9FG",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-96L8NNF9FG",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-update-and-delete-statements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SQL Alchemy 2.0 Russian" class="md-header__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Alchemy 2.0 Russian
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Использование операторов UPDATE и DELETE
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SQL Alchemy 2.0 Russian" class="md-nav__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SQL Alchemy 2.0 Russian
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        SQLAlchemy начало
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Унифицированное руководство SQLAlchemy</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Унифицированное руководство SQLAlchemy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../engine/" class="md-nav__link">
+        Установка соединения - Engine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../db_api/" class="md-nav__link">
+        Работа с транзакциями и DBAPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metadata/" class="md-nav__link">
+        Работа с метаданными базы данных
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Работа с Данными</a>
+          
+            <label for="__nav_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Работа с Данными
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_insert/" class="md-nav__link">
+        Использование операторов INSERT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_select/" class="md-nav__link">
+        Использование операторов SELECT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Использование операторов UPDATE и DELETE
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Использование операторов UPDATE и DELETE
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-update-and-delete-statements" class="md-nav__link">
+    Использование операторов UPDATE и DELETE
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование операторов UPDATE и DELETE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-core-update" class="md-nav__link">
+    Конструкция выражения SQL update()
+  </a>
+  
+    <nav class="md-nav" aria-label="Конструкция выражения SQL update()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-correlated-updates" class="md-nav__link">
+    Связанные обновления
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-update-from" class="md-nav__link">
+    UPDATE..FROM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-parameter-ordered-updates" class="md-nav__link">
+    Обновления с упорядоченными параметрами
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-deletes" class="md-nav__link">
+    Конструкция выражения SQL delete()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-update-delete-rowcount" class="md-nav__link">
+    Получение количества затронутых строк при UPDATE, DELETE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-update-delete" class="md-nav__link">
+    Использование RETURNING с UPDATE, DELETE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../orm_data_manipulation/" class="md-nav__link">
+        Манипуляции с данными с помощью ORM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../orm_related_objects/" class="md-nav__link">
+        Работа с объектами, связанными с ORM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../orm/">ORM</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          ORM
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../core/">SQLAlchemy Core</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          SQLAlchemy Core
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../dialects/">Диалекты</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Диалекты
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../glossary/">Глоссарий</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Глоссарий
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-update-and-delete-statements" class="md-nav__link">
+    Использование операторов UPDATE и DELETE
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование операторов UPDATE и DELETE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-core-update" class="md-nav__link">
+    Конструкция выражения SQL update()
+  </a>
+  
+    <nav class="md-nav" aria-label="Конструкция выражения SQL update()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-correlated-updates" class="md-nav__link">
+    Связанные обновления
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-update-from" class="md-nav__link">
+    UPDATE..FROM
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-parameter-ordered-updates" class="md-nav__link">
+    Обновления с упорядоченными параметрами
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-deletes" class="md-nav__link">
+    Конструкция выражения SQL delete()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-update-delete-rowcount" class="md-nav__link">
+    Получение количества затронутых строк при UPDATE, DELETE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-update-delete" class="md-nav__link">
+    Использование RETURNING с UPDATE, DELETE
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs/edit/main/docs/tutorial/data/data_update.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>Использование операторов UPDATE и DELETE</h1>
+
+<h2 id="using-update-and-delete-statements">Использование операторов UPDATE и DELETE</h2>
+<p>До этого мы рассмотрели <a href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code>Insert</code></a>, чтобы добавить данные в нашу базу данных, и потратили много времени на <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>, который обрабатывает широкий спектр использования для извлечения данных из базы данных. В этом разделе мы рассмотрим конструкции <a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a> и <a href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code>Delete</code></a>, которые используются для изменения существующих строк и удаления существующих строк. В этом разделе мы рассмотрим эти конструкции с точки зрения Core.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Этот раздел не редактировался людьми, возможны ошибки и неточности в форматировании, вы можете помочь исправив и сделав pull request</p>
+</div>
+<p><strong>ORM-читатели</strong> - Как и в случае, упомянутом в <a href="data_insert.html#tutorial-core-insert">Использование операторов INSERT</a>, операции <a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a> и <a href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code>Delete</code></a>, когда они используются с ORM, обычно вызываются внутренне из объекта <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a> в рамках процесса <a href="../glossary.html#term-unit-of-work">единицы работы</a>.</p>
+<p>Однако, в отличие от <a href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code>Insert</code></a>, конструкции <a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a> и <a href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code>Delete</code></a> также могут использоваться напрямую с ORM, используя шаблон, известный как «ORM-enabled update and delete»; поэтому знакомство с этими конструкциями полезно для использования ORM. Оба стиля использования обсуждаются в разделах <a href="orm_data_manipulation.html#tutorial-orm-updating">Обновление объектов ORM с использованием шаблона единицы работы</a> и <a href="orm_data_manipulation.html#tutorial-orm-deleting">Удаление объектов ORM с использованием шаблона единицы работы</a>.</p>
+<h3 id="tutorial-core-update">Конструкция выражения SQL update()</h3>
+<p>Функция <a href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code>update()</code></a> генерирует новый экземпляр <a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a>, который представляет оператор UPDATE в SQL, который обновит существующие данные в таблице.</p>
+<p>Как и конструкция <a href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code>insert()</code></a>, есть «традиционная» форма <a href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code>update()</code></a>, которая генерирует оператор UPDATE для одной таблицы за раз и не возвращает никаких строк. Однако некоторые бэкэнды поддерживают оператор UPDATE, который может изменятьМетод <a href="../core/dml.html#sqlalchemy.sql.expression.Update.values" title="sqlalchemy.sql.expression.Update.values"><code>Update.values()</code></a> управляет содержимым элементов SET оператора UPDATE. Этот метод используется также в конструкции <a href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code>Insert</code></a>. Обычно параметры могут быть переданы с использованием имен столбцов в качестве именованных аргументов.</p>
+<p>UPDATE поддерживает все основные формы SQL UPDATE, включая обновления по выражениям, где мы можем использовать выражения <a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; stmt = update(user_table).values(fullname=&quot;Username: &quot; + user_table.c.name)
+&gt;&gt;&gt; print(stmt)
+UPDATE user_account SET fullname=(:name_1 || user_account.name)
+</code></pre></div>
+<p>Для поддержки UPDATE в контексте "executemany", где множество наборов параметров будут вызываться для одного и того же оператора, можно использовать конструкцию <a href="../core/sqlelement.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><code>bindparam()</code></a> для настройки привязанных параметров; они заменяют места, где обычно находятся литеральные значения:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy import bindparam
+&gt;&gt;&gt; stmt = (
+...     update(user_table)
+...     .where(user_table.c.name == bindparam(&quot;oldname&quot;))
+...     .values(name=bindparam(&quot;newname&quot;))
+... )
+&gt;&gt;&gt; with engine.begin() as conn:
+...     conn.execute(
+...         stmt,
+...         [
+...             {&quot;oldname&quot;: &quot;jack&quot;, &quot;newname&quot;: &quot;ed&quot;},
+...             {&quot;oldname&quot;: &quot;wendy&quot;, &quot;newname&quot;: &quot;mary&quot;},
+...             {&quot;oldname&quot;: &quot;jim&quot;, &quot;newname&quot;: &quot;jake&quot;},
+...         ],
+...     )
+BEGIN (implicit)
+UPDATE user_account SET name=? WHERE user_account.name = ?
+[...] [(&#39;ed&#39;, &#39;jack&#39;), (&#39;mary&#39;, &#39;wendy&#39;), (&#39;jake&#39;, &#39;jim&#39;)]
+&lt;sqlalchemy.engine.cursor.CursorResult object at 0x...&gt;
+COMMIT
+</code></pre></div>
+<p>Другие техники, которые могут быть применены к UPDATE, включают:</p>
+<h4 id="tutorial-correlated-updates">Связанные обновления</h4>
+<p>Оператор UPDATE может использовать строки в других таблицах, используя <a href="data_select.html#tutorial-scalar-subquery">связанный подзапрос</a>. Подзапрос может быть использован в любом месте, где может быть размещено выражение столбца:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; scalar_subq = (
+...     select(address_table.c.email_address)
+...     .where(address_table.c.user_id == user_table.c.id)
+...     .order_by(address_table.c.id)
+...     .limit(1)
+...     .scalar_subquery()
+... )
+&gt;&gt;&gt; update_stmt = update(user_table).values(fullname=scalar_subq)
+&gt;&gt;&gt; print(update_stmt)
+UPDATE user_account SET fullname=(SELECT address.email_address
+FROM address
+WHERE address.user_id = user_account.id ORDER BY address.id
+LIMIT :param_1)
+</code></pre></div>
+<h4 id="tutorial-update-from">UPDATE..FROM</h4>
+<p>Некоторые базы данных, такие как PostgreSQL и MySQL, поддерживают синтаксис "UPDATE FROM", где дополнительные таблицы могут быть указаны непосредственно в специСуществует также специфический для MySQL синтаксис, который может обновлять несколько таблиц. Для этого необходимо ссылаться на объекты <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a> в клаузе VALUES, чтобы ссылаться на дополнительные таблицы:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; update_stmt = (
+...     update(user_table)
+...     .where(user_table.c.id == address_table.c.user_id)
+...     .where(address_table.c.email_address == &quot;patrick@aol.com&quot;)
+...     .values(
+...         {
+...             user_table.c.fullname: &quot;Pat&quot;,
+...             address_table.c.email_address: &quot;pat@aol.com&quot;,
+...         }
+...     )
+... )
+&gt;&gt;&gt; from sqlalchemy.dialects import mysql
+&gt;&gt;&gt; print(update_stmt.compile(dialect=mysql.dialect()))
+UPDATE user_account, address
+SET address.email_address=%s, user_account.fullname=%s
+WHERE user_account.id = address.user_id AND address.email_address = %s
+</code></pre></div>
+<h4 id="tutorial-parameter-ordered-updates">Обновления с упорядоченными параметрами</h4>
+<p>Еще одно поведение, специфичное только для MySQL, заключается в том, что порядок параметров в клаузе SET в операторе UPDATE фактически влияет на вычисление каждого выражения. Для этого случая метод <a href="../core/dml.html#sqlalchemy.sql.expression.Update.ordered_values" title="sqlalchemy.sql.expression.Update.ordered_values"><code>Update.ordered_values()</code></a> принимает последовательность кортежей, чтобы этот порядок можно было контролировать <a href="#id2">[2]</a>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; update_stmt = update(some_table).ordered_values(
+...     (some_table.c.y, 20), (some_table.c.x, some_table.c.y + 10)
+... )
+&gt;&gt;&gt; print(update_stmt)
+UPDATE some_table SET y=:y, x=(some_table.y + :y_1)
+</code></pre></div>
+<p>[<a href="#id1">2</a>]
+Хотя словари Python гарантированно упорядочены по вставке, начиная с Python 3.7, метод <a href="../core/dml.html#sqlalchemy.sql.expression.Update.ordered_values" title="sqlalchemy.sql.expression.Update.ordered_values"><code>Update.ordered_values()</code></a> все еще обеспечивает дополнительную ясность намерений, когда необходимо, чтобы клауза SET оператора MySQL UPDATE происходила в определенном порядке.</p>
+<h3 id="tutorial-deletes">Конструкция выражения SQL delete()</h3>
+<p>Функция <a href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code>delete()</code></a> генерирует новый экземпляр <a href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code>Delete</code></a>, который представляет оператор DELETE в SQL, который удаляет строки из таблицы.</p>
+<p>Конструкция <a href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code>delete()</code></a> с точки зрения API очень похожа на конструкцию <a href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code>update()</code></a>, традиционно не возвращая строк, но позволяя использовать вариант RETURNING на некоторых базах данных.</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy import delete
+&gt;&gt;&gt; stmt = delete(user_table).where(user_table.c.name == &quot;patrick&quot;)
+&gt;&gt;&gt; print(stmt)
+DELETE```
+&gt;&gt;&gt; delete_stmt = (
+...     delete(user_table)
+...     .where(user_table.c.id == address_table.c.user_id)
+...     .where(address_table.c.email_address == &quot;patrick@aol.com&quot;)
+... )
+&gt;&gt;&gt; from sqlalchemy.dialects import mysql
+&gt;&gt;&gt; print(delete_stmt.compile(dialect=mysql.dialect()))
+DELETE FROM user_account USING user_account, address
+WHERE user_account.id = address.user_id AND address.email_address = %s
+</code></pre></div>
+<h3 id="tutorial-update-delete-rowcount">Получение количества затронутых строк при UPDATE, DELETE</h3>
+<p>Классы <a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a> и <a href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code>Delete</code></a> поддерживают возможность
+возвращения количества строк, соответствующих условию, после выполнения операции, для операций,
+которые вызываются через <a href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code>Connection</code></a> ядра, т.е.
+<a href="../core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code>Connection.execute()</code></a>. С учетом оговорок, упомянутых ниже, это значение
+доступно через атрибут <a href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code>CursorResult.rowcount</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; with engine.begin() as conn:
+...     result = conn.execute(
+...         update(user_table)
+...         .values(fullname=&quot;Patrick McStar&quot;)
+...         .where(user_table.c.name == &quot;patrick&quot;)
+...     )
+...     print(result.rowcount)
+BEGIN (implicit)
+UPDATE user_account SET fullname=? WHERE user_account.name = ?
+[...] (&#39;Patrick McStar&#39;, &#39;patrick&#39;)
+1
+COMMIT
+</code></pre></div>
+<p>Совет</p>
+<p>Класс <a href="../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code>CursorResult</code></a> является подклассом
+<a href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code>Result</code></a>, который содержит дополнительные атрибуты, специфичные для объекта <code>cursor</code> DBAPI. Экземпляр этого подкласса
+возвращается, когда оператор вызывается через метод
+<a href="../core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code>Connection.execute()</code></a>. При использовании ORM метод
+<a href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code>Session.execute()</code></a> возвращает объект этого типа для всех операторов INSERT, UPDATE и DELETE.</p>
+<p>Факты об <a href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code>CursorResult.rowcount</code></a>:<em> Возвращаемое значение - это количество строк, </em><em>соответствующих</em>* условию WHERE в запросе. Не имеет значения, были ли строки фактически изменены или нет.
+* <a href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code>CursorResult.rowcount</code></a> не всегда доступен для операторов UPDATE или DELETE, использующих RETURNING.
+* Для выполнения <a href="dbapi_transactions.html#tutorial-multiple-parameters">executemany</a> <a href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code>CursorResult.rowcount</code></a> также может быть недоступен, что сильно зависит от используемого модуля DBAPI и настроенных параметров. Атрибут <a href="../core/connections.html#sqlalchemy.engine.CursorResult.supports_sane_multi_rowcount" title="sqlalchemy.engine.CursorResult.supports_sane_multi_rowcount"><code>CursorResult.supports_sane_multi_rowcount</code></a> указывает, будет ли этот параметр доступен для текущей используемой базы данных.
+* Некоторые драйверы, особенно сторонние диалекты для нереляционных баз данных, могут вообще не поддерживать <a href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code>CursorResult.rowcount</code></a>. Атрибут <a href="../core/connections.html#sqlalchemy.engine.CursorResult.supports_sane_rowcount" title="sqlalchemy.engine.CursorResult.supports_sane_rowcount"><code>CursorResult.supports_sane_rowcount</code></a> указывает на это.
+* «rowcount» используется процессом ORM <a href="../glossary.html#term-unit-of-work">unit of work</a> для проверки того, что оператор UPDATE или DELETE соответствует ожидаемому количеству строк, и также является необходимым для функции ORM версионирования, описанной в разделе <a href="../orm/versioning.html#mapper-version-counter">Configuring a Version Counter</a>.</p>
+<h3 id="returning-update-delete">Использование RETURNING с UPDATE, DELETE</h3>
+<p>Как и конструкция <a href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code>Insert</code></a>, <a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a> и <a href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code>Delete</code></a>
+также поддерживают оператор RETURNING, который добавляется с помощью методов <a href="../core/dml.html#sqlalchemy.sql.expression.Update.returning" title="sqlalchemy.sql.expression.Update.returning"><code>Update.returning()</code></a> и <a href="../core/dml.html#sqlalchemy.sql.expression.Delete.returning" title="sqlalchemy.sql.expression.Delete.returning"><code>Delete.returning()</code></a>.
+Когда эти методы используются на бэкэнде, который поддерживает RETURNING, выбранные
+столбцы из всех строк, которые соответствуют условиям WHERE в запросе,
+будут возвращены в объекте <a href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code>Result</code></a> в виде строк, которые можно
+перебирать:</p>
+<p>```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>update_stmt = (
+...     update(user_table)
+...     .where(user_table.c.name == "patrick")
+...     .values(fullname="Patrick the Star")
+...     .returning(user_table.c.id, user_table.c.name)
+... )
+print(update_stmt)
+UPDATE user_account SET fullname=:fullname
+WHEREORM-возможности для UPDATE и DELETE:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<ul>
+<li><a href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code>Update</code></a> - обновление данных</li>
+<li><a href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code>Delete</code></a> - удаление данных</li>
+</ul>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Elisha Kravchuk
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy", "content.action.edit", "header.autohide"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

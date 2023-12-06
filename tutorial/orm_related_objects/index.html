@@ -1,0 +1,1357 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../orm_data_manipulation/">
+      
+      
+        <link rel="next" href="../../orm/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.1.7">
+    
+    
+      
+        <title>Работа с объектами, связанными с ORM - SQL Alchemy 2.0 Russian</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-96L8NNF9FG"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-96L8NNF9FG",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-96L8NNF9FG",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#working-with-orm-related-objects" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SQL Alchemy 2.0 Russian" class="md-header__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Alchemy 2.0 Russian
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Работа с объектами, связанными с ORM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SQL Alchemy 2.0 Russian" class="md-nav__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SQL Alchemy 2.0 Russian
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        SQLAlchemy начало
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Унифицированное руководство SQLAlchemy</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Унифицированное руководство SQLAlchemy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engine/" class="md-nav__link">
+        Установка соединения - Engine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../db_api/" class="md-nav__link">
+        Работа с транзакциями и DBAPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metadata/" class="md-nav__link">
+        Работа с метаданными базы данных
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../data/">Работа с Данными</a>
+          
+            <label for="__nav_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Работа с Данными
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_insert/" class="md-nav__link">
+        Использование операторов INSERT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_select/" class="md-nav__link">
+        Использование операторов SELECT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data/data_update/" class="md-nav__link">
+        Использование операторов UPDATE и DELETE
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orm_data_manipulation/" class="md-nav__link">
+        Манипуляции с данными с помощью ORM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Работа с объектами, связанными с ORM
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Работа с объектами, связанными с ORM
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-orm-related-objects" class="md-nav__link">
+    Работа с объектами, связанными с ORM
+  </a>
+  
+    <nav class="md-nav" aria-label="Работа с объектами, связанными с ORM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-loading-relationships" class="md-nav__link">
+    Загрузка отношений
+  </a>
+  
+    <nav class="md-nav" aria-label="Загрузка отношений">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-joining-relationships" class="md-nav__link">
+    Использование отношений для объединения
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-relationship-operators" class="md-nav__link">
+    Операторы WHERE для отношений
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-loader-strategies" class="md-nav__link">
+    Стратегии загрузки
+  </a>
+  
+    <nav class="md-nav" aria-label="Стратегии загрузки">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selectin-load" class="md-nav__link">
+    Selectin Load
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joined-load" class="md-nav__link">
+    Joined Load
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-loader-strategies-contains-eager" class="md-nav__link">
+    Явное объединение + Eager load
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../orm/">ORM</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          ORM
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../core/">SQLAlchemy Core</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          SQLAlchemy Core
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../dialects/">Диалекты</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Диалекты
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../glossary/">Глоссарий</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Глоссарий
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-orm-related-objects" class="md-nav__link">
+    Работа с объектами, связанными с ORM
+  </a>
+  
+    <nav class="md-nav" aria-label="Работа с объектами, связанными с ORM">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-loading-relationships" class="md-nav__link">
+    Загрузка отношений
+  </a>
+  
+    <nav class="md-nav" aria-label="Загрузка отношений">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-joining-relationships" class="md-nav__link">
+    Использование отношений для объединения
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-relationship-operators" class="md-nav__link">
+    Операторы WHERE для отношений
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-loader-strategies" class="md-nav__link">
+    Стратегии загрузки
+  </a>
+  
+    <nav class="md-nav" aria-label="Стратегии загрузки">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selectin-load" class="md-nav__link">
+    Selectin Load
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joined-load" class="md-nav__link">
+    Joined Load
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-loader-strategies-contains-eager" class="md-nav__link">
+    Явное объединение + Eager load
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs/edit/main/docs/tutorial/orm_related_objects.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>Работа с объектами, связанными с ORM</h1>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Этот раздел не редактировался людьми, возможны ошибки и неточности в форматировании, вы можете помочь исправив и сделав pull request</p>
+</div>
+<h2 id="working-with-orm-related-objects">Работа с объектами, связанными с ORM</h2>
+<p>В этом разделе мы рассмотрим еще один важный концепт ORM, а именно, как ORM взаимодействует с отображаемыми классами, которые ссылается на другие объекты. В разделе <a href="metadata.html#tutorial-declaring-mapped-classes">Объявление отображаемых классов</a> примеры отображаемых классов использовали конструкцию, называемую <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>. Эта конструкция определяет связь между двумя разными отображаемыми классами или отображаемым классом самого себя, последнее из которых называется <strong>самореференциальной</strong> связью.</p>
+<p>Чтобы описать основную идею <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>, сначала мы рассмотрим отображение в краткой форме, опуская отображения <a href="../orm/mapping_api.html#sqlalchemy.orm.mapped_column" title="sqlalchemy.orm.mapped_column"><code>mapped_column()</code></a> и другие директивы:</p>
+<div class="highlight"><pre><span></span><code>from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import relationship
+
+
+class User(Base):
+    \_\_tablename\_\_ = &quot;user\_account&quot;
+
+    # ... отображения mapped\_column()
+
+    addresses: Mapped[List[&quot;Address&quot;]] = relationship(back\_populates=&quot;user&quot;)
+
+
+class Address(Base):
+    \_\_tablename\_\_ = &quot;address&quot;
+
+    # ... отображения mapped\_column()
+
+    user: Mapped[&quot;User&quot;] = relationship(back\_populates=&quot;addresses&quot;)
+</code></pre></div>
+<p>Выше класс <code>User</code> теперь имеет атрибут <code>User.addresses</code>, а класс <code>Address</code> имеет атрибут <code>Address.user</code>. Конструкция <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>, в сочетании с конструкцией <a href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code>Mapped</code></a> для указания поведения типизации, будет использоваться для анализа отношений таблиц между объектами <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>, которые отображаются на классы <code>User</code> и <code>Address</code>. Поскольку объект <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>, представляющий таблицу <code>address</code>, имеет <a href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code>ForeignKeyConstraint</code></a>, который ссылается на таблицу <code>user_account</code>, <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> может однозначно определить, что существует <a href="../glossary.html#term-one-to-many">один ко многим</a> отношение от <code>User.addresses</code> к <code>User</code>; одна конкретная строка в таблице <code>user_account</code> может быть ссылкой на многие строки в таблице <code>address</code>.</p>
+<p>Все одно-ко-многим отношения естественным образом соответствуют <a href="../glossary.html#term-many-to-one">многим к одному</a> отношению в другом направлении, в данном случае отношению, указанному в <code>Address.user</code>. Параметр```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>u1 = User(name="pkrabs", fullname="Pearl Krabs")
+u1.addresses
+[]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre><span></span><code>Этот объект является специфичной для SQLAlchemy версией списка Python, который имеет возможность отслеживать и реагировать на изменения, внесенные в него. Коллекция также появилась автоматически, когда мы получили доступ к атрибуту, даже если мы никогда не присваивали ее объекту. Это аналогично поведению, отмеченному в [Вставка строк с использованием шаблона Unit of Work ORM](orm_data_manipulation.html#tutorial-inserting-orm), где было отмечено, что атрибуты, основанные на столбцах, которым мы явно не присваиваем значение, также автоматически отображаются как `None`, а не вызывают `AttributeError`, как это обычно происходит в Python.
+
+
+Поскольку объект `u1` все еще [временный](../glossary.html#term-transient), а `list`, который мы получили из `u1.addresses`, не был изменен (т.е. не был добавлен или расширен), он на самом деле еще не связан с объектом, но по мере изменения его состояния он станет частью состояния объекта `User`.
+
+
+Коллекция специфична для класса `Address`, который является единственным типом объекта Python, который может быть сохранен в ней. Используя метод `list.append()`, мы можем добавить объект `Address`:
+</code></pre></div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a1 = Address(email_address="pearl.krabs@gmail.com")
+u1.addresses.append(a1)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre><span></span><code>На этом этапе коллекция `u1.addresses`, как и ожидалось, содержит новый объект `Address`:
+</code></pre></div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>u1.addresses
+[Address(id=None, email_address='pearl.krabs@gmail.com')]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre><span></span><code>Поскольку мы связали объект `Address` с коллекцией `User.addresses` экземпляра `u1`, произошло также другое поведение, а именно, что отношение `User.addresses` синхронизировалось с отношением `Address.user`, так что мы можем перемещаться не только от объекта `User` к объекту `Address`, но также можем перемещаться от объекта `Address` обратно к «родительскому» объекту `User`:
+</code></pre></div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a1.user
+User(id=None, name='pkrabs', fullname='Pearl Krabs')</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre><span></span><code>Эта синхронизация произошла в результате использования параметра [`relationship.back_populates`](../orm/relationship_api.html#sqlalchemy.orm.relationship.params.back_populates &quot;sqlalchemy.orm.relationship&quot;) между двумя объектами [`relationship()`](../orm/relationship_api.html#sqlalchemy.orm.relationship &quot;sqlalchemy.orm.relationship&quot;). Этот параметр называет другой [`relationship()`](../orm/relationship_api.html#sqlalchemy.orm.relationship &quot;sqlalchemy.orm.relationship&quot;), для которого должно происходить взУ нас теперь есть объекты `User` и два объекта `Address`, которые связаны в двунаправленной структуре в памяти, но, как отмечено ранее в [Вставка строк с использованием шаблона ORM Unit of Work](orm_data_manipulation.html#tutorial-inserting-orm), эти объекты находятся в [переходном](../glossary.html#term-transient) состоянии, пока они не будут связаны с объектом [`Session`](../orm/session_api.html#sqlalchemy.orm.Session &quot;sqlalchemy.orm.Session&quot;).
+
+Мы используем [`Session`](../orm/session_api.html#sqlalchemy.orm.Session &quot;sqlalchemy.orm.Session&quot;), который все еще активен, и отмечаем, что когда мы применяем метод [`Session.add()`](../orm/session_api.html#sqlalchemy.orm.Session.add &quot;sqlalchemy.orm.Session.add&quot;) к объекту `User`, связанный объект `Address` также добавляется в эту же [`Session`](../orm/session_api.html#sqlalchemy.orm.Session &quot;sqlalchemy.orm.Session&quot;):
+</code></pre></div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>session.add(u1)
+u1 in session
+True
+a1 in session
+True
+a2 in session
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre><span></span><code>Вышеуказанное поведение, при котором [`Session`](../orm/session_api.html#sqlalchemy.orm.Session &quot;sqlalchemy.orm.Session&quot;) получил объект `User` и следовал по отношению `User.addresses`, чтобы найти связанный объект `Address`, известно как **каскад сохранения-обновления** и подробно обсуждается в документации по ORM в разделе [Каскады](../orm/cascades.html#unitofwork-cascades).
+
+Три объекта теперь находятся в [ожидающем](../glossary.html#term-pending) состоянии; это означает, что они готовы к вставке, но это еще не произошло; у всех трех объектов еще нет первичного ключа, и, кроме того, у объектов `a1` и `a2` есть атрибут `user_id`, который ссылается на [`Column`](../core/metadata.html#sqlalchemy.schema.Column &quot;sqlalchemy.schema.Column&quot;), который имеет [`ForeignKeyConstraint`](../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint &quot;sqlalchemy.schema.ForeignKeyConstraint&quot;), относящийся к столбцу `user_account.id`; они также равны `None`, так как объекты еще не связаны с реальной строкой базы данных:
+</code></pre></div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>print(u1.id)
+None
+print(a1.user_id)
+None</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre><span></span><code>Именно на этом этапе мы можем увидеть очень большую полезность процесса единицы работы; напомним, что в разделе [INSERT usually generates the “values” clause automatically](data_insert.html#tutorial-core-insert-values-clause) строки вставлялись в таблицы `user_account` и `address` с использованием некоторых сложных синтаксисов, чтобы автоматически связать столбцы `address.user_id` с теми из строк `user_account`. Кроме того, было необходимо, чтобы мы сначала вставляли строки `user_account`, а зат```
+&gt;&gt;&gt; session.commit()
+INSERT INTO user_account (name, fullname) VALUES (?, ?)
+[...] (&#39;pkrabs&#39;, &#39;Pearl Krabs&#39;)
+INSERT INTO address (email_address, user_id) VALUES (?, ?) RETURNING id
+[... (insertmanyvalues) 1/2 (ordered; batch not supported)] (&#39;pearl.krabs@gmail.com&#39;, 6)
+INSERT INTO address (email_address, user_id) VALUES (?, ?) RETURNING id
+[insertmanyvalues 2/2 (ordered; batch not supported)] (&#39;pearl@aol.com&#39;, 6)
+COMMIT
+</code></pre></div>
+<h3 id="tutorial-loading-relationships">Загрузка отношений</h3>
+<p>В последнем шаге мы вызвали <a href="../orm/session_api.html#sqlalchemy.orm.Session.commit" title="sqlalchemy.orm.Session.commit"><code>Session.commit()</code></a>, который выполнил COMMIT
+для транзакции, а затем, в соответствии с параметром
+<a href="../orm/session_api.html#sqlalchemy.orm.Session.commit.params.expire_on_commit" title="sqlalchemy.orm.Session.commit"><code>Session.commit.expire_on_commit</code></a>, истекли все объекты, чтобы
+они обновились для следующей транзакции.</p>
+<p>Когда мы следующий раз обратимся к атрибуту этих объектов, мы увидим SELECT,
+выполненный для первичных атрибутов строки, например, когда мы просматриваем
+новый сгенерированный первичный ключ для объекта <code>u1</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; u1.id
+BEGIN (implicit)
+SELECT user_account.id AS user_account_id, user_account.name AS user_account_name,
+user_account.fullname AS user_account_fullname
+FROM user_account
+WHERE user_account.id = ?
+[...] (6,)
+6
+</code></pre></div>
+<p>У объекта <code>u1</code> теперь есть постоянная коллекция <code>User.addresses</code>,
+к которой мы также можем обратиться. Поскольку эта коллекция состоит из
+дополнительного набора строк из таблицы <code>address</code>, когда мы обращаемся к этой коллекции,
+мы снова видим <a href="../glossary.html#term-lazy-load">ленивую загрузку</a>, чтобы получить объекты:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; u1.addresses
+SELECT address.id AS address_id, address.email_address AS address_email_address,
+address.user_id AS address_user_id
+FROM address
+WHERE ? = address.user_id
+[...] (6,)
+[Address(id=4, email_address=&#39;pearl.krabs@gmail.com&#39;), Address(id=5, email_address=&#39;pearl@aol.com&#39;)]
+</code></pre></div>
+<p>Коллекции и связанные атрибуты в SQLAlchemy ORM являются постоянными в
+памяти; после того, как коллекция или атрибут заполнены, SQL больше не
+выполняется, пока эта коллекция или атрибут не будут <a href="../glossary.html#term-expired">истекши</a>. Мы можем обратиться
+к <code>u1.addresses</code> снова, а также добавлять или удалять элементы, и это не
+приведет к новым вызовам SQL:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; u1.addresses
+[Address(id=4, email_address=&#39;pearl.krabs@gmail.com&#39;), Address(id=5, email_address=&#39;pearl@aol.com&#39;)]
+</code></pre></div>
+<p>Хотя загрузка, вызываемая ленивой### Использование отношений в запросах {#tutorial-select-relationships}</p>
+<p>Предыдущий раздел представил поведение конструкции <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> при работе с <strong>экземплярами отображаемого класса</strong>, такими как <code>u1</code>, <code>a1</code> и <code>a2</code> экземпляры классов <code>User</code> и <code>Address</code>. В этом разделе мы представляем поведение <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> в отношении <strong>поведения на уровне класса отображаемого класса</strong>, где он служит нескольким способам для автоматизации создания SQL-запросов.</p>
+<h4 id="tutorial-joining-relationships">Использование отношений для объединения</h4>
+<p>Разделы <a href="data_select.html#tutorial-select-join">Явные FROM-клаузы и JOIN-ы</a> и <a href="data_select.html#tutorial-select-join-onclause">Установка ON-клаузы</a> представили использование методов <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a> и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code>Select.join_from()</code></a> для составления SQL JOIN-клауз. Чтобы описать, как объединять таблицы, эти методы либо <strong>выводят</strong> ON-клаузу на основе наличия единственного неоднозначного объекта <a href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code>ForeignKeyConstraint</code></a> в структуре метаданных таблицы, связывающей две таблицы, либо мы можем предоставить явный конструкт SQL Expression, который указывает на конкретную ON-клаузу.</p>
+<p>При использовании сущностей ORM доступен дополнительный механизм, который помогает нам настроить ON-клаузу объединения, а именно использование объектов <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>, которые мы настроили в нашем отображении пользователя, как было продемонстрировано в разделе <a href="metadata.html#tutorial-declaring-mapped-classes">Объявление отображаемых классов</a>. Атрибут, связанный с классом, соответствующий <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>, может быть передан как <strong>единственный аргумент</strong> в <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a>, где он служит для указания как правой стороны объединения, так и ON-клаузы сразу же:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(select(Address.email_address).select_from(User).join(User.addresses))
+SELECT address.email_address
+FROM user_account JOIN address ON user_account.id = address.user_id
+</code></pre></div>
+<p>Наличие объекта ORM <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> в отображении не используется <a href="../core/selectableСмотрите раздел [Joins](../orm/queryguide/select.html#orm-queryguide-joins) в [ORM Querying Guide](../orm/queryguide/index.html) для получения множества примеров использования [Select.join()](../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a> и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code>Select.join_from()</code></a> с конструкциями <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>.</p>
+<p>Смотрите также</p>
+<p><a href="../orm/queryguide/select.html#orm-queryguide-joins">Joins</a> в <a href="../orm/queryguide/index.html">ORM Querying Guide</a></p>
+<h4 id="tutorial-relationship-operators">Операторы WHERE для отношений</h4>
+<p>Существуют дополнительные варианты генерации SQL-запросов, которые поставляются с <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> и обычно полезны при создании
+WHERE-выражения. Смотрите раздел <a href="../orm/queryguide/select.html#orm-queryguide-relationship-operators">Операторы WHERE для отношений</a> в <a href="../orm/queryguide/index.html">ORM Querying Guide</a>.</p>
+<p>Смотрите также</p>
+<p><a href="../orm/queryguide/select.html#orm-queryguide-relationship-operators">Операторы WHERE для отношений</a> в <a href="../orm/queryguide/index.html">ORM Querying Guide</a></p>
+<h3 id="tutorial-orm-loader-strategies">Стратегии загрузки</h3>
+<p>В разделе <a href="#tutorial-loading-relationships">Loading Relationships</a> мы представили концепцию
+того, что при работе с экземплярами отображаемых объектов доступ к атрибутам,
+которые отображаются с помощью <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a> в стандартном случае, вызовет
+<a href="../glossary.html#term-lazy-load">ленивую загрузку</a>, когда коллекция не заполнена, чтобы загрузить
+объекты, которые должны быть присутствовать в этой коллекции.</p>
+<p>Ленивая загрузка - один из самых известных шаблонов ORM и, вероятно, самый
+контроверсиальный. Когда в памяти находится несколько десятков ORM-объектов, каждый из которых ссылается на
+несколько незагруженных атрибутов, рутинная манипуляция этими объектами может
+вызвать множество дополнительных запросов, которые могут накапливаться (иначе
+известно как <a href="../glossary.html#term-N-plus-one-problem">проблема N+1</a>), и, что еще хуже, они генерируются
+неявно. Эти неявные запросы могут не быть замечены, могут вызывать ошибки,
+когда они попытаются выполниться после того, как транзакция базы данных больше не доступна,
+или при использовании альтернативных подходов к параллелизму```
+Для объекта пользователя в session.execute(
+    select(User).options(selectinload(User.addresses))
+).scalars():
+    user_obj.addresses  # доступ к уже загруженной коллекции адресов
+<div class="highlight"><pre><span></span><code>Они также могут быть настроены как значения по умолчанию для [`relationship()`](../orm/relationship_api.html#sqlalchemy.orm.relationship &quot;sqlalchemy.orm.relationship&quot;) с использованием
+опции [`relationship.lazy`](../orm/relationship_api.html#sqlalchemy.orm.relationship.params.lazy &quot;sqlalchemy.orm.relationship&quot;), например:
+</code></pre></div>
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import relationship</p>
+<p>class User(Base):
+    __tablename__ = "user_account"</p>
+<pre><code>addresses: Mapped[List["Address"]] = relationship(
+    back\_populates="user", lazy="selectin"
+)
+</code></pre>
+<p><code>``
+
+
+Каждый объект стратегии загрузки добавляет какой-то вид информации в выражение, которое
+будет использоваться позже [</code>Session<code>](../orm/session_api.html#sqlalchemy.orm.Session "sqlalchemy.orm.Session") при принятии решения о том, как различные
+атрибуты должны быть загружены и/или как они должны вести себя при доступе к ним.
+
+
+Ниже приведены несколько наиболее часто используемых
+стратегий загрузки.
+
+Смотрите также
+
+
+Два раздела в [Техниках загрузки отношений](../orm/queryguide/relationships.html):
+
+
+* [Настройка стратегий загрузки во время отображения](../orm/queryguide/relationships.html#relationship-lazy-option) - подробности о настройке стратегии
+на [</code>relationship()`](../orm/relationship_api.html#sqlalchemy.orm.relationship "sqlalchemy.orm.relationship")
+* <a href="../orm/queryguide/relationships.html#relationship-loader-options">Загрузка отношений с параметрами загрузчика</a> - подробности об использовании стратегий загрузки на этапе запроса
+
+</p>
+<h4 id="selectin-load">Selectin Load</h4>
+<p>Самый полезный загрузчик в современном SQLAlchemy это
+опция загрузчика <a href="../orm/queryguide/relationships.html#sqlalchemy.orm.selectinload" title="sqlalchemy.orm.selectinload"><code>selectinload()</code></a>. Эта опция решает наиболее распространенную
+форму проблемы "N plus one", которая заключается в том, что набор объектов ссылается
+на связанные коллекции. <a href="../orm/queryguide/relationships.html#sqlalchemy.orm.selectinload" title="sqlalchemy.orm.selectinload"><code>selectinload()</code></a> гарантирует, что определенная
+коллекция для полного набора объектов будет загружена заранее с помощью одного
+запроса. Он делает это с помощью формы SELECT, которая в большинстве случаев может быть
+выпущена только против связанной таблицы, без введения JOIN или
+подзапросов, и запрашивает только те родительские объекты, для которых
+коллекция еще не загружена. Ниже мы иллюстрируем <a href="../orm/queryguide/relationships.html#sqlalchemy.orm.selectinload" title="sqlalchemy.orm.selectinload"><code>selectinload()</code></a>
+загрузкой всех объектов <code>User</code> и всех связанных```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from sqlalchemy.orm import selectinload
+stmt = select(User).options(selectinload(User.addresses)).order_by(User.id)
+for row in session.execute(stmt):
+...     print(
+...         f"{row.User.name}  ({', '.join(a.email_address for a in row.User.addresses)})"
+...     )
+SELECT user_account.id, user_account.name, user_account.fullname
+FROM user_account ORDER BY user_account.id
+[...] ()
+SELECT address.user_id AS address_user_id, address.id AS address_id,
+address.email_address AS address_email_address
+FROM address
+WHERE address.user_id IN (?, ?, ?, ?, ?, ?)
+[...] (1, 2, 3, 4, 5, 6)
+spongebob  (spongebob@sqlalchemy.org)
+sandy  (sandy@sqlalchemy.org, sandy@squirrelpower.org)
+patrick  ()
+squidward  ()
+ehkrabs  ()
+pkrabs  (pearl.krabs@gmail.com, pearl@aol.com)</p>
+</blockquote>
+</blockquote>
+<p>```</p>
+</blockquote>
+<p>Смотрите также</p>
+<p><a href="../orm/queryguide/relationships.html#selectin-eager-loading">Выборка с IN-загрузкой</a> - в <a href="../orm/queryguide/relationships.html">Техники загрузки связей</a></p>
+<h4 id="joined-load">Joined Load</h4>
+<p>Стратегия жадной загрузки <a href="../orm/queryguide/relationships.html#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><code>joinedload()</code></a> является самой старой стратегией загрузки в SQLAlchemy, которая дополняет передаваемый в базу данных оператор SELECT соединением (которое может быть внешним или внутренним соединением в зависимости от параметров), которое может загружать связанные объекты.</p>
+<p>Стратегия <a href="../orm/queryguide/relationships.html#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><code>joinedload()</code></a> наилучшим образом подходит для загрузки связанных объектов многие-к-одному, поскольку для этого требуется только добавить дополнительные столбцы к строке первичной сущности, которая была бы выбрана в любом случае. Для большей эффективности она также принимает параметр <a href="../orm/queryguide/relationships.html#sqlalchemy.orm.joinedload.params.innerjoin" title="sqlalchemy.orm.joinedload"><code>joinedload.innerjoin</code></a>, чтобы использовать внутреннее соединение вместо внешнего соединения, как в случае ниже, где мы знаем, что все объекты <code>Address</code> имеют связанный <code>User</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy.orm import joinedload
+&gt;&gt;&gt; stmt = (
+...     select(Address)
+...     .options(joinedload(Address.user, innerjoin=True))
+...     .order_by(Address.id)
+... )
+&gt;&gt;&gt; for row in session.execute(stmt):
+...     print(f&quot;{row.Address.email_address} {row.Address.user.name}&quot;)
+SELECT address.id, address.email_address, address.user_id, user_account_1.id AS id_1,
+user_account_1.name, user_account_1.fullname
+FROM address
+JOIN user_account AS user_account_1 ON user_account_1.id = address.user_id
+ORDER BY address.id
+[...] ()
+spongebob@sqlalchemy.org spongebob
+sandy@sqlalchemy.org sandy
+sandy@squirrelpower.org sandy
+pearl.krabs@gmail.com pkrabs
+pearl@aol.com pkrabs
+</code></pre></div>
+<p>[<code>joinedload()</code>](../orm/queryguide/relationships.html#Важно отметить, что критерии WHERE и ORDER BY внешнего выражения Select не направлены на таблицу, отображаемую joinedload(). В SQL выше можно увидеть, что к таблице user_account применяется анонимный псевдоним, который не может быть напрямую адресован в запросе. Эта концепция подробно рассматривается в разделе The Zen of Joined Eager Loading.</p>
+<p>Совет</p>
+<p>Важно отметить, что многие к eager-загрузкам связей многие-к-одному часто не нужны, так как проблема "N plus one" гораздо менее распространена в общем случае. Когда многие объекты ссылаются на один и тот же связанный объект, например, многие объекты Address, каждый из которых ссылается на один и тот же объект User, SQL будет генерироваться только один раз для этого объекта User с использованием обычной ленивой загрузки. Процедура ленивой загрузки будет искать связанный объект по первичному ключу в текущей сессии Session без генерации SQL, когда это возможно.</p>
+<p>См. также</p>
+<p>Joined Eager Loading - в Relationship Loading Techniques</p>
+<h4 id="tutorial-orm-loader-strategies-contains-eager">Явное объединение + Eager load</h4>
+<p>Если мы загружаем строки Address, объединяя их с таблицей user_account, используя метод, такой как Select.join(), чтобы отобразить JOIN, мы также можем использовать этот JOIN, чтобы предварительно загрузить содержимое атрибута Address.user на каждом возвращенном объекте. Это по существу то, что мы используем "joined eager loading", но рендерим JOIN сами. Этот распространенный случай использования достигается с помощью опции contains_eager(). Эта опция очень похожа на joinedload(), за исключением того, что она предполагает, что мы настроили JOIN сами, и вместо этого указывает, что в каждый возвращенный объект должны быть загружены дополнительные столбцы в COLUMNS, например:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy.orm import contains_eager
+&gt;&gt;&gt; stmt = (
+...     select(Address)
+...     .join(Address.user)
+...     .where(User.name == &quot;pkrabs&quot;)
+...     .options(contains_eager(Address.user))
+...     .order_by(Address.id)
+... )
+&gt;&gt;&gt; for row in session.execute(stmt):
+...     print(f&quot;{row.Address.email_address} {row.Address.user.name}&quot;)
+SELECT user_account.id, user_account.name, user_account.fullname,
+address.id AS id_1, address.email_address, address.user_id
+FROM address JOIN user_account ON user_account.id = address.user_id
+WHERE user_account.name = ? ORDER BY address.id
+[...] (&#39;pkrabs&#39;,)
+pearl.krabs@gmail.com pkrabs
+pearl@aol.com pkrabs
+</code></pre></div>
+<p>Выше мы фильтровали строки по user_account.name и загружали строки из user_account в атрибут Address.user возвращаемых строк. Если бы мы применили joined```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>stmt = (
+...     select(Address)
+...     .join(Address.user)
+...     .where(User.name == "pkrabs")
+...     .options(joinedload(Address.user))
+...     .order_by(Address.id)
+... )
+print(stmt)  # SELECT имеет JOIN и LEFT OUTER JOIN, которые не нужны
+SELECT address.id, address.email_address, address.user_id,
+user_account_1.id AS id_1, user_account_1.name, user_account_1.fullname
+FROM address JOIN user_account ON user_account.id = address.user_id
+LEFT OUTER JOIN user_account AS user_account_1 ON user_account_1.id = address.user_id
+WHERE user_account.name = :name_1 ORDER BY address.id</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><pre><span></span><code>Смотрите также
+
+
+Два раздела в [Техники загрузки отношений](../orm/queryguide/relationships.html):
+
+
+* [Zen of Joined Eager Loading](../orm/queryguide/relationships.html#zen-of-eager-loading) - подробно описывает вышеупомянутую проблему
+* [Routing Explicit Joins/Statements into Eagerly Loaded Collections](../orm/queryguide/relationships.html#contains-eager) - использование [`contains_eager()`](../orm/queryguide/relationships.html#sqlalchemy.orm.contains_eager &quot;sqlalchemy.orm.contains_eager&quot;)
+
+#### Raiseload 
+
+
+Одна дополнительная стратегия загрузки, которую стоит упомянуть, - [`raiseload()`](../orm/queryguide/relationships.html#sqlalchemy.orm.raiseload &quot;sqlalchemy.orm.raiseload&quot;).
+Этот параметр используется для полного блокирования приложения от проблемы
+[N plus one](../glossary.html#term-N-plus-one), вызывая ошибку вместо того, чтобы выполнять ленивую
+загрузку. У него есть две вариации, которые управляются через
+опцию [`raiseload.sql_only`](../orm/queryguide/relationships.html#sqlalchemy.orm.raiseload.params.sql_only &quot;sqlalchemy.orm.raiseload&quot;), чтобы блокировать либо ленивую загрузку,
+которая требует SQL, либо все операции «загрузки», включая те, которые
+только нужно проверить в текущей [`Session`](../orm/session_api.html#sqlalchemy.orm.Session &quot;sqlalchemy.orm.Session&quot;).
+
+
+Один из способов использования [`raiseload()`](../orm/queryguide/relationships.html#sqlalchemy.orm.raiseload &quot;sqlalchemy.orm.raiseload&quot;) - настроить его на
+[`relationship()`](../orm/relationship_api.html#sqlalchemy.orm.relationship &quot;sqlalchemy.orm.relationship&quot;) самостоятельно, установив [`relationship.lazy`](../orm/relationship_api.html#sqlalchemy.orm.relationship.params.lazy &quot;sqlalchemy.orm.relationship&quot;)
+на значение `&quot;raise_on_sql&quot;`, так что для определенного
+отображения определенное отношение никогда не будет пытаться генерировать SQL:
+</code></pre></div>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import relationship</p>
+<p>class User(Base):
+...     <strong>tablename</strong> = "user_account"
+...     id: Mapped[int] = mapped_column(primary_key=True)
+...     addresses: Mapped[List["Address"]] = relationship(
+...         back_populates="user", lazy="raise_on_sql"
+...     )</p>
+<p>class Address(Base):
+...     <strong>tablename</strong> = "address"
+...     id: Mapped[int] = mapped_column(primary_key=True)
+...     user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
+...    ```
+u1 = (
+...     session.execute(select(User).options(selectinload(User.addresses)))
+...     .scalars()
+...     .first()
+... )
+SELECT user_account.id
+FROM user_account
+[...] ()
+SELECT address.user_id AS address_user_id, address.id AS address_id
+FROM address
+WHERE address.user_id IN (?, ?, ?, ?, ?, ?)
+[...] (1, 2, 3, 4, 5, 6)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>```</p>
+<p>Опция <code>lazy="raise_on_sql"</code> пытается быть умной и в отношениях многие-к-одному; выше, если атрибут <code>Address.user</code> объекта <code>Address</code> не был загружен, но объект <code>User</code> был локально присутствующим в той же <a href="../orm/session_api.html#sqlalchemy.orm.Session"><code>Session</code></a>, стратегия "raiseload" не вызовет ошибку.</p>
+<p>Смотрите также</p>
+<p><a href="../orm/queryguide/relationships.html#prevent-lazy-with-raiseload">Предотвращение нежелательной ленивой загрузки с помощью raiseload</a> - в <a href="../orm/queryguide/relationships.html">Техниках загрузки отношений</a></p>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Elisha Kravchuk
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "content.code.copy", "content.action.edit", "header.autohide"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

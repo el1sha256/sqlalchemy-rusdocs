@@ -1,0 +1,2657 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../data_insert/">
+      
+      
+        <link rel="next" href="../data_update/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.1.7">
+    
+    
+      
+        <title>Использование операторов SELECT - SQL Alchemy 2.0 Russian</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ded33207.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-96L8NNF9FG"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-96L8NNF9FG",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-96L8NNF9FG",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#select" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SQL Alchemy 2.0 Russian" class="md-header__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Alchemy 2.0 Russian
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Использование операторов SELECT
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
+          
+            <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SQL Alchemy 2.0 Russian" class="md-nav__button md-logo" aria-label="SQL Alchemy 2.0 Russian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    SQL Alchemy 2.0 Russian
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    el1sha-git/sqlalchemy-rusdocs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        SQLAlchemy начало
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../">Унифицированное руководство SQLAlchemy</a>
+          
+            <label for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Унифицированное руководство SQLAlchemy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../engine/" class="md-nav__link">
+        Установка соединения - Engine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../db_api/" class="md-nav__link">
+        Работа с транзакциями и DBAPI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../metadata/" class="md-nav__link">
+        Работа с метаданными базы данных
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Работа с Данными</a>
+          
+            <label for="__nav_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Работа с Данными
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_insert/" class="md-nav__link">
+        Использование операторов INSERT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Использование операторов SELECT
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Использование операторов SELECT
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    Использование оператора SELECT
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование оператора SELECT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select-sql-expression" class="md-nav__link">
+    Конструкция select() SQL Expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-selecting-columns" class="md-nav__link">
+    Установка COLUMNS и FROM clause
+  </a>
+  
+    <nav class="md-nav" aria-label="Установка COLUMNS и FROM clause">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-selecting-orm-entities" class="md-nav__link">
+    Выбор ORM-сущностей и столбцов
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-select-arbitrary-text" class="md-nav__link">
+    Выбор с текстовыми столбцовыми выражениями
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-select-where-clause" class="md-nav__link">
+    Оператор WHERE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-select-join" class="md-nav__link">
+    Явные выражения FROM и JOIN
+  </a>
+  
+    <nav class="md-nav" aria-label="Явные выражения FROM и JOIN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#outer-full-join" class="md-nav__link">
+    OUTER и FULL join
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-order-by-group-by-having" class="md-nav__link">
+    ORDER BY, GROUP BY, HAVING
+  </a>
+  
+    <nav class="md-nav" aria-label="ORDER BY, GROUP BY, HAVING">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-group-by-w-aggregates" class="md-nav__link">
+    Агрегатные функции с GROUP BY / HAVING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-order-by-label" class="md-nav__link">
+    Сортировка или группировка по метке
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-using-aliases" class="md-nav__link">
+    Использование псевдонимов
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование псевдонимов">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-entity-aliases" class="md-nav__link">
+    Псевдонимы ORM-сущностей
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-subqueries-ctes" class="md-nav__link">
+    Подзапросы и CTE
+  </a>
+  
+    <nav class="md-nav" aria-label="Подзапросы и CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cte" class="md-nav__link">
+    Общие таблицы выражений (CTE)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-subqueries-orm-aliased" class="md-nav__link">
+    ORM Entity Subqueries/CTEs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-scalar-subquery" class="md-nav__link">
+    Скалярные и коррелированные подзапросы
+  </a>
+  
+    <nav class="md-nav" aria-label="Скалярные и коррелированные подзапросы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-lateral-correlation" class="md-nav__link">
+    Корреляция LATERAL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-union" class="md-nav__link">
+    UNION, UNION ALL и другие операции наборов
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-exists" class="md-nav__link">
+    EXISTS подзапросы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions" class="md-nav__link">
+    Работа с SQL-функциями
+  </a>
+  
+    <nav class="md-nav" aria-label="Работа с SQL-функциями">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Функции имеют типы возврата
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Встроенные функции имеют заранее настроенные типы возврата
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-" class="md-nav__link">
+    Расширенные техники работы с SQL-функциями
+  </a>
+  
+    <nav class="md-nav" aria-label="Расширенные техники работы с SQL-функциями">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-window-functions" class="md-nav__link">
+    Использование оконных функций
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions-within-group" class="md-nav__link">
+    Специальные модификаторы WITHIN GROUP, FILTER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions-table-valued" class="md-nav__link">
+    Функции со значением таблицы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions-column-valued" class="md-nav__link">
+    Функции со значением столбца - функция со значением таблицы как скалярный столбец
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-casts" class="md-nav__link">
+    Приведение типов данных и приведение типов
+  </a>
+  
+    <nav class="md-nav" aria-label="Приведение типов данных и приведение типов">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type_coerce-python-only-cast" class="md-nav__link">
+    type_coerce() - Python-only "cast"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_update/" class="md-nav__link">
+        Использование операторов UPDATE и DELETE
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../orm_data_manipulation/" class="md-nav__link">
+        Манипуляции с данными с помощью ORM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../orm_related_objects/" class="md-nav__link">
+        Работа с объектами, связанными с ORM
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../orm/">ORM</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          ORM
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../core/">SQLAlchemy Core</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          SQLAlchemy Core
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../dialects/">Диалекты</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Диалекты
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../../glossary/">Глоссарий</a>
+          
+        </div>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Глоссарий
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    Использование оператора SELECT
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование оператора SELECT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select-sql-expression" class="md-nav__link">
+    Конструкция select() SQL Expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-selecting-columns" class="md-nav__link">
+    Установка COLUMNS и FROM clause
+  </a>
+  
+    <nav class="md-nav" aria-label="Установка COLUMNS и FROM clause">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-selecting-orm-entities" class="md-nav__link">
+    Выбор ORM-сущностей и столбцов
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-select-arbitrary-text" class="md-nav__link">
+    Выбор с текстовыми столбцовыми выражениями
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-select-where-clause" class="md-nav__link">
+    Оператор WHERE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-select-join" class="md-nav__link">
+    Явные выражения FROM и JOIN
+  </a>
+  
+    <nav class="md-nav" aria-label="Явные выражения FROM и JOIN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#outer-full-join" class="md-nav__link">
+    OUTER и FULL join
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-order-by-group-by-having" class="md-nav__link">
+    ORDER BY, GROUP BY, HAVING
+  </a>
+  
+    <nav class="md-nav" aria-label="ORDER BY, GROUP BY, HAVING">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-group-by-w-aggregates" class="md-nav__link">
+    Агрегатные функции с GROUP BY / HAVING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-order-by-label" class="md-nav__link">
+    Сортировка или группировка по метке
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-using-aliases" class="md-nav__link">
+    Использование псевдонимов
+  </a>
+  
+    <nav class="md-nav" aria-label="Использование псевдонимов">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-orm-entity-aliases" class="md-nav__link">
+    Псевдонимы ORM-сущностей
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-subqueries-ctes" class="md-nav__link">
+    Подзапросы и CTE
+  </a>
+  
+    <nav class="md-nav" aria-label="Подзапросы и CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cte" class="md-nav__link">
+    Общие таблицы выражений (CTE)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-subqueries-orm-aliased" class="md-nav__link">
+    ORM Entity Subqueries/CTEs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-scalar-subquery" class="md-nav__link">
+    Скалярные и коррелированные подзапросы
+  </a>
+  
+    <nav class="md-nav" aria-label="Скалярные и коррелированные подзапросы">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-lateral-correlation" class="md-nav__link">
+    Корреляция LATERAL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-union" class="md-nav__link">
+    UNION, UNION ALL и другие операции наборов
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-exists" class="md-nav__link">
+    EXISTS подзапросы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions" class="md-nav__link">
+    Работа с SQL-функциями
+  </a>
+  
+    <nav class="md-nav" aria-label="Работа с SQL-функциями">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Функции имеют типы возврата
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Встроенные функции имеют заранее настроенные типы возврата
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-" class="md-nav__link">
+    Расширенные техники работы с SQL-функциями
+  </a>
+  
+    <nav class="md-nav" aria-label="Расширенные техники работы с SQL-функциями">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-window-functions" class="md-nav__link">
+    Использование оконных функций
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions-within-group" class="md-nav__link">
+    Специальные модификаторы WITHIN GROUP, FILTER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions-table-valued" class="md-nav__link">
+    Функции со значением таблицы
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-functions-column-valued" class="md-nav__link">
+    Функции со значением столбца - функция со значением таблицы как скалярный столбец
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tutorial-casts" class="md-nav__link">
+    Приведение типов данных и приведение типов
+  </a>
+  
+    <nav class="md-nav" aria-label="Приведение типов данных и приведение типов">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#type_coerce-python-only-cast" class="md-nav__link">
+    type_coerce() - Python-only "cast"
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/el1sha-git/sqlalchemy-rusdocs/edit/main/docs/tutorial/data/data_select.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>Использование операторов SELECT</h1>
+
+<h2 id="select">Использование оператора SELECT</h2>
+<p>Для Core и ORM
+функция <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>
+генерирует
+конструкцию <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>,
+которая используется для всех запросов SELECT. Передается методам, таким
+как <a href="../core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code>Connection.execute()</code></a>
+в Core и <a href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code>Session.execute()</code></a>
+в ORM, и выдается SELECT-запрос в текущей транзакции, а строки результата доступны через возвращаемый
+объект <a href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code>Result</code></a>.</p>
+<p><strong>ORM Читатели</strong> - содержание здесь одинаково хорошо применимо как к Core, так и к ORM использованию, и здесь
+упоминаются базовые варианты использования ORM. Однако также доступно много других специфических для ORM функций; они
+документированы в <a href="../orm/queryguide/index.html">ORM Querying Guide</a>.</p>
+<h3 id="select-sql-expression">Конструкция select() SQL Expression</h3>
+<p>Конструкция <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>
+строит оператор таким же образом,
+как <a href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code>insert()</code></a>,
+используя <a href="../glossary.html#term-generative">генеративный</a> подход, где каждый метод добавляет больше состояния в объект.
+Как и другие SQL-конструкции, его можно преобразовать в строку на месте:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy import select
+&gt;&gt;&gt; stmt = select(user_table).where(user_table.c.name == &quot;spongebob&quot;)
+&gt;&gt;&gt; print(stmt)
+SELECT user_account.id, user_account.name, user_account.fullname
+FROM user_account
+WHERE user_account.name = :name_1
+</code></pre></div>
+<p>Также так же, как и все другие SQL-конструкции на уровне оператора, чтобы фактически выполнить оператор, мы передаем его
+методу выполнения. Поскольку оператор SELECT возвращает строки, мы всегда можем перебирать объект результата, чтобы
+получить обратно объекты <a href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code>Row</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; with engine.connect() as conn:
+...     for row in conn.execute(stmt):
+...         print(row)
+BEGIN (implicit)
+SELECT user_account.id, user_account.name, user_account.fullname
+FROM user_account
+WHERE user_account.name = ?
+[...] (&#39;spongebob&#39;,)
+(1, &#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;)
+ROLLBACK
+</code></pre></div>
+<p>При использовании ORM, особенно с
+конструкцией <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>,
+которая составляется против сущностей ORM, мы захотим выполнить ее, используя
+метод <a href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code>Session.execute()</code></a>
+на <a href="../orm/session_api.html#sqlalchemy.orm.Session" title="sqlalchemy.orm.Session"><code>Session</code></a>; используя этот подход, мы
+продолжаем получать объекты <a href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code>Row</code></a></p>
+<h3 id="tutorial-selecting-columns">Установка COLUMNS и FROM clause</h3>
+<p>Функция <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>
+принимает позиционные элементы, представляющие любое количество
+выражений <a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a>
+и/или <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>, а также широкий спектр
+совместимых объектов, которые преобразуются в список SQL-выражений, которые будут выбраны и возвращены в качестве
+столбцов в результате. Эти элементы также используются в более простых случаях для создания FROM clause, которая
+выводится из переданных столбцов и выражений, похожих на таблицы:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(select(user_table))
+SELECT user_account.id, user_account.name, user_account.fullname
+FROM user_account
+</code></pre></div>
+<p>Для выбора отдельных столбцов с помощью подхода Core
+объекты <a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a> получаются из доступа
+к <a href="../core/metadata.html#sqlalchemy.schema.Table.c" title="sqlalchemy.schema.Table.c"><code>Table.c</code></a> и могут быть отправлены
+непосредственно; FROM clause будет выведен как набор
+всех <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a> и
+других <a href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code>FromClause</code></a>
+объектов, которые представлены этими столбцами:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(select(user_table.c.name, user_table.c.fullname))
+SELECT user_account.name, user_account.fullname
+FROM user_account
+</code></pre></div>
+<p>В качестве альтернативы, при использовании
+коллекции <a href="../core/selectable.html#sqlalchemy.sql.expression.FromClause.c" title="sqlalchemy.sql.expression.FromClause.c"><code>FromClause.c</code></a>
+любого <a href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code>FromClause</code></a>,
+такого как <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>,
+для <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a> могут быть
+указаны несколько столбцов с помощью кортежа строковых имен:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(select(user_table.c[&quot;name&quot;, &quot;fullname&quot;]))
+SELECT user_account.name, user_account.fullname
+FROM user_account
+</code></pre></div>
+<p>Новое в версии 2.0: Добавлена возможность доступа к кортежам в коллекции :attr<code>.FromClause.c</code></p>
+<h4 id="tutorial-selecting-orm-entities">Выбор ORM-сущностей и столбцов</h4>
+<p>ORM-сущности, такие как наш класс <code>User</code>, а также отображаемые на них столбцы, такие как <code>User.name</code>, также участвуют в
+системе языка выражений SQL Expression, представляя таблицы и столбцы. Ниже приведен пример выбора из сущности <code>User</code>,
+который в конечном итоге отображается так же, как если бы мы использовали <code>user_table</code> напрямую:</p>
+<p>Вышеуказанный <a href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code>Row</code></a> имеет только один элемент,
+представляющий сущность <code>User</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; row[0]
+&gt; &gt; &gt; User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)
+</code></pre></div>
+<p>Высоко рекомендуемым методом для достижения того же результата, что и выше, является использование
+метода <a href="../orm/session_api.html#sqlalchemy.orm.Session.scalars" title="sqlalchemy.orm.Session.scalars"><code>Session.scalars()</code></a>
+для выполнения оператора
+непосредственно; этот метод вернет
+объект <a href="../core/connections.html#sqlalchemy.engine.ScalarResult" title="sqlalchemy.engine.ScalarResult"><code>ScalarResult</code></a>,
+который
+одновременно доставляет первый «столбец» каждой строки, в данном случае,
+экземпляры класса <code>User</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; user = session.scalars(select(User)).first()
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+[...] ()
+&gt; &gt; &gt; user
+&gt; &gt; &gt; User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)
+</code></pre></div>
+<p>В качестве альтернативы мы можем выбирать отдельные столбцы сущности ORM в качестве отдельных
+элементов в строках результата, используя привязанные к классу атрибуты; когда они
+передаются в такую конструкцию,
+как <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>, они
+разрешаются в
+<a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a> или другое SQL-выражение,
+представленное каждым
+атрибут:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(User.name, User.fullname))
+&gt; &gt; &gt; SELECT user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+</code></pre></div>
+<p>Когда мы вызываем <em>этот</em> оператор с
+помощью <a href="../orm/session_api.html#sqlalchemy.orm.Session.execute" title="sqlalchemy.orm.Session.execute"><code>Session.execute()</code></a>,
+мы теперь
+получаем строки, которые имеют отдельные элементы для каждого значения, каждый соответствующий
+отдельному столбцу или другому SQL-выражению:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; row = session.execute(select(User.name, User.fullname)).first()
+&gt; &gt; &gt; SELECT user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+[...] ()
+&gt; &gt; &gt; row
+(&#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;)
+</code></pre></div>
+<p>Подходы также могут быть смешаны, как в примере ниже, где мы выбираем атрибут <code>name</code>
+сущности <code>User</code> в качестве первого элемента строки и объединяем
+его с полными сущностями <code>Address</code> во втором элементе:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; session.execute(
+...     select(User.name, Address).where(User.id == Address.user_id).order_by(Address.id)
+... ).all()
+SELECT user_account.name, address.id, address.email_address, address.user_id
+FROM user_account, address
+WHERE user_account.id = address.user_id ORDER BY address.id
+[...] ()
+[(&#39;spongebob&#39;, Address(id=1, email_address=&#39;spongebob@sqlalchemy.org&#39;)),
+(&#39;sandy&#39;, Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)),
+(&#39;sandy&#39;, Address(id=3, email_address=&#39;sandy@squirrelpower.org&#39;))]
+</code></pre></div>
+<p><a href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.label" title="sqlalchemy.sql.expression.ColumnElement.label"><code>ColumnElement.label()</code></a>,
+а также метод с тем же именем, доступный в ORM-атрибутах, предоставляет SQL-метку столбца или выражения, позволяя ему
+иметь определенное имя в наборе результатов. Это может быть полезно при обращении к произвольным SQL-выражениям в строке
+результата по имени:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy import func, cast
+&gt;&gt;&gt; stmt = select(
+...     (&quot;Username: &quot; + user_table.c.name).label(&quot;username&quot;),
+... ).order_by(user_table.c.name)
+&gt;&gt;&gt; with engine.connect() as conn:
+...     for row in conn.execute(stmt):
+...         print(f&quot;{row.username}&quot;)
+BEGIN (implicit)
+SELECT ? || user_account.name AS username
+FROM user_account ORDER BY user_account.name
+[...] (&#39;Username: &#39;,)
+Username: patrick
+Username: sandy
+Username: spongebob
+ROLLBACK
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">См. также</p>
+<p><a href="#tutorial-order-by-label">Упорядочивание или группировка по метке</a> - имена меток, которые мы создаем, также могут быть
+использованы в клаузе ORDER BY или GROUP
+BY <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>.</p>
+</div>
+<h4 id="tutorial-select-arbitrary-text">Выбор с текстовыми столбцовыми выражениями</h4>
+<p>Когда мы создаем
+объект <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>,
+используя
+функцию <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>, мы
+обычно передаем ему серию объектов <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>
+и <a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a>, которые были определены с
+использованием <a href="metadata.html#tutorial-working-with-metadata">метаданных таблицы</a>, или при использовании ORM мы можем
+отправлять атрибуты ORM, которые представляют столбцы таблицы. Однако иногда также требуется создавать произвольные
+SQL-блоки внутри операторов, такие как константные строковые выражения или просто какой-то произвольный SQL, который
+быстрее написать буквально.</p>
+<p>Конструкция <a href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code>text()</code></a>,
+введенная в <a href="dbapi_transactions.html#tutorial-working-with-transactions">Работа с транзакциями и DBAPI</a>, может
+фактически быть встроена в
+конструкцию <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>
+непосредственно, например, ниже, где мы создаем жестко закодированную строковую литеру <code>'some phrase'</code> и встраиваем ее в
+оператор SELECT:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy import text
+&gt;&gt;&gt; stmt = select(text(&quot;&#39;some phrase&#39;&quot;), user_table.c.name).order_by(user_table.c.name)
+&gt;&gt;&gt; with engine.connect() as conn:
+...     print(conn.execute(stmt).all())
+BEGIN (implicit)
+SELECT &#39;some phrase&#39;, user_account.name
+FROM user_account ORDER BY user_account.name
+[generated in ...] ()
+[(&#39;some phrase&#39;, &#39;patrick&#39;), (&#39;some phrase&#39;, &#39;sandy&#39;), (&#39;some phrase&#39;, &#39;spongebob&#39;)]
+ROLLBACK
+</code></pre></div>
+<p>Хотя конструкция <a href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code>text()</code></a>
+может использоваться в большинстве случаев для вставки литеральных фраз SQL, чаще всего мы имеем дело с текстовыми
+единицами, каждая из которых представляет отдельное выражение столбца. В этом общем случае мы можем получить больше
+функциональности из нашего текстового фрагмента, используя
+конструкцию <a href="../core/sqlelement.html#sqlalchemy.sql.expression.literal_column" title="sqlalchemy.sql.expression.literal_column"><code>literal_column()</code></a>
+вместо этого. Этот объект похож
+на <a href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code>text()</code></a>, за исключением
+того, что вместо представления произвольного SQL любой формы он явно представляет отдельный "столбец" и может быть
+помечен и обращаться к нему в подзапросах и других выражениях:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy import literal_column
+&gt;&gt;&gt; stmt = select(literal_column(&quot;&#39;some phrase&#39;&quot;).label(&quot;p&quot;), user_table.c.name).order_by(
+...     user_table.c.name
+... )
+&gt;&gt;&gt; with engine.connect() as conn:
+...     for row in conn.execute(stmt):
+...         print(f&quot;{row.p}, {row.name}&quot;)
+BEGIN (implicit)
+SELECT &#39;some phrase&#39; AS p, user_account.name
+FROM user_account ORDER BY user_account.name
+[generated in ...] ()
+some phrase, patrick
+some phrase, sandy
+some phrase, spongebob
+ROLLBACK
+</code></pre></div>
+<p>Обратите внимание, что в обоих случаях, при
+использовании <a href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code>text()</code></a>
+или <a href="../core/sqlelement.html#sqlalchemy.sql.expression.literal_column" title="sqlalchemy.sql.expression.literal_column"><code>literal_column()</code></a>,
+мы пишем синтаксическое выражение SQL, а не литеральное значение. Поэтому мы должны включать все кавычки или
+синтаксические элементы, необходимые для SQL, который мы хотим увидеть в рендеринге.</p>
+<h3 id="tutorial-select-where-clause">Оператор WHERE</h3>
+<p>SQLAlchemy позволяет нам составлять выражения SQL, такие как <code>name = 'squidward'</code> или <code>user_id &gt; 10</code>, используя
+стандартные операторы Python в сочетании
+с <a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a> и подобными объектами. Для
+логических выражений большинство операторов Python, таких как <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;=</code> и т. д., генерируют новые объекты
+SQL Expression, а не простые булевы значения <code>True</code>/<code>False</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(user_table.c.name == &quot;squidward&quot;)
+&gt; &gt; &gt; user_account.name = :name_1
+
+&gt; &gt; &gt; print(address_table.c.user_id &gt; 10)
+&gt; &gt; &gt; address.user_id &gt; :user_id_1
+</code></pre></div>
+<p>Мы можем использовать такие выражения для генерации оператора WHERE, передавая полученные объекты
+методу <a href="../core/selectable.html#Один
+вызов [Select.where()](../core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code>Select.where()</code></a>
+также принимает несколько выражений с тем же эффектом:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(
+&gt; &gt; &gt; ... select(address_table.c.email_address).where(
+&gt; &gt; &gt; ... user_table.c.name == &quot;squidward&quot;,
+&gt; &gt; &gt; ... address_table.c.user_id == user_table.c.id,
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; SELECT address.email_address
+&gt; &gt; &gt; FROM address, user_account
+&gt; &gt; &gt; WHERE user_account.name = :name_1 AND address.user_id = user_account.id
+</code></pre></div>
+<p>"AND" и "OR" соединения также доступны непосредственно с использованием
+функций <a href="../core/sqlelement.html#sqlalchemy.sql.expression.and_" title="sqlalchemy.sql.expression.and_"><code>and_()</code></a>
+и <a href="../core/sqlelement.html#sqlalchemy.sql.expression.or_" title="sqlalchemy.sql.expression.or_"><code>or_()</code></a>, проиллюстрированных
+ниже в терминах сущностей ORM:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy import and_, or_
+&gt; &gt; &gt; print(
+&gt; &gt; &gt; ... select(Address.email_address).where(
+&gt; &gt; &gt; ... and_(
+&gt; &gt; &gt; ... or_(User.name == &quot;squidward&quot;, User.name == &quot;sandy&quot;),
+&gt; &gt; &gt; ... Address.user_id == User.id,
+&gt; &gt; &gt; ...         )
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; SELECT address.email_address
+&gt; &gt; &gt; FROM address, user_account
+&gt; &gt; &gt; WHERE (user_account.name = :name_1 OR user_account.name = :name_2)
+&gt; &gt; &gt; AND address.user_id = user_account.id
+</code></pre></div>
+<p>Для простых сравнений "равенства" с одной сущностью также существует популярный метод, известный
+как <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.filter_by" title="sqlalchemy.sql.expression.Select.filter_by"><code>Select.filter_by()</code></a>,
+который принимает именованные аргументы, соответствующие ключам столбцов или именам атрибутов ORM. Он будет фильтровать
+по самому левому FROM-выражению или последней присоединенной сущности:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(User).filter_by(name=&quot;spongebob&quot;, fullname=&quot;Spongebob Squarepants&quot;))
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; WHERE user_account.name = :name_1 AND user_account.fullname = :fullname_1
+</code></pre></div>
+<p>Смотрите также</p>
+<p><a href="../core/operators.html">Справочник операторов</a> - описания большинства функций операторов SQL в SQLAlchemy</p>
+<h3 id="tutorial-select-join">Явные выражения FROM и JOIN</h3>
+<p>Как уже упоминалось ранее, выражение FROM обычно <strong>выводится</strong> на основе выражений, которые мы устанавливаем в столбцах,
+а также других
+элементов <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>.</p>
+<p>Если мы устанавливаем один столбец из
+определенной <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a> в COLUMNS, то это
+помещает эту <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a> в выражение FROM:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(user_table.c.name))
+&gt; &gt; &gt; SELECT user_account.name
+&gt; &gt; &gt; FROM user_account
+</code></pre></div>
+<p>Если мы установим столбцы из двух таблиц, то получим выражение FROM, разделенное запятыми:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(
+&gt; &gt; &gt; ... select(user_table.c.name, address_table.c.email_address).join_from(
+&gt; &gt; &gt; ... user_table, address_table
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; SELECT user_account.name, address.email_address
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id
+</code></pre></div>
+<p>Другой
+метод - <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a>,
+который указывает только правую сторону JOIN, левая сторона подразумевается:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(user_table.c.name, address_table.c.email_address).join(address_table))
+&gt; &gt; &gt; SELECT user_account.name, address.email_address
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id
+</code></pre></div>
+<p>ON Clause подразумевается</p>
+<p>При
+использовании <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code>Select.join_from()</code></a>
+или <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a>
+мы можем
+заметить, что ON clause соединения также подразумевается для нас в простых случаях внешнего ключа. Больше об этом в
+следующем разделе.</p>
+<p>У нас также есть возможность явно добавлять элементы в FROM clause, если он не
+выводится так, как мы хотим из списка столбцов. Мы используем
+метод <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.select_from" title="sqlalchemy.sql.expression.Select.select_from"><code>Select.select_from()</code></a>
+для этого, как показано ниже,
+где мы устанавливаем <code>user_table</code> в качестве первого элемента в FROM
+clause
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a>
+для установки <code>address_table</code> в качестве второго:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(address_table.c.email_address).select_from(user_table).join(address_table))
+&gt; &gt; &gt; SELECT address.email_address
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id
+</code></pre></div>
+<p>Еще один пример, когда мы можем захотеть
+использовать <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.select_from" title="sqlalchemy.sql.expression.Select.select_from"><code>Select.select_from()</code></a>-
+это если наш список столбцов не содержит достаточно информации для FROM clause. Например, для SELECT из общего
+SQL-выражения
+<code>count(*)</code>, мы используем элемент SQLAlchemy, известный
+как <a href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code>sqlalchemy.sql.expression.func</code></a>,
+чтобы
+произвести функцию SQL <code>count()</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy import func
+&gt; &gt; &gt; print(select(func.count(&quot;*&quot;)).select_from(user_table))
+&gt; &gt; &gt; SELECT count(:count_2) AS count_1
+&gt; &gt; &gt; FROM user_account
+</code></pre></div>
+<p>Смотрите также</p>
+<p><a href="../orm/queryguide/select.html#orm-queryguide-select-from">Установка самого левого элемента FROM clause в join</a> -
+в <a href="../orm/queryguide/index.html">ORM Querying Guide</a> -
+содержит дополнительные примеры и заметки
+относительно
+взаимодействия <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.select_from" title="sqlalchemy.sql.expression.Select.select_from"><code>Select.select_from()</code></a>
+и
+<a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a>
+.Если у левой и правой цели соединения нет такого ограничения, или есть несколько ограничений, мы должны указать
+ON-клаузу напрямую.
+Как <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a>,
+так
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code>Select.join_from()</code></a>
+принимают дополнительный аргумент для ON-клаузы, который указывается с использованием тех же механизмов SQL-выражений,
+что и в разделе <a href="#tutorial-select-where-clause">WHERE-клауза</a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(
+&gt; &gt; &gt; ... select(address_table.c.email_address)
+&gt; &gt; &gt; ... .select_from(user_table)
+&gt; &gt; &gt; ... .join(address_table, user_table.c.id == address_table.c.user_id)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; SELECT address.email_address
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id
+</code></pre></div>
+<p><strong>Совет ORM</strong> - есть еще один способ генерировать ON-клаузу при использовании сущностей ORM, которые используют
+конструкцию <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>,
+как это было настроено в предыдущем разделе
+в <a href="metadata.html#tutorial-declaring-mapped-classes">Объявление отображаемых классов</a>. Это целая тема, которая подробно
+рассматривается в
+разделе <a href="orm_related_objects.html#tutorial-joining-relationships">Использование отношений для соединения</a>.</p>
+<h4 id="outer-full-join">OUTER и FULL join</h4>
+<p>Методы <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code>Select.join()</code></a>
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code>Select.join_from()</code></a>
+принимают ключевые
+аргументы <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join.params.isouter" title="sqlalchemy.sql.expression.Select.join"><code>Select.join.isouter</code></a>
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join.params.full" title="sqlalchemy.sql.expression.Select.join"><code>Select.join.full</code></a>,
+которые будут отображать LEFT OUTER JOIN и FULL OUTER JOIN соответственно:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(user_table).join(address_table, isouter=True))
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account LEFT OUTER JOIN address ON user_account.id = address.user_id
+&gt; &gt; &gt; print(select(user_table).join(address_table, full=True))
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account FULL OUTER JOIN address ON user_account.id = address.user_id
+</code></pre></div>
+<p>Также есть
+метод <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.outerjoin" title="sqlalchemy.sql.expression.Select.outerjoin"><code>Select.outerjoin()</code></a>,
+который эквивалентен использованию <code>.join(..., isouter=True)</code>.</p>
+<p>Совет</p>
+<p>SQL также имеет "RIGHT OUTER JOIN". SQLAlchemy не отображает это напрямую; вместо этого поменяйте порядок таблиц и
+используйте "LEFT OUTER JOIN".</p>
+<h3 id="tutorial-order-by-group-by-having">ORDER BY, GROUP BY, HAVING</h3>
+<p>SQL-оператор SELECT включает клаузу, называемую ORDER BY, которая используется для возврата выбранных строк в заданном
+порядкеКлаузу ORDER BY составляют на основе конструкций SQL Expression, обычно основанных
+на <a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a> или аналогичных объектах.
+Метод <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code>Select.order_by()</code></a>
+принимает одно или несколько таких выражений в качестве позиционных аргументов:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(user_table).order_by(user_table.c.name))
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account ORDER BY user_account.name
+</code></pre></div>
+<p>Возможность сортировки по возрастанию / убыванию предоставляют
+модификаторы <a href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.asc" title="sqlalchemy.sql.expression.ColumnElement.asc"><code>ColumnElement.asc()</code></a>
+и <a href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.desc" title="sqlalchemy.sql.expression.ColumnElement.desc"><code>ColumnElement.desc()</code></a>,
+которые присутствуют также и в связанных с ORM атрибутах:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(User).order_by(User.fullname.desc()))
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account ORDER BY user_account.fullname DESC
+</code></pre></div>
+<p>Этот оператор вернет строки, отсортированные по столбцу <code>user_account.fullname</code> в порядке убывания.</p>
+<h4 id="tutorial-group-by-w-aggregates">Агрегатные функции с GROUP BY / HAVING</h4>
+<p>В SQL агрегатные функции позволяют объединять выражения столбцов из нескольких строк в один результат. Примеры включают
+подсчет, вычисление среднего значения, а также поиск максимального или минимального значения в наборе значений.</p>
+<p>SQLAlchemy предоставляет SQL-функции в открытом виде, используя пространство
+имен <a href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code>func</code></a>. Это специальный
+объект-конструктор, который создает новые
+экземпляры <a href="../core/functions.html#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code>Function</code></a>,
+когда ему передается имя конкретной SQL-функции, которое может иметь любое имя, а также ноль или более аргументов,
+которые, как и во всех других случаях, являются конструкциями SQL Expression. Например, чтобы вывести функцию SQL
+COUNT() для столбца <code>user_account.id</code>, мы вызываем имя <code>count()</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy import func
+&gt; &gt; &gt; count_fn = func.count(user_table.c.id)
+&gt; &gt; &gt; print(count_fn)
+&gt; &gt; &gt; count(user_account.id)
+</code></pre></div>
+<p>SQL-функции описываются более подробно позже в этом учебнике в разделе <a href="#tutorial-functions">Работа с SQL-функциями</a>.</p>
+<p>При использовании агрегатных функций в SQL клауза GROUP BY является необходимой, поскольку она позволяет разбивать
+строки на группы, в которых агрегатные функции будут применяться к каждой группе индив```</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; with engine.connect() как conn:
+...     result = conn.execute(
+...         select(User.name, func.count(Address.id).label(&quot;count&quot;))
+...         .join(Address)
+...         .group_by(User.name)
+...         .having(func.count(Address.id) &gt; 1)
+...     )
+...     print(результат.all())
+BEGIN (implicit)
+SELECT user_account.name, count(address.id) AS count
+FROM user_account JOIN address ON user_account.id = address.user_id GROUP BY user_account.name
+HAVING count(address.id) &gt; ?
+[...] (1,)
+[(&#39;sandy&#39;, 2)]
+ROLLBACK
+</code></pre></div>
+<h4 id="tutorial-order-by-label">Сортировка или группировка по метке</h4>
+<p>Важная техника, в частности на некоторых базах данных, - это возможность
+УПОРЯДОЧИТЬ ПО или ГРУППИРОВАТЬ ПО выражению, которое уже указано в столбцах
+клаузы, без повторного указания выражения в клаузе ORDER BY или GROUP BY
+и вместо этого использовать имя столбца или помеченное имя из клаузы COLUMNS.
+Эта форма доступна, передавая строковый текст имени в
+<a href="../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code>Select.order_by()</code></a>
+или <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.group_by" title="sqlalchemy.sql.expression.Select.group_by"><code>Select.group_by()</code></a>
+метод. Текст
+передается <strong>не напрямую</strong>; вместо этого имя, данное выражению
+в клаузе столбцов и отображаемое как имя этого выражения в контексте, поднимается
+ошибка, если соответствие не найдено. Унарные модификаторы
+<a href="../core/sqlelement.html#sqlalchemy.sql.expression.asc" title="sqlalchemy.sql.expression.asc"><code>asc()</code></a>
+и <a href="../core/sqlelement.html#sqlalchemy.sql.expression.desc" title="sqlalchemy.sql.expression.desc"><code>desc()</code></a> также могут
+использоваться в этой форме:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy import func, desc
+&gt;&gt;&gt; stmt = (
+...     выбрать(Address.user_id, func.count(Address.id).label(&quot;num_addresses&quot;))
+...     .group_by(&quot;user_id&quot;)
+...     .order_by(&quot;user_id&quot;, desc(&quot;num_addresses&quot;))
+... )
+&gt;&gt;&gt; print(stmt)
+SELECT address.user_id, count(address.id) AS num_addresses
+FROM address GROUP BY address.user_id ORDER BY address.user_id, num_addresses DESC
+</code></pre></div>
+<h3 id="tutorial-using-aliases">Использование псевдонимов</h3>
+<p>Теперь, когда мы выбираем из нескольких таблиц и используем соединения, мы быстро
+сталкиваемся с тем, что нам нужно ссылаться на одну и ту же таблицу несколько раз
+в клаузе FROM выражения. Мы делаем это с помощью SQL <strong>псевдонимов</strong>,
+которые являются синтаксисом, который предоставляет альтернативное имя таблице или подзапросу
+от которого можно ссылаться на него в выражении.</p>
+<p>В SQLAlchemy Expression Language эти "имена" представлены
+объектами <a href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code>FromClause</code></a>,
+известными как
+конструкция <a href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code>Alias</code></a>.
+Конструкция <a href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code>Alias</code></a>
+создается в Core с использованием
+метода <a href="../core/selectable.html#sqlalchemy.sql.expression.FromClause.alias" title="sqlalchemy.sql.expression.FromClause.alias"><code>FromClause.alias()</code></a>.
+Конструкция <a href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code>Alias</code></a> так же,
+как и конструкция <code>Table</code>, имеет пространство
+имен <a href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code>Column</code></a> объектов внутри
+коллекции <code>Alias.c</code>. Например, приведенный ниже оператор SELECT возвращает все уникальные пары имен пользователей:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; user_alias_1 = user_table.alias()
+&gt; &gt; &gt; user_alias_2 = user_table.alias()
+&gt; &gt; &gt; print(
+&gt; &gt; &gt; ... select(user_alias_1.c.name, user_alias_2.c.name).join_from(
+&gt; &gt; &gt; ... user_alias_1, user_alias_2, user_alias_1.c.id &gt; user_alias_2.c.id
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; SELECT user_account_1.name, user_account_2.name AS name_1
+&gt; &gt; &gt; FROM user_account AS user_account_1
+&gt; &gt; &gt; JOIN user_account AS user_account_2 ON user_account_1.id &gt; user_account_2.id
+</code></pre></div>
+<h4 id="tutorial-orm-entity-aliases">Псевдонимы ORM-сущностей</h4>
+<p>ORM-эквивалент
+метода <a href="../core/selectable.html#sqlalchemy.sql.expression.FromClause.alias" title="sqlalchemy.sql.expression.FromClause.alias"><code>FromClause.alias()</code></a> -
+функция
+ORM <a href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code>aliased()</code></a>, которая может быть
+применена к сущности
+такой как <code>User</code> и <code>Address</code>. Это создает
+объект <a href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code>Alias</code></a>
+внутри, который используется с оригинальным
+отображенным <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a> объектом,
+с сохранением функциональности ORM. SELECT ниже выбирает из
+сущности <code>User</code> все объекты, которые включают два конкретных адреса электронной почты:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy.orm import aliased
+&gt; &gt; &gt; address_alias_1 = aliased(Address)
+&gt; &gt; &gt; address_alias_2 = aliased(Address)
+&gt; &gt; &gt; print(
+&gt; &gt; &gt; ... select(User)
+&gt; &gt; &gt; ... .join_from(User, address_alias_1)
+&gt; &gt; &gt; ... .where(address_alias_1.email_address == &quot;patrick@aol.com&quot;)
+&gt; &gt; &gt; ... .join_from(User, address_alias_2)
+&gt; &gt; &gt; ... .where(address_alias_2.email_address == &quot;patrick@gmail.com&quot;)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; JOIN address AS address_1 ON user_account.id = address_1.user_id
+&gt; &gt; &gt; JOIN address AS address_2 ON user_account.id = address_2.user_id
+&gt; &gt; &gt; WHERE address_1.email_address = :email_address_1
+&gt; &gt; &gt; AND address_2.email_address = :email_address_2
+</code></pre></div>
+<p>Совет</p>
+<p>Как упоминалось в разделе <a href="#tutorial-select-join-onclause">Установка ON Clause</a>, ORM предоставляет
+еще один способ объединения с использованием
+конструкции <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>.
+Приведенный выше пример с псевдонимами демонстрируется с
+использованием <a href="../orm/relationship_api.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><code>relationship()</code></a>
+в
+разделе <a href="../orm/queryguide/select.html#tutorial-joining-relationships-aliased">Использование Relationship для объединения между псевдонимами целей</a>.</p>
+<h3 id="tutorial-subqueries-ctes">Подзапросы и CTE</h3>
+<p>Подзапрос в SQL - это оператор SELECT, который отображается внутри скобок и
+размещается в контексте включающего оператора, обычно оператора SELECT,
+но не обязательно.</p>
+<p>В этом разделе будет рассмотрен так называемый "нескалярный" SQLAlchemy использует
+объект <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a> для
+представления подзапроса и
+объект <a href="../core/selectable.html#sqlalchemy.sql.expression.CTE" title="sqlalchemy.sql.expression.CTE"><code>CTE</code></a> для представления
+CTE, обычно получаемых из
+методов <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.subquery" title="sqlalchemy.sql.expression.Select.subquery"><code>Select.subquery()</code></a>
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.cte" title="sqlalchemy.sql.expression.Select.cte"><code>Select.cte()</code></a>
+соответственно. Любой из этих объектов может использоваться в качестве элемента FROM внутри более крупной
+конструкции <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>.</p>
+<p>Мы можем
+создать <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a>,
+который будет выбирать агрегатное количество строк из таблицы <code>address</code> (функции агрегирования и GROUP BY были
+рассмотрены ранее в разделе <a href="#tutorial-group-by-w-aggregates">Функции агрегирования с GROUP BY / HAVING</a>):</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; subq = (
+select(func.count(address_table.c.id).label(&quot;count&quot;), address_table.c.user_id)
+.group_by(address_table.c.user_id)
+.subquery()
+</code></pre></div>
+<p>Преобразование подзапроса в строку без вложения его в
+другой <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a> или
+другой оператор дает простой оператор SELECT без каких-либо вложенных скобок:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(subq)
+&gt; &gt; &gt; SELECT count(address.id) AS count, address.user_id
+&gt; &gt; &gt; FROM address GROUP BY address.user_id
+</code></pre></div>
+<p>Объект <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a>
+ведет себя как любой другой объект FROM, такой
+как <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>, в частности, он включает
+пространство имен <code>Subquery.c</code> столбцов, которые он выбирает. Мы можем использовать это пространство имен для ссылки как
+на столбец <code>user_id</code>, так и на нашу настраиваемую метку выражения <code>count</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(select(subq.c.user_id, subq.c.count))
+&gt; &gt; &gt; SELECT anon_1.user_id, anon_1.count
+&gt; &gt; &gt; FROM (SELECT count(address.id) AS count, address.user_id AS user_id
+&gt; &gt; &gt; FROM address GROUP BY address.user_id) AS anon_1
+</code></pre></div>
+<p>С выборкой строк, содержащихся в объекте <code>subq</code>, мы можем применить объект к более
+крупному <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>,
+который объединит данные с таблицей <code>user_account</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt = select(user_table.c.name, user_table.c.fullname, subq.c.count).join_from(
+&gt; &gt; &gt; ... user_table, subq
+&gt; &gt; &gt; ... )
+
+&gt; &gt; &gt; print(stmt)
+&gt; &gt; &gt; SELECT user_account.name, user_account.fullname, anon_1.count
+&gt; &gt; &gt; FROM user_account JOIN (SELECT count(address.id) AS count, address.user_id AS user_id
+&gt; &gt; &gt; FROM address GROUP BY address.user
+</code></pre></div>
+<p>Для соединения таблиц <code>user_account</code> и <code>address</code> мы использовали
+метод <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code>Select.join_from()</code></a>.
+Как было показано ранее, условие ON для этого соединения было снова <strong>выведено</strong> на основе ограничений внешнего ключа.
+Несмотря на то, что у SQL-подзапроса самого по себе нет ограничений, SQLAlchemy может использовать ограничения,
+представленные на столбцах, определив, что столбец <code>subq.c.user_id</code> <strong>производный</strong> от
+столбца <code>address_table.c.user_id</code>, который выражает обратную связь с столбцом <code>user_table.c.id</code>, который затем
+используется для создания ON-условия.</p>
+<h4 id="cte">Общие таблицы выражений (CTE)</h4>
+<p>Использование конструкции <a href="../core/selectable.html#sqlalchemy.sql.expression.CTE" title="sqlalchemy.sql.expression.CTE"><code>CTE</code></a>
+в SQLAlchemy практически идентично использованию
+конструкции <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a>.
+Изменив вызов
+метода <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.subquery" title="sqlalchemy.sql.expression.Select.subquery"><code>Select.subquery()</code></a>
+на
+использование <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.cte" title="sqlalchemy.sql.expression.Select.cte"><code>Select.cte()</code></a>,
+мы можем использовать полученный объект как элемент FROM таким же образом, но SQL, сгенерированный в этом случае, имеет
+совершенно другой синтаксис общих таблиц выражений:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; subq = (
+&gt; &gt; &gt; ... select(func.count(address_table.c.id).label(&quot;count&quot;), address_table.c.user_id)
+&gt; &gt; &gt; ... .group_by(address_table.c.user_id)
+&gt; &gt; &gt; ... .cte()
+&gt; &gt; &gt; ... )
+
+&gt; &gt; &gt; stmt = select(user_table.c.name, user_table.c.fullname, subq.c.count).join_from(
+&gt; &gt; &gt; ... user_table, subq
+&gt; &gt; &gt; ... )
+
+&gt; &gt; &gt; print(stmt)
+&gt; &gt; &gt; WITH anon_1 AS
+(SELECT count(address.id) AS count, address.user_id AS user_id
+&gt; &gt; &gt; FROM address GROUP BY address.user_id)
+&gt; &gt; &gt; SELECT user_account.name, user_account.fullname, anon_1.count
+&gt; &gt; &gt; FROM user_account JOIN anon_1 ON user_account.id = anon_1.user_id
+</code></pre></div>
+<p>Конструкция <a href="../core/selectable.html#sqlalchemy.sql.expression.CTE" title="sqlalchemy.sql.expression.CTE"><code>CTE</code></a> также имеет
+возможность использоваться в «рекурсивном» стиле и может в более сложных случаях составляться из RETURNING-запроса
+операторов INSERT, UPDATE или DELETE. В документации
+к <a href="../core/selectable.html#sqlalchemy.sql.expression.CTE" title="sqlalchemy.sql.expression.CTE"><code>CTE</code></a> содержатся подробности
+об этих дополнительных шаблонах.</p>
+<p>В обоих случаях подзапрос и CTE были названы на уровне SQL с использованием «анонимного» имени. В коде Python нам не
+нужно вообще указывать эти имена. Идентичность объекта <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery[Select.cte()](../core/selectable.html#sqlalchemy.sql.expression.Select.cte &quot;sqlalchemy.sql.expression.Select.cte"><code>Subquery</code></a> -
+примеры использования CTE, включая то, как использовать RECURSIVE, а также CTE, ориентированные на DML.</p>
+<h4 id="tutorial-subqueries-orm-aliased">ORM Entity Subqueries/CTEs</h4>
+<p>В ORM конструкция <a href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code>aliased()</code></a> может
+использоваться для связи ORM-сущности, такой как наш класс <code>User</code> или <code>Address</code>, с любым
+концептом <a href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code>FromClause</code></a>,
+который представляет источник строк. Предыдущий раздел <a href="#tutorial-orm-entity-aliases">ORM Entity Aliases</a> иллюстрирует
+использование <a href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code>aliased()</code></a> для связи
+отображенного класса
+с <a href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code>Alias</code></a> его
+отображенной <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>. Здесь мы
+иллюстрируем <a href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code>aliased()</code></a>, делающий то же
+самое
+против <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a>, а
+также <a href="../core/selectable.html#sqlalchemy.sql.expression.CTE" title="sqlalchemy.sql.expression.CTE"><code>CTE</code></a>, сгенерированный
+против
+конструкции <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>,
+который в конечном итоге происходит от той же
+отображенной <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>.</p>
+<p>Ниже приведен пример
+применения <a href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code>aliased()</code></a> к
+конструкции <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a>,
+чтобы извлечь ORM-сущности из его строк. Результат показывает серию объектов <code>User</code> и <code>Address</code>, где данные для каждого
+объекта <code>Address</code> в конечном итоге происходят из подзапроса против таблицы <code>address</code>, а не непосредственно из этой
+таблицы:
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; subq = select(Address).where(~Address.email_address.like(&quot;%@aol.com&quot;)).subquery()
+&gt; &gt; &gt; address_subq = aliased(Address, subq)
+&gt; &gt; &gt; stmt = (
+&gt; &gt; &gt; ... select(User, address_subq)
+&gt; &gt; &gt; ... .join_from(User, address_subq)
+&gt; &gt; &gt; ... .order_by(User.id, address_subq.id)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; with Session(engine) as session:
+&gt; &gt; &gt; ... for user, address in session.execute(stmt):
+&gt; &gt; &gt; ... print(f&quot;{user} {address}&quot;)
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname,
+&gt; &gt; &gt; anon_1.id AS id_1, anon_1.email_address, anon_1.user_id
+&gt; &gt; &gt; FROM user_account JOIN
+(SELECT address.id AS id, address.email_address AS email_address, address.user_id AS user_id
+&gt; &gt; &gt; FROM address
+&gt; &gt; &gt; WHERE address.email_address NOT LIKE ?) AS anon_1 ON user_account.id = anon_1.user_id
+&gt; &gt; &gt; ORDER BY user_account.id, anon_1.id
+[...] (&#39;%@aol.com&#39;,)
+&gt; &gt; &gt; User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;) Address(id=1, email_address=&#39;spongebob@sqlalchemy.org&#39;)
+&gt; &gt; &gt; User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)
+&gt; &gt; &gt; User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=3, email_address=&#39;sandy@squirrelpower.org&#39;)
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div></p>
+<p>Далее приводится еще один пример, который полностью аналогичен предыдущему, за исключением того, что он использует
+конструкцию <a href="../core/selectable.html#sqlalchemy.sql.expression.CTE" title="sqlalchemy.sql.expression.CTE"><code>CTE</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; cte_obj = select(Address).where(~Address.email_address.like(&quot;%@aol.com&quot;)).cte()
+&gt; &gt; &gt; address_cte = aliased(Address, cte_obj)
+&gt; &gt; &gt; stmt = (
+&gt; &gt; &gt; ... select(User, address_cte)
+&gt; &gt; &gt; ... .join_from(User, address_cte)
+&gt; &gt; &gt; ... .order_by(User.id, address_cte.id)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; with Session(engine) as session:
+&gt; &gt; &gt; ... for user, address in session.execute(stmt):
+&gt; &gt; &gt; ... print(f&quot;{user} {address}&quot;)
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; WITH anon_1 AS
+(SELECT address.id AS id, address.email_address AS email_address, address.user_id AS user_id
+&gt; &gt; &gt; FROM address
+&gt; &gt; &gt; WHERE address.email_address NOT LIKE ?)
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname,
+&gt; &gt; &gt; anon_1.id AS id_1, anon_1.email_address, anon_1.user_id
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; JOIN anon_1 ON user_account.id = anon_1.user_id
+&gt; &gt; &gt; ORDER BY user_account.id, anon_1.id
+[...] (&#39;%@aol.com&#39;,)
+&gt; &gt; &gt; User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;) Address(id=1, email_address=&#39;spongebob@sqlalchemy.org&#39;)
+&gt; &gt; &gt; User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)
+&gt; &gt; &gt; User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=3, email_address=&#39;sandy@squirrelpower.org&#39;)
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<p>См. также</p>
+<p><a href="../orm/queryguide/select.html#orm-queryguide-subqueries">Выбор сущностей из подзапросов</a> -
+в <a href="../orm/queryguide/index.html">Руководстве по запросам ORM</a></p>
+<h3 id="tutorial-scalar-subquery">Скалярные и коррелированные подзапросы</h3>
+<p>Скалярный подзапрос - это подзапрос, который возвращает ровно ноль или одну строку и ровно один столбец. Затем подзапрос
+используется в COLUMNS или WHERE-клаузе включающего SELECT-запроса и отличается от обычного подзапроса тем, что не
+используется в FROM-клаузе. Коррелированный подзапрос - это скалярный подзапрос, который ссылается на таблицу во
+включающем SELECT-запросе.</p>
+<p>SQLAlchemy представляет скалярный подзапрос с помощью конструкции ScalarSelect, которая является частью иерархии
+выражений ColumnElement, в отличие от обычного подзапроса, который представлен конструкцией Subquery, которая находится
+в иерархии FromClause.</p>
+<p>Скалярные подзапросы часто, но не обязательно, используются с агрегатными функциями, ранее представленными в разделе "
+Агрегатные функции с GROUP BY / HAVING". Скалярный подзапрос указывается явно с помощью метода Select.scalar_subquery(),
+как показано ниже. Его строковая форма по умолчанию при преобразовании в строку представляет собой обычный
+SELECT-запрос, который выбирает из двух таблиц:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; subq = (
+&gt; &gt; &gt; ... select(func.count(address_table.c.id))
+&gt; &gt; &gt; ... .where(user_table.c.id == address_table.c.user_id)
+&gt; &gt; &gt; ... .scalar_subquery()
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; print(subq)
+(SELECT count(address.id) AS count_1
+&gt; &gt; &gt; FROM address, user_account
+&gt; &gt; &gt; WHERE user_account.id = address.user_id)
+</code></pre></div>
+<p>Теперь объект subq относится к иерархии SQL-выражений ColumnElement, и его можно использовать как любое другое выражение
+столбца:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(subq == 5)
+(SELECT count(address.id) AS count_1
+&gt; &gt; &gt; FROM address, user_account
+&gt; &gt; &gt; WHERE user_account.id = address.user_id) = :param_1
+</code></pre></div>
+<p>Хотя скалярный подзапрос по умолчанию включает в свой FROM-клауз таблицы user_account и address, когда он встраивается
+во включающую конструкцию select(), которая работает с таблицей user_account, таблица user_account автоматически
+становится скоррелированной, что означает, что она не отображается в FROM-клаузе подзапроса:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt = select(user_table.c.name, subq.label(&quot;address_count&quot;))
+&gt; &gt; &gt; print(stmt)
+&gt; &gt; &gt; SELECT user_account.name, (SELECT count(address.id) AS count_1
+&gt; &gt; &gt; FROM address
+&gt; &gt; &gt; WHERE user_account.id = address.user_id) AS address_count
+&gt; &gt; &gt; FROM user_account
+</code></pre></div>
+<p>Простые коррелированные подзапросы обычно делают то, что требуется. Однако, если корреляция неоднозначна, SQLAlchemy
+сообщит нам, что требуется больше ясности:
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt = (
+&gt; &gt; &gt; ... select(
+&gt; &gt; &gt; ... user_table.c.name,
+&gt; &gt; &gt; ... address_table.c.email_address,
+&gt; &gt; &gt; ... subq.label(&quot;address_count&quot;),
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... .join_from(user_table, address_table)
+&gt; &gt; &gt; ... .order_by(user_table.c.id, address_table.c.id)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; print(stmt)
+&gt; &gt; &gt; Traceback (most recent call last):
+&gt; &gt; &gt; ...
+&gt; &gt; &gt; InvalidRequestError: Выборка &#39;&lt;... Select object at ...&gt;&#39; не вернула
+&gt; &gt; &gt; ни одного из FROM выражений из-за автокорреляции; укажите correlate(&lt;tables&gt;),
+&gt; &gt; &gt; чтобы управлять корреляцией вручную.
+</code></pre></div></p>
+<p>Чтобы указать, что <code>user_table</code> - это та таблица, которую мы ищем для корреляции, мы указываем это, используя
+методы <a href="../core/selectable.html#sqlalchemy.sql.expression.ScalarSelect.correlate" title="sqlalchemy.sql.expression.ScalarSelect.correlate"><code>ScalarSelect.correlate()</code></a>
+или <a href="../core/selectable.html#sqlalchemy.sql.expression.ScalarSelect.correlate_except" title="sqlalchemy.sql.expression.ScalarSelect.correlate_except"><code>ScalarSelect.correlate_except()</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; subq = (
+&gt; &gt; &gt; ... select(func.count(address_table.c.id))
+&gt; &gt; &gt; ... .where(user_table.c.id == address_table.c.user_id)
+&gt; &gt; &gt; ... .scalar_subquery()
+&gt; &gt; &gt; ... .correlate(user_table)
+&gt; &gt; &gt; ... )
+</code></pre></div>
+<p>Затем оператор может возвращать данные для этого столбца, как и для любого другого:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; with engine.connect() as conn:
+&gt; &gt; &gt; ... result = conn.execute(
+&gt; &gt; &gt; ... select(
+&gt; &gt; &gt; ... user_table.c.name,
+&gt; &gt; &gt; ... address_table.c.email_address,
+&gt; &gt; &gt; ... subq.label(&quot;address_count&quot;),
+&gt; &gt; &gt; ...         )
+&gt; &gt; &gt; ... .join_from(user_table, address_table)
+&gt; &gt; &gt; ... .order_by(user_table.c.id, address_table.c.id)
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... print(result.all())
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT user_account.name, address.email_address, (SELECT count(address.id) AS count_1
+&gt; &gt; &gt; FROM address
+&gt; &gt; &gt; WHERE user_account.id = address.user_id) AS address_count
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id ORDER BY user_account.id, address.id
+[...] ()
+[(&#39;spongebob&#39;, &#39;spongebob@sqlalchemy.org&#39;, 1), (&#39;sandy&#39;, &#39;sandy@sqlalchemy.org&#39;, 2),
+(&#39;sandy&#39;, &#39;sandy@squirrelpower.org&#39;, 2)]
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<h4 id="tutorial-lateral-correlation">Корреляция LATERAL</h4>
+<p>Корреляция LATERAL - это особый подтип корреляции SQL, который
+позволяет выбираемому элементу ссылаться на другой выбираемый элемент в
+одном FROM выражении. Это крайне специальный случай использования, который,
+хотя и является частью стандарта SQL, известен только в последних
+версиях PostgreSQL.</p>
+<p>Обычно, если оператор SELECT ссылается на
+<code>table1 JOIN (SELECT ...) AS subquery</code> в своем выражении FROM, подзапрос
+справа не может ссылаться на выражение "table1" слева;
+корреляция может ссылаться только на таблицу, которая является частью другого SELECT, который
+полностью включает этот SELECT. Ключевое слово LATERAL позволяет нам изменить эту
+логику и позволяет корреляцию с правой стороны JOIN.SQLAlchemy поддерживает эту функцию с помощью
+метода <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.lateral" title="sqlalchemy.sql.expression.Select.lateral"><code>Select.lateral()</code></a>,
+который создает объект, известный
+как <a href="../core/selectable.html#sqlalchemy.sql.expression.Lateral" title="sqlalchemy.sql.expression.Lateral"><code>Lateral</code></a>. <a href="../core/selectable.html#sqlalchemy.sql.expression.Lateral" title="sqlalchemy.sql.expression.Lateral"><code>Lateral</code></a>
+находится в той же семье, что
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a>
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code>Alias</code></a>, но также
+включает корреляционное поведение, когда конструкция добавляется в FROM-клаузу охватывающего SELECT. В следующем примере
+показан SQL-запрос, который использует LATERAL, выбирая данные "учетной записи пользователя / количество адресов
+электронной почты", как было обсуждено в предыдущем разделе:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; subq = (
+&gt; &gt; &gt; ... select(
+&gt; &gt; &gt; ... func.count(address_table.c.id).label(&quot;address_count&quot;),
+&gt; &gt; &gt; ... address_table.c.email_address,
+&gt; &gt; &gt; ... address_table.c.user_id,
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... .where(user_table.c.id == address_table.c.user_id)
+&gt; &gt; &gt; ... .lateral()
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; stmt = (
+&gt; &gt; &gt; ... select(user_table.c.name, subq.c.address_count, subq.c.email_address)
+&gt; &gt; &gt; ... .join_from(user_table, subq)
+&gt; &gt; &gt; ... .order_by(user_table.c.id, subq.c.email_address)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; print(stmt)
+&gt; &gt; &gt; SELECT user_account.name, anon_1.address_count, anon_1.email_address
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; JOIN LATERAL (SELECT count(address.id) AS address_count,
+&gt; &gt; &gt; address.email_address AS email_address, address.user_id AS user_id
+&gt; &gt; &gt; FROM address
+&gt; &gt; &gt; WHERE user_account.id = address.user_id) AS anon_1
+&gt; &gt; &gt; ON user_account.id = anon_1.user_id
+&gt; &gt; &gt; ORDER BY user_account.id, anon_1.email_address
+</code></pre></div>
+<p>Выше, правая сторона JOIN является подзапросом, который коррелирует с таблицей <code>user_account</code>, которая находится на
+левой стороне соединения.</p>
+<p>При
+использовании <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.lateral" title="sqlalchemy.sql.expression.Select.lateral"><code>Select.lateral()</code></a>
+поведение
+методов <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.correlate" title="sqlalchemy.sql.expression.Select.correlate"><code>Select.correlate()</code></a>
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.correlate_except" title="sqlalchemy.sql.expression.Select.correlate_except"><code>Select.correlate_except()</code></a>
+также применяется к
+конструкции <a href="../core/selectable.html#sqlalchemy.sql.expression.Lateral" title="sqlalchemy.sql.expression.Lateral"><code>Lateral</code></a>.</p>
+<p>См. также</p>
+<p><a href="../core/selectable.html#sqlalchemy.sql.expression.Lateral" title="sqlalchemy.sql.expression.Lateral"><code>Lateral</code></a></p>
+<p><a href="../core/selectable.html#sqlalchemy.sql.expression.Select.lateral" title="sqlalchemy.sql.expression.Select.lateral"><code>Select.lateral()</code></a></p>
+<h3 id="tutorial-union">UNION, UNION ALL и другие операции наборов</h3>
+<p>В SQL операторы SELECT могут быть объединены с помощью операции UNION или UNION ALL, которая производит набор всех
+строк, производимых одним или несколькими операторами
+вместе.Конструкция <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>
+в SQLAlchemy поддерживает композиции такого рода с помощью функций, таких
+как <a href="../core/selectable.html#sqlalchemy.sql.expression.union" title="sqlalchemy.sql.expression.union"><code>union()</code></a>, <a href="../core/selectable.html#sqlalchemy.sql.expression.intersect" title="sqlalchemy.sql.expression.intersect"><code>intersect()</code></a>
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.except_" title="sqlalchemy.sql.expression.except_"><code>except_()</code></a>, а также
+их аналогов с "
+all" - <a href="../core/selectable.html#sqlalchemy.sql.expression.union_all" title="sqlalchemy.sql.expression.union_all"><code>union_all()</code></a>, <a href="../core/selectable.html#sqlalchemy.sql.expression.intersect_all" title="sqlalchemy.sql.expression.intersect_all"><code>intersect_all()</code></a>
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.except_all" title="sqlalchemy.sql.expression.except_all"><code>except_all()</code></a>.
+Эти функции все принимают произвольное количество под-выборок, которые обычно являются
+конструкциями <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>,
+но могут также быть существующей композицией.</p>
+<p>Конструкция, созданная этими функциями,
+является <a href="../core/selectable.html#sqlalchemy.sql.expression.CompoundSelect" title="sqlalchemy.sql.expression.CompoundSelect"><code>CompoundSelect</code></a>,
+которая используется так же, как и
+конструкция <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>, за
+исключением того, что у нее меньше
+методов. <a href="../core/selectable.html#sqlalchemy.sql.expression.CompoundSelect" title="sqlalchemy.sql.expression.CompoundSelect"><code>CompoundSelect</code></a>,
+созданный, например, с
+помощью <a href="../core/selectable.html#sqlalchemy.sql.expression.union_all" title="sqlalchemy.sql.expression.union_all"><code>union_all()</code></a>,
+может быть вызван непосредственно с
+помощью <a href="../core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code>Connection.execute()</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy import union_all
+&gt; &gt; &gt; stmt1 = select(user_table).where(user_table.c.name == &quot;sandy&quot;)
+&gt; &gt; &gt; stmt2 = select(user_table).where(user_table.c.name == &quot;spongebob&quot;)
+&gt; &gt; &gt; u = union_all(stmt1, stmt2)
+&gt; &gt; &gt; with engine.connect() as conn:
+&gt; &gt; &gt; ... result = conn.execute(u)
+&gt; &gt; &gt; ... print(result.all())
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; WHERE user_account.name = ?
+&gt; &gt; &gt; UNION ALL SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; WHERE user_account.name = ?
+[generated in ...] (&#39;sandy&#39;, &#39;spongebob&#39;)
+[(2, &#39;sandy&#39;, &#39;Sandy Cheeks&#39;), (1, &#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;)]
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<p>Чтобы
+использовать <a href="../core/selectable.html#sqlalchemy.sql.expression.CompoundSelect" title="sqlalchemy.sql.expression.CompoundSelect"><code>CompoundSelect</code></a>
+в качестве подзапроса, как
+и <a href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code>Select</code></a>, он
+предоставляет
+метод <a href="../core/selectable.html#sqlalchemy.sql.expression.SelectBase.subquery" title="sqlalchemy.sql.expression.SelectBase.subquery"><code>SelectBase.subquery()</code></a>,
+который создаст
+объект <a href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code>Subquery</code></a> с
+коллекцией [`FromClause#### Выбор ORM-сущностей из объединений {#tutorial-orm-union}</p>
+<p>Предыдущие примеры показали, как создать объединение двух
+объектов <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a>, чтобы затем вернуть строки
+из базы данных. Если мы хотим использовать объединение или другую операцию над множествами для выбора строк, которые мы
+затем получаем в виде ORM-объектов, можно использовать два подхода. В обоих случаях мы сначала создаем
+объект <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>
+или <a href="../core/selectable.html#sqlalchemy.sql.expression.CompoundSelect" title="sqlalchemy.sql.expression.CompoundSelect"><code>CompoundSelect</code></a>,
+который представляет выражение SELECT / UNION / и т.д., которое мы хотим выполнить; это выражение должно быть составлено
+против целевых ORM-сущностей или их базовых
+отображенных <a href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code>Table</code></a> объектов:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt1 = select(User).where(User.name == &quot;sandy&quot;)
+&gt; &gt; &gt; stmt2 = select(User).where(User.name == &quot;spongebob&quot;)
+&gt; &gt; &gt; u = union_all(stmt1, stmt2)
+</code></pre></div>
+<p>Для простого SELECT с UNION, который еще не вложен в подзапрос, это можно часто использовать в контексте получения
+объектов ORM, используя
+метод <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.from_statement" title="sqlalchemy.sql.expression.Select.from_statement"><code>Select.from_statement()</code></a>.
+При этом подходе оператор UNION представляет всю выборку; после
+использования <a href="../core/selectable.html#sqlalchemy.sql.expression.Select.from_statement" title="sqlalchemy.sql.expression.Select.from_statement"><code>Select.from_statement()</code></a>
+нельзя добавлять дополнительные критерии:</p>
+<p><div class="highlight"><pre><span></span><code>&gt; &gt; &gt; orm_stmt = select(User).from_statement(u)
+&gt; &gt; &gt; with Session(engine) as session:
+&gt; &gt; &gt; ... for obj in session.execute(orm_stmt).scalars():
+&gt; &gt; &gt; ... print(obj)
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; WHERE user_account.name = ? UNION ALL SELECT user_account.id, user_account.name, user_account.fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; WHERE user_account.name = ?
+[generated in ...] (&#39;sandy&#39;, &#39;spongebob&#39;)
+&gt; &gt; &gt; User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;)
+&gt; &gt; &gt; User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+Чтобы использовать UNION или другую связанную сущность в более гибком
+способе, конструкцию <a href="../core/selectable.html#sqlalchemy.sql.expression.CompoundSelect" title="sqlalchemy.sql.expression.CompoundSelect"><code>CompoundSelect</code></a> можно
+организовать в подзапрос, используя метод <a href="../core/selectable.html#sqlalchemy.sql.expression.CompoundSelect.subquery" title="sqlalchemy.sql.expression.CompoundSelect.subquery"><code>CompoundSelect.subquery()</code></a>, который
+затем связывается с ORM-объектами с помощью функции <a href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code>aliased()</code></a>. Это работает
+так же, как и в <a href="#tutorial-subqueries-orm-aliased">ORM Entity Subqueries/CTEs</a>, чтобы сначала
+создать вспомогательное «отображение» нашей желаемой сущности для подзапроса, затем
+выбирая из этой новой сущности, как если бы это был любой другой отображенный класс.
+В приведенном ниже примере мы можем добавить дополнительные критерии, такие как ORDER BY
+вне самого UNION, так как мы можем фильтровать или сортировать по экспортированным столбцам
+подзапроса:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; user_alias = aliased(User, u.subquery())
+&gt; &gt; &gt; orm_stmt = select(user_alias).order_by(user_alias.id)
+&gt; &gt; &gt; with Session(engine) as session:
+&gt; &gt; &gt; ... for obj in session.execute(orm_stmt).scalars():
+&gt; &gt; &gt; ... print(obj)
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT anon_1.id, anon_1.name, anon_1.fullname
+&gt; &gt; &gt; FROM (SELECT user_account.id AS id, user_account.name AS name, user_account.fullname AS fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; WHERE user_account.name = ? UNION ALL SELECT user_account.id AS id, user_account.name AS name,
+&gt; &gt; &gt; user_account.fullname AS
+&gt; &gt; &gt; fullname
+&gt; &gt; &gt; FROM user_account
+&gt; &gt; &gt; WHERE user_account.name = ?) AS anon_1 ORDER BY anon_1.id
+[generated in ...] (&#39;sandy&#39;, &#39;spongebob&#39;)
+&gt; &gt; &gt; User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)
+&gt; &gt; &gt; User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;)
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<p>Смотрите также</p>
+<p><a href="../orm/queryguide/select.html#orm-queryguide-unions">Выбор сущностей из UNION и других операций над множествами</a> - в <a href="../orm/queryguide/index.html">Руководстве по запросам ORM</a></p>
+<h3 id="tutorial-exists">EXISTS подзапросы</h3>
+<p>Ключевое слово SQL EXISTS - это оператор, который используется с <a href="#tutorial-scalar-subquery">скалярными подзапросами</a> для возврата логического значения true или false в зависимости от того,
+вернет ли оператор SELECT строку. SQLAlchemy включает вариант объекта <a href="../core/selectable.html#sqlalchemy.sql.expression.ScalarSelect" title="sqlalchemy.sql.expression.ScalarSelect"><code>ScalarSelect</code></a> под названием <a href="../core/selectable.html#sqlalchemy.sql.expression.Exists" title="sqlalchemy.sql.expression.Exists"><code>Exists</code></a>, который
+сгенерирует подзапрос EXISTS и наиболее удобно сгенерируется с помощью метода [<code>SelectBase.exists()</code>](../core/selectable.html#sqlalchemy.sql.expression.SelectBase.exists "sqlalchemy.sql.expression.SelectBase.exists
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; subq = (
+...     select(func.count(address_table.c.id))
+...     .where(user_table.c.id == address_table.c.user_id)
+...     .group_by(address_table.c.user_id)
+...     .having(func.count(address_table.c.id) &gt; 1)
+... ).exists()
+&gt;&gt;&gt; with engine.connect() as conn:
+...     result = conn.execute(select(user_table.c.name).where(subq))
+...     print(result.all())
+BEGIN (implicit)
+SELECT user_account.name
+FROM user_account
+WHERE EXISTS (SELECT count(address.id) AS count_1
+FROM address
+WHERE user_account.id = address.user_id GROUP BY address.user_id
+HAVING count(address.id) &gt; ?)
+[...] (1,)
+[(&#39;sandy&#39;,)]
+ROLLBACK
+</code></pre></div></p>
+<p>Конструкция EXISTS чаще всего используется в отрицательной форме, например NOT EXISTS, так как она обеспечивает
+SQL-эффективную форму поиска строк, для которых связанная таблица не имеет строк. Ниже мы выбираем имена пользователей,
+у которых нет адресов электронной почты; обратите внимание на оператор отрицания (~), используемый внутри второго WHERE:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; subq = (
+...     select(address_table.c.id).where(user_table.c.id == address_table.c.user_id)
+... ).exists()
+&gt;&gt;&gt; with engine.connect() as conn:
+...     result = conn.execute(select(user_table.c.name).where(~subq))
+...     print(result.all())
+BEGIN (implicit)
+SELECT user_account.name
+FROM user_account
+WHERE NOT (EXISTS (SELECT address.id
+FROM address
+WHERE user_account.id = address.user_id))
+[...] ()
+[(&#39;patrick&#39;,)]
+ROLLBACK
+</code></pre></div>
+<h3 id="tutorial-functions">Работа с SQL-функциями</h3>
+<p>Как было введено ранее в этом разделе в
+<a href="#tutorial-group-by-w-aggregates">Функции агрегирования с GROUP BY / HAVING</a>,
+объект <a href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code>func</code></a> служит как
+фабрика для создания новых
+объектов <a href="../core/functions.html#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code>Function</code></a>,
+которые при использовании
+в конструкции <a href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code>select()</code></a>,
+производят отображение SQL-функции,
+которое обычно состоит из имени, некоторых скобок (хотя не всегда) и
+возможно некоторых аргументов. Примеры типичных SQL-функций включают:</p>
+<ul>
+<li>функция <code>count()</code>, агрегатная функция, которая подсчитывает, сколько
+  строк возвращается:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(select(func.count()).select_from(user_table))
+SELECT count(*) AS count_1
+FROM user_account
+</code></pre></div>
+<ul>
+<li>функция <code>lower()</code>, строковая функция, которая преобразует строку в нижний
+  регистр:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(select(func.lower(&quot;A String With Much UPPERCASE&quot;)))
+SELECT lower(:lower_2) AS lower_1
+</code></pre></div>
+<ul>
+<li>функция <code>now()</code>, которая обеспечивает текущую дату и время; так как это
+  общая функция, SQLAlchemy знает, как отображать это по-разному для каждой
+  базы данных, в случае SQLite используется функция CURRENT_TIM```</li>
+</ul>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print(select(func.some_crazy_function(user_table.c.name, 17)))
+SELECT some_crazy_function(user_account.name, :some_crazy_function_2) AS some_crazy_function_1
+FROM user_account
+</code></pre></div>
+<p>В то же время, относительно небольшой набор чрезвычайно распространенных SQL-функций, таких
+как <a href="../core/functions.html#sqlalchemy.sql.functions.count" title="sqlalchemy.sql.functions.count"><code>count</code></a>, <a href="../core/functions.html#sqlalchemy.sql.functions.now" title="sqlalchemy.sql.functions.now"><code>now</code></a>, <a href="../core/functions.html#sqlalchemy.sql.functions.max" title="sqlalchemy.sql.functions.max"><code>max</code></a>,
+<a href="../core/functions.html#sqlalchemy.sql.functions.concat" title="sqlalchemy.sql.functions.concat"><code>concat</code></a> включают в себя
+предварительно упакованные версии, которые обеспечивают правильную информацию о типах, а также генерацию SQL,
+специфичную для бэкэнда в некоторых случаях. Приведенный ниже пример контрастирует генерацию SQL, которая происходит для
+диалекта PostgreSQL по сравнению с диалектом Oracle для
+функции <a href="../core/functions.html#sqlalchemy.sql.functions.now" title="sqlalchemy.sql.functions.now"><code>now</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; from sqlalchemy.dialects import postgresql
+&gt;&gt;&gt; print(select(func.now()).compile(dialect=postgresql.dialect()))
+SELECT now() AS now_1
+&gt;&gt;&gt; from sqlalchemy.dialects import oracle
+&gt;&gt;&gt; print(select(func.now()).compile(dialect=oracle.dialect()))
+SELECT CURRENT_TIMESTAMP AS now_1 FROM DUAL
+</code></pre></div>
+<h4 id="_1">Функции имеют типы возврата</h4>
+<p>Поскольку функции являются выражениями столбцов, они также имеют
+SQL <a href="../core/types.html">типы данных</a>, которые описывают тип данных
+сгенерированного SQL-выражения. Мы называем эти типы здесь "SQL-типами возврата",
+в отношении типа SQL-значения, возвращаемого функцией
+в контексте SQL-выражения на стороне базы данных,
+в отличие от "типа возврата" функции Python.</p>
+<p>SQL-тип возврата любой SQL-функции может быть получен, обычно для
+отладки, обращаясь к атрибуту <code>Function.type</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; func.now().type
+DateTime()
+</code></pre></div>
+<p>Эти SQL-типы возврата значимы при использовании выражения функции в контексте более крупного выражения; то есть,
+математические операторы будут работать лучше, когда тип выражения будет
+что-то вроде <a href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code>Integer</code></a>
+или <a href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code>Numeric</code></a>, JSON
+доступоразрешающие устройства, чтобы работать, должны использовать тип, такой как
+<a href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code>JSON</code></a>. Некоторые классы функций возвращают
+целые строки
+вместо значений столбцов, где есть
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy import JSON
+&gt; &gt; &gt; function_expr = func.json_object(&#39;{a, 1, b, &quot;def&quot;, c, 3.5}&#39;, type_=JSON)
+</code></pre></div></p>
+<p>Создавая нашу функцию JSON с типом данных <a href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code>JSON</code></a>, объект выражения SQL принимает свойства, связанные с JSON, такие как доступ к элементам:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt = select(function_expr[&quot;def&quot;])
+&gt; &gt; &gt; print(stmt)
+&gt; &gt; &gt; SELECT json_object(:json_object_1)[:json_object_2] AS anon_1
+</code></pre></div>
+<h4 id="_2">Встроенные функции имеют заранее настроенные типы возврата</h4>
+<p>Для общих агрегатных функций, таких как <a href="../core/functions.html#sqlalchemy.sql.functions.count" title="sqlalchemy.sql.functions.count"><code>count</code></a>,
+<a href="../core/functions.html#sqlalchemy.sql.functions.max" title="sqlalchemy.sql.functions.max"><code>max</code></a>, <a href="../core/functions.html#sqlalchemy.sql.functions.min" title="sqlalchemy.sql.functions.min"><code>min</code></a>, а также очень небольшого количества
+функций даты, таких как <a href="../core/functions.html#sqlalchemy.sql.functions.now" title="sqlalchemy.sql.functions.now"><code>now</code></a> и функций строк, таких как
+<a href="../core/functions.html#sqlalchemy.sql.functions.concat" title="sqlalchemy.sql.functions.concat"><code>concat</code></a>, SQL-тип возврата настраивается соответствующим образом,
+иногда на основе использования. Функция <a href="../core/functions.html#sqlalchemy.sql.functions.max" title="sqlalchemy.sql.functions.max"><code>max</code></a> и аналогичные
+функции фильтрации агрегатов настраивают SQL-тип возврата на основе
+заданного аргумента:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; m1 = func.max(Column(&quot;some_int&quot;, Integer))
+&gt; &gt; &gt; m1.type
+&gt; &gt; &gt; Integer()
+
+&gt; &gt; &gt; m2 = func.max(Column(&quot;some_str&quot;, String))
+&gt; &gt; &gt; m2.type
+&gt; &gt; &gt; String()
+</code></pre></div>
+<p>Функции даты и времени обычно соответствуют SQL-выражениям, описанным в
+<a href="../core/type_basics.html#sqlalchemy.types.DateTime" title="sqlalchemy.types.DateTime"><code>DateTime</code></a>, <a href="../core/type_basics.html#sqlalchemy.types.Date" title="sqlalchemy.types.Date"><code>Date</code></a> или <a href="../core/type_basics.html#sqlalchemy.types.Time" title="sqlalchemy.types.Time"><code>Time</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; func.now().type
+&gt; &gt; &gt; DateTime()
+&gt; &gt; &gt; func.current_date().type
+&gt; &gt; &gt; Date()
+</code></pre></div>
+<p>Известно, что функция строк, такая как <a href="../core/functions.html#sqlalchemy.sql.functions.concat" title="sqlalchemy.sql.functions.concat"><code>concat</code></a>,
+знает, что SQL-выражение будет иметь тип <a href="../core/type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code>String</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; func.concat(&quot;x&quot;, &quot;y&quot;).type
+&gt; &gt; &gt; String()
+</code></pre></div>
+<p>Однако для подавляющего большинства SQL-функций SQLAlchemy не имеет их
+явно присутствующих в своем очень небольшом списке известных функций. Например,
+хотя обычно нет проблем с использованием SQL-функций <code>func.lower()</code>
+и <code>func.upper()</code> для преобразования регистра строк, SQLAlchemy не
+фактически знает об этих функциях, поэтому у них нет SQL-типа возврата:</p>
+<p><div class="highlight"><pre><span></span><code>&gt; &gt; &gt; &gt;&gt;&gt; func.upper(&quot;lowercase&quot;).type
+NullType()
+</code></pre></div>
+1. Функция еще не является встроенной функцией SQLAlchemy; это можно увидеть, создав функцию и
+наблюдая за атрибутом <code>Function.type</code>, который выглядит следующим образом:</p>
+<pre><code>```
+&gt;&gt;&gt; func.count().type
+Integer()
+
+```
+
+в отличие от:
+
+```
+&gt;&gt;&gt; func.json_object('{"a", "b"}').type
+NullType()
+
+```
+</code></pre>
+<ol>
+<li>Необходима поддержка выражений, осознающих функции; это обычно относится к специальным операторам, связанным с типами
+   данных, такими как <a href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code>JSON</code></a>
+   или <a href="../core/type_basics.html#sqlalchemy.types.ARRAY" title="sqlalchemy.types.ARRAY"><code>ARRAY</code></a></li>
+<li>Необходима обработка результирующего значения, которая может включать типы, такие
+   как <code>DateTime</code>, <a href="../core/type_basics.html#sqlalchemy.types.Boolean" title="sqlalchemy.types.Boolean"><code>Boolean</code></a>, <a href="../core/type_basics.html#sqlalchemy.types.Enum" title="sqlalchemy.types.Enum"><code>Enum</code></a>,
+   или опять же специальные типы данных, такие
+   как <a href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code>JSON</code></a>, <a href="../core/type_basics.html#sqlalchemy.types.ARRAY" title="sqlalchemy.types.ARRAY"><code>ARRAY</code></a>.</li>
+</ol>
+<h4 id="sql-">Расширенные техники работы с SQL-функциями</h4>
+<p>В следующих подразделах иллюстрируются более продвинутые вещи, которые можно сделать с SQL-функциями. Хотя эти техники
+менее распространены и более продвинуты, чем базовое использование SQL-функций, они тем не менее чрезвычайно популярны,
+в основном благодаря упору PostgreSQL на более сложные формы функций, включая формы со значениями таблиц и столбцов,
+которые популярны с данными JSON.</p>
+<h5 id="tutorial-window-functions">Использование оконных функций</h5>
+<p>Оконная функция - это специальное использование агрегатной SQL-функции, которая вычисляет агрегатное значение по
+строкам, возвращаемым в группе, по мере обработки отдельных результатов строк. В то время как функция, такая
+как <code>MAX()</code>, даст вам наивысшее значение столбца в наборе строк, использование той же функции в качестве "оконной
+функции" даст вам наивысшее значение для каждой строки, <em>на момент этой строки</em>.</p>
+<p>В SQL оконные функции позволяют указать строки, над которыми должна быть применена функция, значение "раздела", которое
+учитывает окно в разных подмножествах строк, и выражение "order by", которое важно указывает порядок, в котором строки
+должны быть применены к агрегатной функции.</p>
+<p>В SQLAlchemy все SQL-функции, созданные пространством имен [<code>func</code>](
+../core/sqlelement.html#sqlalchemy.sql.expression.func "
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt = (
+&gt; &gt; &gt; ... select(
+&gt; &gt; &gt; ... func.row_number().over(partition_by=user_table.c.name),
+&gt; &gt; &gt; ... user_table.c.name,
+&gt; &gt; &gt; ... address_table.c.email_address,
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... .select_from(user_table)
+&gt; &gt; &gt; ... .join(address_table)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; with engine.connect() as conn:  
+&gt; &gt; &gt; ... result = conn.execute(stmt)
+&gt; &gt; &gt; ... print(result.all())
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT row_number() OVER (PARTITION BY user_account.name) AS anon_1,
+&gt; &gt; &gt; user_account.name, address.email_address
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id
+[...] ()
+[(1, &#39;sandy&#39;, &#39;sandy@sqlalchemy.org&#39;), (2, &#39;sandy&#39;, &#39;sandy@squirrelpower.org&#39;), (1, &#39;spongebob&#39;, &#39;spongebob@sqlalchemy.org&#39;)]
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div></p>
+<p>Выше используется параметр <a href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.over.params.partition_by" title="sqlalchemy.sql.functions.FunctionElement.over"><code>FunctionElement.over.partition_by</code></a>, чтобы <code>PARTITION BY</code> был отображен внутри OVER-оператора. Мы также можем использовать оператор <code>ORDER BY</code>, используя <a href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.over.params.order_by" title="sqlalchemy.sql.functions.FunctionElement.over"><code>FunctionElement.over.order_by</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt = (
+&gt; &gt; &gt; ... select(
+&gt; &gt; &gt; ... func.count().over(order_by=user_table.c.name),
+&gt; &gt; &gt; ... user_table.c.name,
+&gt; &gt; &gt; ... address_table.c.email_address,
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... .select_from(user_table)
+&gt; &gt; &gt; ... .join(address_table)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; with engine.connect() as conn:  
+&gt; &gt; &gt; ... result = conn.execute(stmt)
+&gt; &gt; &gt; ... print(result.all())
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT count(*) OVER (ORDER BY user_account.name) AS anon_1,
+&gt; &gt; &gt; user_account.name, address.email_address
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id
+[...] ()
+[(2, &#39;sandy&#39;, &#39;sandy@sqlalchemy.org&#39;), (2, &#39;sandy&#39;, &#39;sandy@squirrelpower.org&#39;), (3, &#39;spongebob&#39;, &#39;spongebob@sqlalchemy.org&#39;)]
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<p>Дополнительные опции для оконных функций включают использование диапазонов; см. <a href="../core/sqlelement.html#sqlalchemy.sql.expression.over" title="sqlalchemy.sql.expression.over"><code>over()</code></a> для получения дополнительных примеров.</p>
+<p>Совет</p>
+<p>Важно отметить, что метод <a href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.over" title="sqlalchemy.sql.functions.FunctionElement.over"><code>FunctionElement.over()</code></a> применяется только к тем SQL-функциям, которые являются агрегатными функциями; хотя конструкция <a href="../core/sqlelement.html#sqlalchemy.sql.expression.Over" title="sqlalchemy.sql.expression.Over"><code>Over</code></a> будет успешно отображаться для любой заданной SQL-функции, база данных отклонит выражение, если сама функция не является SQL-агрегатной функцией.</p>
+<h5 id="tutorial-functions-within-group">Специальные модификаторы WITHIN GROUP, FILTER</h5>
+<p>Синтаксис SQL "WITHIN GROUP" используется в сочетании с функцией агрегирования "упорядоченного набора" или "гипотетического набора". Общие функции "упорядоченного набора" включают <code>percentile_cont()</code> и <code>rank()</code>. SQLAlchemy включает встроенные реализации <a href="../core/functions.html#sqlalchemy.sql.functions.rank" title="sqlalchemy.sql.functions.rank"><code>rank</code></a>, <a href="../core/functions.html#sqlalchemy.sql.functions.dense_rank" title="sqlalchemy.sql.functions.dense_rank"><code>dense_rank</code></a>, <a href="../core/functions.html#sqlalchemy.sql.functions.mode" title="sqlalchemy.sql.functions.mode"><code>mode</code></a>, <a href="../core/functions.html#sqlalchemy.sql.functions.percentile_cont" title="sqlalchemy.sql.functions.percentile_cont"><code>percentile_cont</code></a> и <a href="../core/functions.html#sqlalchemy.sql.functions.percentile_disc" title="sqlalchemy.sql.functions.percentile_disc"><code>percentile_disc</code></a>, которые включают метод <a href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code>FunctionElement.within_group()</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; print(
+&gt; &gt; &gt; ... func.unnest(
+&gt; &gt; &gt; ... func.percentile_disc([0.25, 0.5, 0.75, 1]).within_group(user_table.c.name)
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; unnest(percentile_disc(:percentile_disc_1) WITHIN GROUP (ORDER BY user_account.name))
+</code></pre></div>
+<p>"FILTER" поддерживается некоторыми бэкэндами для ограничения диапазона функции агрегирования до определенного подмножества строк по сравнению с общим диапазоном возвращаемых строк, доступных с помощью метода <a href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.filter" title="sqlalchemy.sql.functions.FunctionElement.filter"><code>FunctionElement.filter()</code></a>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; stmt = (
+&gt; &gt; &gt; ... select(
+&gt; &gt; &gt; ... func.count(address_table.c.email_address).filter(user_table.c.name == &quot;sandy&quot;),
+&gt; &gt; &gt; ... func.count(address_table.c.email_address).filter(
+&gt; &gt; &gt; ... user_table.c.name == &quot;spongebob&quot;
+&gt; &gt; &gt; ...         ),
+&gt; &gt; &gt; ...     )
+&gt; &gt; &gt; ... .select_from(user_table)
+&gt; &gt; &gt; ... .join(address_table)
+&gt; &gt; &gt; ... )
+&gt; &gt; &gt; with engine.connect() as conn:  
+&gt; &gt; &gt; ... result = conn.execute(stmt)
+&gt; &gt; &gt; ... print(result.all())
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT count(address.email_address) FILTER (WHERE user_account.name = ?) AS anon_1,
+&gt; &gt; &gt; count(address.email_address) FILTER (WHERE user_account.name = ?) AS anon_2
+&gt; &gt; &gt; FROM user_account JOIN address ON user_account.id = address.user_id
+[...] (&#39;sandy&#39;, &#39;spongebob&#39;)
+[(2, 1)]
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<h5 id="tutorial-functions-table-valued">Функции со значением таблицы</h5>
+<p>Функции SQL со значением таблицы поддерживают скалярное представление, которое содержит именованные подэлементы. Часто используется для функций, ориентированных на JSON и ARRAY, а также для функций, таких как <code>generate_series()</code>. Функция со значением таблицы указывается в FROM-клаузе, а затем ссылается на нее как на таблицу или иногда даже как на столбец. Функции этой формы являются распространенными в базе данных PostgreSQL, однако некоторые формы функций со значением таблицы также поддерживаются SQLite, Oracle и SQL Server.</p>
+<p>СмSQLAlchemy предоставляет метод <a href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code>FunctionElement.table_valued()</code></a> в качестве основной конструкции "функции со значением таблицы", который преобразует объект <a href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code>func</code></a> в выражение FROM, содержащее ряд именованных столбцов на основе строковых имен, переданных позиционно. Это возвращает объект <a href="../core/selectable.html#sqlalchemy.sql.expression.TableValuedAlias" title="sqlalchemy.sql.expression.TableValuedAlias"><code>TableValuedAlias</code></a>, который является конструкцией с функцией, включенной в <a href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code>Alias</code></a>, который может использоваться как любое другое выражение FROM, как это было представлено в разделе <a href="#tutorial-using-aliases">Использование псевдонимов</a>. Ниже мы иллюстрируем функцию <code>json_each()</code>, которая, хотя и распространена в PostgreSQL, также поддерживается современными версиями SQLite:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; onetwothree = func.json_each(&#39;[&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]&#39;).table_valued(&quot;value&quot;)
+&gt; &gt; &gt; stmt = select(onetwothree).where(onetwothree.c.value.in_([&quot;two&quot;, &quot;three&quot;]))
+&gt; &gt; &gt; with engine.connect() as conn:
+&gt; &gt; &gt; ... result = conn.execute(stmt)
+&gt; &gt; &gt; ... result.all()
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT anon_1.value
+&gt; &gt; &gt; FROM json_each(?) AS anon_1
+&gt; &gt; &gt; WHERE anon_1.value IN (?, ?)
+[...] (&#39;[&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]&#39;, &#39;two&#39;, &#39;three&#39;)
+[(&#39;two&#39;,), (&#39;three&#39;,)]
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<p>Выше мы использовали функцию <code>json_each()</code> JSON, поддерживаемую SQLite и PostgreSQL, чтобы сгенерировать выражение со значением таблицы с одним столбцом, на который ссылается как <code>value</code>, а затем выбрали две из его трех строк.</p>
+<p>Смотрите также</p>
+<p><a href="../dialects/postgresql.html#postgresql-table-valued">Функции со значением таблицы</a> - в документации <a href="../dialects/postgresql.html">PostgreSQL</a> -
+этот раздел подробно описывает дополнительные синтаксисы, такие как специальные производные столбцы и "WITH ORDINALITY", которые известны работать с PostgreSQL.</p>
+<h5 id="tutorial-functions-column-valued">Функции со значением столбца - функция со значением таблицы как скалярный столбец</h5>
+<p>Особый синтаксис, поддерживаемый PostgreSQL и Oracle, заключается в ссылке
+на функцию в выражении FROM, которая затем представляет собой
+один столбец в выражении столбцов оператора SELECT или другом контексте
+выражения столбца. PostgreSQL широко использует этот синтаксис для таких
+функций, как <code>json_array_elements()</code>, <code>json_object_keys()</code>,
+<code>json_each_text()</code>, <code>json_each()</code>, и т.д.</p>
+<p>SQLAlchemy называет это "функцией со<a href="../dialects/postgresql.html#postgresql-column-valued">Функции со значением столбца</a> - в документации <a href="../dialects/postgresql.html">PostgreSQL</a>.</p>
+<h3 id="tutorial-casts">Приведение типов данных и приведение типов</h3>
+<p>В SQL нам часто нужно явно указывать тип данных выражения, либо чтобы сообщить базе данных, какой тип ожидается в противном случае неоднозначного выражения, либо в некоторых случаях, когда мы хотим преобразовать подразумеваемый тип данных SQL-выражения в что-то другое. Для этой задачи используется ключевое слово SQL CAST, которое в SQLAlchemy предоставляется функцией <a href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code>cast()</code></a>. Эта функция принимает выражение столбца и объект типа данных в качестве аргументов, как показано ниже, где мы создаем SQL-выражение <code>CAST(user_account.id AS VARCHAR)</code> из объекта столбца <code>user_table.c.id</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy import cast
+&gt; &gt; &gt; stmt = select(cast(user_table.c.id, String))
+&gt; &gt; &gt; with engine.connect() as conn:
+&gt; &gt; &gt; ... result = conn.execute(stmt)
+&gt; &gt; &gt; ... result.all()
+&gt; &gt; &gt; BEGIN (implicit)
+&gt; &gt; &gt; SELECT CAST(user_account.id AS VARCHAR) AS id
+&gt; &gt; &gt; FROM user_account
+[...] ()
+[(&#39;1&#39;,), (&#39;2&#39;,), (&#39;3&#39;,)]
+&gt; &gt; &gt; ROLLBACK
+</code></pre></div>
+<p>Функция <a href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code>cast()</code></a> не только отображает синтаксис SQL CAST, но также
+производит выражение столбца SQLAlchemy, которое также будет действовать как данный тип на стороне Python. Выражение строки, которое <a href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code>cast()</code></a> в
+<a href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code>JSON</code></a>, получит подсказки и операторы сравнения JSON, например:</p>
+<div class="highlight"><pre><span></span><code>&gt; &gt; &gt; from sqlalchemy import JSON
+&gt; &gt; &gt; print(cast(&quot;{&#39;a&#39;: &#39;b&#39;}&quot;, JSON)[&quot;a&quot;])
+&gt; &gt; &gt; CAST(:param_1 AS JSON)[:param_2]
+</code></pre></div>
+<h4 id="type_coerce-python-only-cast">type_coerce() - Python-only "cast"</h4>
+<p>Иногда необходимо, чтобы SQLAlchemy знал тип данных выражения по всем причинам, упомянутым выше, но не отображал само выражение CAST на стороне SQL, где оно может мешать SQL-операции, которая уже работает без него. Для этого довольно распространенного случая использования существует другая функция <a href="../core/sqlelement.html#sqlalchemy.sql.expression.type_coerce" title="sqlalchemy.sql.expression.type_coerce"><code>type_coerce()</code></a>, которая тесно связана с <a href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code>cast()</code></a>, поскольку она устанавливает выражение Python как имеющее определенный тип базы данных SQL, но не отображает ключевое слово CAST или тип данных на стороне базы данных. <a href="../core/sq"><code>type_coerce()</code></a>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; import json
+&gt;&gt;&gt; from sqlalchemy import JSON
+&gt;&gt;&gt; from sqlalchemy import type_coerce
+&gt;&gt;&gt; from sqlalchemy.dialects import mysql
+&gt;&gt;&gt; s = select(type_coerce({&quot;some_key&quot;: {&quot;foo&quot;: &quot;bar&quot;}}, JSON)[&quot;some_key&quot;])
+&gt;&gt;&gt; print(s.compile(dialect=mysql.dialect()))
+SELECT JSON_EXTRACT(%s, %s) AS anon_1
+</code></pre></div></p>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Elisha Kravchuk
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.indexes", "content.code.copy", "content.action.edit", "header.autohide"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.51198bba.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
